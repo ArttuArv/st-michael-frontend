@@ -1,15 +1,11 @@
-# fly.toml file generated for stmichael-website on 2022-09-12T00:54:17+03:00
+# fly.toml file generated for st-michael-irish-pub-web on 2022-12-11T19:31:36+02:00
 
-app = "stmichael-website"
+app = "st-michael-irish-pub-web"
 kill_signal = "SIGINT"
 kill_timeout = 5
 processes = []
 
-[build]
-  builder = "heroku/buildpacks:20"
-
 [env]
-  PORT = "8080"
 
 [experimental]
   allowed_public_ports = []
