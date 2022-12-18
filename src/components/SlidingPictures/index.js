@@ -13,7 +13,7 @@ const images = [
   },
   {
     id: 2,
-    background: require('../../assets/images/kuva2.png'),
+    background: require('../../assets/images/kuva2.jpg'),
     header: 'Viskit',
     to: '/whisky'
   },

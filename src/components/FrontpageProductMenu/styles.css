@@ -34,7 +34,7 @@
   text-shadow: 3px 3px 2px black;
 }
 
-.menu-page-container p {
+.menu-page-container > p {
   font-size: 1.5rem;
   margin: 2rem 0;
   color: #F5BD30;
@@ -47,7 +47,7 @@
   /* flex-direction: row; */
   flex-flow: row wrap;
   margin: 1rem;
-  max-width: 1500px;
+  max-width: 1650px;
 
 
   /* border: 1px solid var(--clr-neutral-400);
@@ -89,8 +89,9 @@
   margin-bottom: 0.5rem;
 }
 
-.menu-content p {
+.menu-content > p {
   font-size: 1rem;
+  line-height: 1; 
   margin-bottom: 0.5rem;
 }
 
