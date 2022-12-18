@@ -8,6 +8,7 @@ const FrontPageProductMenu = ({ beer }) => {
     <>
       <div className="menu-page-container">
         <h2>Menu</h2>
+        <p>Testiksi jotain tällaistakin näkymää</p>
         <div className='menu-container'>
           {beer.map(category => (
             <div className='menu-box' key={category.id}>

@@ -34,6 +34,14 @@
   text-shadow: 3px 3px 2px black;
 }
 
+.menu-page-container p {
+  font-size: 1.5rem;
+  margin: 2rem 0;
+  color: #F5BD30;
+  text-align: center;
+  text-shadow: 3px 3px 2px black;
+}
+
 .menu-container {
   display: flex;
   /* flex-direction: row; */
