@@ -6,7 +6,7 @@ import './styles.css';
 import fiLogo from '../../assets/images/sportLogos/F1.svg';
 import valioliigaLogo from '../../assets/images/sportLogos/Premier_League-Logo.wine.svg';
 import liigaLogo from '../../assets/images/sportLogos/Liiga_logo.svg.png';
-import vsportLogo from '../../assets/images/sportLogos/Vsport1_Suomi_Vert_RGB_pos.png';
+import vsportLogo from '../../assets/images/sportLogos/vsport_logo_pos.png';
 import karppaLogo from '../../assets/images/sportLogos/Oulun_Kärpät_logo.png';
 
 const SportsSection = () => {
