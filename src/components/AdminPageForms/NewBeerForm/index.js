@@ -113,7 +113,7 @@ const NewBeerForm = ({ createNewBeer }) => {
               placeholder='Oluen kotimaa'
             />
           </InputFormItems>
-          <InputFormItems>
+          {/* <InputFormItems>
             <InputFormP>Hinta</InputFormP>
             <InputFormInput
               value={price}
@@ -121,7 +121,7 @@ const NewBeerForm = ({ createNewBeer }) => {
               id='price'
               placeholder='Oluen hinta'
             />
-          </InputFormItems>
+          </InputFormItems> */}
           <InputFormItems>
             <InputFormLabel>Kategoria</InputFormLabel>
             <InputFormSelect value={category} onChange={handleCategoryChange}>

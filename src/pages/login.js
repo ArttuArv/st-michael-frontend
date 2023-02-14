@@ -29,6 +29,7 @@ import {
   LoginPageButton,
   LoginPageInputForm,
   LoginPageRemoveButton,
+  LoginPageHideButton,
   LoginPageWrapper
 } from '../components/LoginPageStyledComponents/LoginPageElements'
 
@@ -45,7 +46,7 @@ const OpeningHoursList = ({ openingHour, removeOpeningHour }) => {
     <div key={openingHour.id}>
       <LoginPageP><b>{openingHour.day}</b></LoginPageP>
       <LoginPageP>{openingHour.openinghours}</LoginPageP>
-      <LoginPageRemoveButton background = 'light' onClick = {() => removeOpeningHour(openingHour.id)}>
+      <LoginPageRemoveButton onClick = {() => removeOpeningHour(openingHour.id)}>
         Poista
       </LoginPageRemoveButton>
     </div>
@@ -59,7 +60,7 @@ const ItemList = ({ product, remove }) => {
     return(
       <div style = {{ marginBottom: '25px' }}>
         <FullItemList product={product} remove={remove} setShowAll={setShowAll} />
-        <LoginPageRemoveButton background = 'light' onClick = {() => remove(product.id, product)}>Poista</LoginPageRemoveButton>
+        <LoginPageRemoveButton onClick = {() => remove(product.id, product)}>Poista</LoginPageRemoveButton>
         <LoginPageButton background = 'light' onClick = {() => setShowAll(false)}>Piilota</LoginPageButton>
       </div>
     )
@@ -69,7 +70,7 @@ const ItemList = ({ product, remove }) => {
     <div style = {{ marginBottom: '25px' }} key={product.id}>
       <LoginPageP><b>{product.name}</b></LoginPageP>
       <div>     
-        <LoginPageRemoveButton background = 'light' onClick = {() => remove(product.id, product)}>Poista</LoginPageRemoveButton>
+        <LoginPageRemoveButton onClick = {() => remove(product.id, product)}>Poista</LoginPageRemoveButton>
         <LoginPageButton background = 'light' onClick = {() => setShowAll(true)}>Näytä kaikki</LoginPageButton>
       </div>      
     </div>
@@ -85,6 +86,43 @@ const FullItemList = ({ product, remove }) => {
       <LoginPageP><b>{product?.style}</b></LoginPageP>
       <LoginPageP><b>{product?.country}</b></LoginPageP>
     </div>
+  )
+}
+
+const ProductCategoryList = ({ productList, removeProduct }) => {
+  const [showAll, setShowAll] = useState(false)
+
+  // if productList contains whiskies instead of products, change the whiskies to products
+  if (productList.whiskies)
+    productList.products = productList.whiskies  
+
+  // Goes to top of the page when showAll is set to false
+  useEffect(() => {
+    if (!showAll) {
+      window.scrollTo(0, 0)
+    }
+  }, [showAll])
+
+  if (showAll) {
+    return(
+      <>
+        <LoginPageH3 fontsize = 'large' >{productList.name}</LoginPageH3>      
+        <div style = {{ marginBottom: '25px' }}>
+          <LoginPageHideButton onClick = {() => setShowAll(false)}>Piilota</LoginPageHideButton>
+          {productList.products.map(product =>
+            <ItemList key = {product.id} product = {product} remove = {removeProduct} />
+          )}    
+          <LoginPageHideButton onClick = {() => setShowAll(false)}>Piilota</LoginPageHideButton> 
+        </div>
+      </>
+    )
+  }
+
+  return (
+    <>
+      <LoginPageH3 fontsize = 'small' >{productList.name}</LoginPageH3>
+      <LoginPageButton background = 'light' onClick = {() => setShowAll(true)}>Avaa lista</LoginPageButton>
+    </>
   )
 }
 
@@ -412,10 +450,7 @@ const Login = () => {
           <LoginPageGridItem>
             {sortedBeers.map(beer =>
               <div style = {{ paddingTop: '10px' }} key={beer.id}>
-                <LoginPageH3>{beer.name}</LoginPageH3>
-                {beer.products.map(product =>
-                  <ItemList key = {product.id} product = {product} remove = {removeBeer} />
-                )}
+                <ProductCategoryList productList = {beer} removeProduct ={removeBeer} />
               </div>
             )}
           </LoginPageGridItem>
@@ -429,11 +464,8 @@ const Login = () => {
           </LoginPageInputForm>
           <LoginPageGridItem>
             {sortedWhiskies.map(whisky =>
-              <div key={whisky.name}>
-                <LoginPageH3>{whisky.name}</LoginPageH3>
-                {whisky.whiskies.map(product =>
-                  <ItemList key = {product.id} product = {product} remove = {removeWhisky} />
-                )}
+              <div style = {{ paddingTop: '10px' }} key={whisky.name}>
+                <ProductCategoryList productList = {whisky} removeProduct = {removeWhisky} />
               </div>
               )}
           </LoginPageGridItem>          

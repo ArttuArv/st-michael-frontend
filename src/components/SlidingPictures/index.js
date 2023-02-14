@@ -3,6 +3,7 @@ import { useSpring, useSprings } from 'react-spring';
 import { useScroll } from 'react-use-gesture';
 import { SPCard, SPContainer, SPCardWrapper, SPCardH1, SPCardContainer, } from './SlidingPicturesElements';
 import { Link } from 'react-router-dom';
+import ImageLinkCarousel from '../ImageLinkCarousel';
 
 const images = [
   {
@@ -80,7 +81,7 @@ const SlidingPictures = () => {
           ))}
         </SPContainer> )
         : (
-         <div>Tähän kuvakaruselli</div>          
+          <ImageLinkCarousel style={{padding: "100px"}} images = {images} />         
         )
       }
     </>

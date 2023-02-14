@@ -1,8 +1,9 @@
 import React, { lazy } from "react"
 
 const baseUrl = process.env.REACT_APP_PRODUCT_API_URI
+const baseUrlTest = process.env.REACT_APP_PRODUCT_API_TEST_URI
 
-export const getBaseUrl = () => baseUrl
+export const getBaseUrl = () => baseUrlTest != undefined ? baseUrlTest : console.log('No test url defined')
 
 export const lazyLoad = (path, namedExport) => {
 

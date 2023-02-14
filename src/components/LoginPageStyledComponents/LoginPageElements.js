@@ -37,8 +37,8 @@ export const LoginPageP = styled.p`
 `;
 
 export const LoginPageH3 = styled.h3`
-  font-size: 3rem;
-  margin-top: 40px;
+  font-size: ${props => props.fontsize === 'large' ? '3rem' : '1.5rem'};
+  margin-top: ${props => props.fontsize === 'large' ? '10px' : '0px'};
   margin-bottom: 10px;
 `;
 
@@ -116,7 +116,31 @@ export const LoginPageRemoveButton = styled.button`
   border-radius: 5px;
   font-size: 1rem;
   background: #84172C;
-  color: gold; //#EFBC69;
+  color: gold;
+  font-weight: bold;
+  cursor: pointer;
+
+  &:hover {
+    transition: all 0.2s ease-in-out;
+    transform: scale(1.01);
+    box-shadow: 0 1px 3px rgba(255, 203, 5, 0.9);
+  }
+
+  @media screen and (max-width: 500px) {
+    font-size: 1.5rem;
+    height: 60px;
+  }
+`;
+
+export const LoginPageHideButton = styled.button`
+  padding: 10px;
+  margin: 0 0 1.5rem 0;
+  width: 100%;
+  max-width: 300px;
+  border-radius: 5px;
+  font-size: 1rem;
+  background: #17841D;
+  color: gold;
   font-weight: bold;
   cursor: pointer;
 
