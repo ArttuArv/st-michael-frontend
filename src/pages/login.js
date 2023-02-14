@@ -414,7 +414,7 @@ const Login = () => {
         <LoginPageInputForm>
           <LoginPageH1>Lataa Excelin csv-tiedosto</LoginPageH1>
           <input type="file" accept='.csv' lang='fin' onChange={handleFileChange} />
-          <LoginPageButton background = 'light' onClick={() => uploadWhiskies(file)}>Upload</LoginPageButton>
+          <LoginPageButton background = 'light' onClick={() => uploadWhiskies(file)}>Lataa palvelimelle</LoginPageButton>
         </LoginPageInputForm>
       </div>
       <LoginPageGrid>
@@ -425,7 +425,7 @@ const Login = () => {
               <NewOpeningHoursForm createNewHours = {createOpeningHours} />
             </Togglable>
             <Togglable buttonLabel='Päivitä aika' ref = {openingHoursUpdateRef} >
-              <UpdateOpeningHoursForm updateOpeningHours = {updateOpeningHours} />
+              <UpdateOpeningHoursForm currentOpeningHours = {openingHours} updateOpeningHours = {updateOpeningHours} />
             </Togglable>
           </LoginPageInputForm>
           <LoginPageGridItem>
