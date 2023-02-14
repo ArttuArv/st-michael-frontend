@@ -381,7 +381,7 @@ const Login = () => {
     setFile(event.target.files[0])
   }
 
-  // Alphabetically sorted beers
+  // Alphabetically sorted beers and whiskies
   const sortedBeers = beers.map(beer => {
     beer.products.sort((a, b) => a.name.localeCompare(b.name))
     return beer

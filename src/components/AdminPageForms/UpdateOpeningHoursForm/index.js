@@ -19,7 +19,7 @@ const updateOpeningHoursTest = (updatedHours) => {
 const NewOpeningHoursForm = ({ currentOpeningHours, updateOpeningHours }) => {
   const [day, setDay] = useState('')
   const [id, setId] = useState('')
-  const [openingHours, setOpeningHours] = useState('')
+  const [openinghours, setOpeningHours] = useState('')
 
   const fakeOpeningHours = {
     id: 'Valitse listasta',
@@ -36,19 +36,22 @@ const NewOpeningHoursForm = ({ currentOpeningHours, updateOpeningHours }) => {
     event.preventDefault()
 
     const updatedHours = {
-      id: id,
-      day: day,
-      openinghours: openingHours,
+      day,
+      openinghours,
     }
+
+    console.log('updatedHours: ', updatedHours)
     
-    if (updatedHours.id === 'Valitse listasta' || !updatedHours.id) {
+    if (id === 'Valitse listasta' || !id) {
       alert('Et valinnut muutettavaa päivää')
       resetStates()
 
       return
     }      
 
-    updateOpeningHoursTest(updatedHours)
+    // updateOpeningHoursTest(updatedHours)
+
+    updateOpeningHours(id, updatedHours)
 
     
     // Nollataan syöttökentät
@@ -73,11 +76,6 @@ const NewOpeningHoursForm = ({ currentOpeningHours, updateOpeningHours }) => {
     setOpeningHours(event.target.value)
   }
 
-  console.log('openingHours: ', openingHours)
-  console.log('day: ', day)
-  console.log('id: ', id)
-  console.log('currentOpeningHours: ', currentOpeningHours)
-
   return (
     <div>
       <div style = {{ marginBottom: '10px' }}>
@@ -88,9 +86,9 @@ const NewOpeningHoursForm = ({ currentOpeningHours, updateOpeningHours }) => {
         <InputFormForm onSubmit={handleSubmit}>
           <InputFormItems>
             <InputFormLabel>Muutettava päiväys</InputFormLabel>
-            <InputFormSelect value={day} onChange={handleIdChange}>
-              {currentOpeningHours.map((hours) => (
-                <InputFormOption key={hours.day} value={hours.day}>{hours.day}</InputFormOption>
+            <InputFormSelect value={id} onChange={handleIdChange}>
+              {currentOpeningHours.map((days) => (
+                <InputFormOption key={days.day} value={days.id}>{days.day}</InputFormOption>
               ))}
             </InputFormSelect>
           </InputFormItems>
@@ -106,7 +104,7 @@ const NewOpeningHoursForm = ({ currentOpeningHours, updateOpeningHours }) => {
           <InputFormItems>
             <InputFormP>Aukioloaika</InputFormP>
             <InputFormInput
-              value={openingHours}
+              value={openinghours}
               onChange={handleHoursChange}
               id='openingHours'
               placeholder='Aseta aukioloaika'
