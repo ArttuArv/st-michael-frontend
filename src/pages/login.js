@@ -6,6 +6,7 @@ import LoginForm from "../components/LoginForm"
 import NewOpeningHoursForm from "../components/AdminPageForms/NewOpeningHoursForm"
 import UpdateOpeningHoursForm from "../components/AdminPageForms/UpdateOpeningHoursForm"
 import NewBeerForm from "../components/AdminPageForms/NewBeerForm"
+import UpdateBeerForm from "../components/AdminPageForms/UpdateBeerForm"
 import NewWhiskyForm from "../components/AdminPageForms/NewWhiskyForm"
 
 import loginService from '../services/login'
@@ -138,6 +139,7 @@ const Login = () => {
   const whiskyFormRef = useRef()
   const openingHoursFormRef = useRef()
   const openingHoursUpdateRef = useRef()
+  const beerUpdateRef = useRef()
 
   // Get logged in user from localStorage
   useEffect(() => {
@@ -358,12 +360,39 @@ const Login = () => {
   }
 
   // Update opening hours
-  const updateOpeningHours = (id, newOpeningHours) => {
+  const updateOpeningHours = (id, updatedOpeningHours) => {
     openingHoursService
-      .update(id, newOpeningHours)
+      .update(id, updatedOpeningHours)
       .then(returnedOpeningHours => {
         setOpeningHours(openingHours.map(openingHours => openingHours.id !== id ? openingHours : returnedOpeningHours))
         notify(`Muokattiin ${returnedOpeningHours.day} ${returnedOpeningHours.openinghours}`)
+      }).catch(exception => {
+        notify(`${exception.response.data.error}`, 'alert')
+        console.log('Exception: ', exception)
+      })
+  }
+
+  // Update beer
+  const updateBeer = (id, existingBeerCategory, updatedBeer) => {
+    beerService
+      .update(id, updatedBeer)
+      .then(returnedBeer => {
+
+        setBeers(beers.map(beers => {
+          if (beers.name === existingBeerCategory) {
+            beers.products = beers.products.filter(beer => beer.id !== id)
+          }
+          return beers
+        }))
+
+        setBeers(beers.map(beers => {
+          if (beers.name === updatedBeer.category) {
+            beers.products.push(returnedBeer)
+          }
+          return beers
+        }))
+
+        notify(`Muokattiin ${returnedBeer.name}`)
       }).catch(exception => {
         notify(`${exception.response.data.error}`, 'alert')
         console.log('Exception: ', exception)
@@ -410,7 +439,7 @@ const Login = () => {
         <LoginPageP>{user.name} logged in</LoginPageP>
         <LoginPageButton background = 'dark' onClick={logout}>Logout</LoginPageButton>
       </LoginPageWrapper>
-      <div className="csv-file-upload">
+      <div style={{margin: '0 10px'}} className="csv-file-upload">
         <LoginPageInputForm>
           <LoginPageH1>Lataa Excelin csv-tiedosto</LoginPageH1>
           <input type="file" accept='.csv' lang='fin' onChange={handleFileChange} />
@@ -446,6 +475,9 @@ const Login = () => {
             <Togglable buttonLabel='Uusi olut' ref = {beerFormRef}>
               <NewBeerForm createNewBeer={createBeer} />
             </Togglable>
+            <Togglable buttonLabel='Päivitä olut' ref = {beerUpdateRef}>
+              <UpdateBeerForm currentBeers = {beers} updateBeer = {updateBeer} />
+            </Togglable>
           </LoginPageInputForm>
           <LoginPageGridItem>
             {sortedBeers.map(beer =>
@@ -459,7 +491,7 @@ const Login = () => {
           <LoginPageInputForm>
             <LoginPageH1>Viskilista</LoginPageH1>
             <Togglable buttonLabel='Uusi viski' ref = {whiskyFormRef} >
-              <NewWhiskyForm createNewWhisky = {createWhisky} />
+              <NewWhiskyForm createNewWhisky = {createWhisky} currentWhiskies = {whiskies} />
             </Togglable>
           </LoginPageInputForm>
           <LoginPageGridItem>

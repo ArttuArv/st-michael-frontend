@@ -12,23 +12,12 @@ import {
   InputFormOption
 } from '../InputFormElements'
 
-const NewWhiskyForm = ({ createNewWhisky }) => {
+const NewWhiskyForm = ({ createNewWhisky, currentWhiskies }) => {
   const [name, setName] = useState('')
   const [area, setArea] = useState('')
   const [price, setPrice] = useState('')
 
-
-  const whiskyAreas = [
-    'Valitse listasta',
-    'Highland',
-    'Lowland',
-    'Campbeltown',
-    'Irish',
-    'Japan',
-    'Islands',
-    'Other Countries / Bourbons',
-    'Uutuudet',
-  ]
+  const whiskyAreas = returnListOfWhiskyAreas(currentWhiskies)
 
   const handleSubmit = (event) => {
     event.preventDefault()
@@ -71,8 +60,7 @@ const NewWhiskyForm = ({ createNewWhisky }) => {
   return (
     <div>
       <div style = {{ marginBottom: '10px' }}>
-        <InputFormH2>Lisää uusi</InputFormH2>
-        <InputFormH2>viski</InputFormH2>
+        <InputFormH2>Lisää viski</InputFormH2>
       </div>
       <div>
         <InputFormForm onSubmit={handleSubmit}>
@@ -112,3 +100,22 @@ const NewWhiskyForm = ({ createNewWhisky }) => {
 }
 
 export default NewWhiskyForm
+
+function returnListOfWhiskyAreas(currentWhiskies) {
+  let whiskyAreas = currentWhiskies.map((whisky) => whisky.name)
+  const uutuudetExists = whiskyAreas.find(areaName => areaName === 'Uutuudet')
+
+  if (!uutuudetExists) {
+    whiskyAreas = [
+      'Valitse listasta',
+      ...whiskyAreas,
+      'Uutuudet'
+    ]
+  } else {
+    whiskyAreas = [
+      'Valitse listasta',
+      ...whiskyAreas
+    ]
+  }
+  return whiskyAreas
+}

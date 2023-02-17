@@ -12,10 +12,6 @@ import {
   InputFormLabel
 } from '../InputFormElements'
 
-const updateOpeningHoursTest = (updatedHours) => {
-  console.log('updatedHours: ', updatedHours)
-}
-
 const NewOpeningHoursForm = ({ currentOpeningHours, updateOpeningHours }) => {
   const [day, setDay] = useState('')
   const [id, setId] = useState('')
@@ -39,21 +35,15 @@ const NewOpeningHoursForm = ({ currentOpeningHours, updateOpeningHours }) => {
       day,
       openinghours,
     }
-
-    console.log('updatedHours: ', updatedHours)
     
     if (id === 'Valitse listasta' || !id) {
       alert('Et valinnut muutettavaa päivää')
-      resetStates()
 
       return
     }      
 
-    // updateOpeningHoursTest(updatedHours)
+    updateOpeningHours(id, updatedHours) 
 
-    updateOpeningHours(id, updatedHours)
-
-    
     // Nollataan syöttökentät
     resetStates()
   }
@@ -77,7 +67,7 @@ const NewOpeningHoursForm = ({ currentOpeningHours, updateOpeningHours }) => {
   }
 
   return (
-    <div>
+    <>
       <div style = {{ marginBottom: '10px' }}>
         <InputFormH2>Päivitä</InputFormH2>
         <InputFormH2>aukioloaika</InputFormH2>
@@ -115,7 +105,7 @@ const NewOpeningHoursForm = ({ currentOpeningHours, updateOpeningHours }) => {
           </InputFormButton>
         </InputFormForm>
       </div>
-    </div>
+    </>
   )
 }
 

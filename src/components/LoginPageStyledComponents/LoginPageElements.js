@@ -98,6 +98,7 @@ export const LoginPageButton = styled.button`
 `;
 
 export const LoginPageInputForm = styled.div`
+  width: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -136,7 +137,7 @@ export const LoginPageHideButton = styled.button`
   padding: 10px;
   margin: 0 0 1.5rem 0;
   width: 100%;
-  max-width: 300px;
+  max-width: 500px;
   border-radius: 5px;
   font-size: 1rem;
   background: #17841D;

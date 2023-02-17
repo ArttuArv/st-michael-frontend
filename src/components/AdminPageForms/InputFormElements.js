@@ -26,6 +26,7 @@ export const InputFormButton = styled.button`
 
 export const InputFormH2 = styled.h2`
   font-size: 3rem;
+  margin: 0 10px;
   color: #06260F;
   text-align: center;
   color: gold;
@@ -37,11 +38,20 @@ export const InputFormP = styled.p`
 `;
 
 export const InputFormForm = styled.form`
+  width: 100%;
+  max-width: 700px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto;
+  padding: 10px;
+
 `;
 
 export const InputFormItems = styled.div`
   width: 100%;
-  padding: 5px;
+  padding: 2px;
   font-size: 1.5rem;
 
   @media screen and (max-width: 500px) {
@@ -51,7 +61,7 @@ export const InputFormItems = styled.div`
 
 export const InputFormInput = styled.input`
   width: 100%;
-  max-width: 300px;
+  max-width: 700px;
   padding: 10px;
   margin: 5px;
   border-radius: 5px;
@@ -72,28 +82,12 @@ export const InputFormInput = styled.input`
   }
 `;
 
-export const InputFormLabel = styled.label` 
-// width: 100%;
-  // max-width: 300px;
-  // padding: 10px;
-  // margin: 5px;
-  // border-radius: 5px;
-  // font-size: 1rem;
-  // background: #FFFFE0;
-  // color: #32231F;
-  // font-weight: bold;
-  // border: 1px solid gold;
-  // text-align: center;
-
-  // @media screen and (max-width: 500px) {
-  //   font-size: 1.5rem;
-  //   height: 60px;
-  // }
+export const InputFormLabel = styled.label`
 `;
 
 export const InputFormSelect = styled.select`
   width: 100%;
-  max-width: 300px;
+  max-width: 700px;
   padding: 10px;
   margin: 5px;
   border-radius: 5px;
@@ -115,7 +109,7 @@ export const InputFormSelect = styled.select`
 `;
 
 export const InputFormOption = styled.option`
-  // width: 100%;
+  width: 100%;
   // max-width: 300px;
   // margin: 5px;
   // border-radius: 5px;
