@@ -18,6 +18,7 @@ const images = [
   require('../../assets/images/st-michael-tunnelmakuva.jpg'),
 ]
 
+
 const Story = () => {
   const [text, setText] = useState();
 
@@ -41,14 +42,15 @@ const Story = () => {
             <h3>{text3}</h3>
           </section>
           <div className="story-page-grid">
-            <img className='image-grid-col-2' src={images[0]}></img>
-            <img className='image-grid-row-2' src={images[1]}></img>
+            <img src={images[0]}></img>
+            <img src={images[1]}></img>
             <img src={images[2]}></img>
             <img src={images[3]}></img>
-            <img src={images[4]}></img>
+            <img src={images[4]}></img>     
             <img src={images[5]}></img>
-            <img className='image-grid-big' src={images[7]}></img>
-            <img className='image-grid-big' src={images[8]}></img>
+            <img src={images[7]}></img>
+            <img src={images[8]}></img>
+            <img src={images[6]}></img>
           </div>     
           <h2>Tarinan otsikko</h2> 
           <section className='story-page-text'>
@@ -57,6 +59,39 @@ const Story = () => {
           </section>          
         </div>
       </div>
+      {/* <div className="carousel">
+        <button className="carousel__button"></button>
+        <div className="carousel__track-container"></div>
+          <ul className="carousel__track">
+            <li className="carousel__slide">
+              <img src={images[0].url}></img>
+            </li>
+            <li className="carousel__slide">
+              <img src={images[1].url}></img>
+            </li>
+            <li className="carousel__slide">
+              <img src={images[2].url}></img>
+            </li>
+            <li className="carousel__slide">
+              <img src={images[3].url}></img>
+            </li>
+            <li className="carousel__slide">
+              <img src={images[4].url}></img>
+            </li>
+            <li className="carousel__slide">
+              <img src={images[5].url}></img>
+            </li>
+            <li className="carousel__slide">
+              <img src={images[6].url}></img>
+            </li>
+            <li className="carousel__slide">
+              <img src={images[7].url}></img>
+            </li>
+            <li className="carousel__slide">
+              <img src={images[8].url}></img>
+            </li>
+          </ul>
+      </div> */}
     </>
   )
 }
