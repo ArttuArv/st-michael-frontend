@@ -1,0 +1,100 @@
+:root {
+  --clr-neutral-900: hsl(207, 19%, 9%);
+  --clr-neutral-100: hsl(0, 0%, 100%);
+  --clr-neutral-400: hsl(142, 90%, 61%);
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+
+/* Carousel styles */
+
+.carousel {
+  display: none;
+  position: relative;
+  height: 600px;
+  width: 88%;
+  margin: 0 auto;
+}
+
+
+.carousel__image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.carousel__track-container {
+  height: 100%;
+  width: 100%;
+  position: relative;
+}
+
+.carousel__track {
+  padding: 0;
+  margin: 0;
+  list-style: none;
+  display: flex;
+}
+
+.carousel__slide {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 100%;
+}
+
+.carousel__button {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: transparent;
+  border: 0;
+  cursor: pointer;
+}
+
+.carousel__button--left {
+  left: 0px;
+}
+
+.carousel__button--right {
+  right: 0px;
+}
+
+.carousel__button > .arrow-symbol {
+  width: 30px;
+  height: 30px;
+  fill: gold;
+}
+
+.carousel__nav {
+  display: flex;
+  justify-content: center;
+  padding: 10px 0;
+}
+
+.carousel__indicator {
+  border: 0;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: rgba(0, 0, 0 , .3);
+  cursor: pointer;
+  margin: 0 10px;
+}
+
+.carousel__indicator--active {
+  background: gold;
+}
+
+/* If screen size is smaller than 900px show carousel */
+
+@media screen and (max-width: 900px) {
+  .carousel {
+    display: block;
+  }
+}
