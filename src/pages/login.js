@@ -20,7 +20,7 @@ import whiskyCsvService from '../services/whiskyCsv'
 
 import { checkIfFileIsCsv } from '../utils/utils'
 
-import { 
+import {
   LoginPageContainer,
   LoginPageH1,
   LoginPageH3,
@@ -70,10 +70,10 @@ const ItemList = ({ product, remove }) => {
   return (
     <div style = {{ marginBottom: '25px' }} key={product.id}>
       <LoginPageP><b>{product.name}</b></LoginPageP>
-      <div>     
+      <div>
         <LoginPageRemoveButton onClick = {() => remove(product.id, product)}>Poista</LoginPageRemoveButton>
         <LoginPageButton background = 'light' onClick = {() => setShowAll(true)}>Näytä kaikki</LoginPageButton>
-      </div>      
+      </div>
     </div>
   )
 }
@@ -95,7 +95,7 @@ const ProductCategoryList = ({ productList, removeProduct }) => {
 
   // if productList contains whiskies instead of products, change the whiskies to products
   if (productList.whiskies)
-    productList.products = productList.whiskies  
+    productList.products = productList.whiskies
 
   // Goes to top of the page when showAll is set to false
   useEffect(() => {
@@ -107,13 +107,13 @@ const ProductCategoryList = ({ productList, removeProduct }) => {
   if (showAll) {
     return(
       <>
-        <LoginPageH3 fontsize = 'large' >{productList.name}</LoginPageH3>      
+        <LoginPageH3 fontsize = 'large' >{productList.name}</LoginPageH3>
         <div style = {{ marginBottom: '25px' }}>
           <LoginPageHideButton onClick = {() => setShowAll(false)}>Piilota</LoginPageHideButton>
           {productList.products.map(product =>
             <ItemList key = {product.id} product = {product} remove = {removeProduct} />
-          )}    
-          <LoginPageHideButton onClick = {() => setShowAll(false)}>Piilota</LoginPageHideButton> 
+          )}
+          <LoginPageHideButton onClick = {() => setShowAll(false)}>Piilota</LoginPageHideButton>
         </div>
       </>
     )
@@ -168,7 +168,7 @@ const Login = () => {
     userService.clearUser()
   }
 
-  // Get all beers from db  
+  // Get all beers from db
   useEffect(() => {
     beersService.getAll()
       .then(beers => {
@@ -209,7 +209,7 @@ const Login = () => {
       }))
       notify(`Lisätty ${returnedBeer.name}`)
       beerFormRef.current.toggleVisibility()
-    }).catch(exception => { 
+    }).catch(exception => {
       notify(exception.response.data.error, 'alert')
       console.log('Exception: ', exception)
     })
@@ -252,7 +252,7 @@ const Login = () => {
       notify('Valitse tiedosto', 'alert')
       return
     }
-    
+
     if (checkIfFileIsCsv(file)) {
 
       whiskyCsvService
@@ -265,8 +265,8 @@ const Login = () => {
               whisky.whiskies = whisky.whiskies.concat(returnedWhiskies)
             }
             return whisky
-          }))  
-          
+          }))
+
           notify(`Ladattu ${returnedWhiskies.length} tuotetta! Päivitä selain heten kuluttua!`)
           setFile(() => null)
 
@@ -278,7 +278,7 @@ const Login = () => {
         })
     } else {
       notify(`Väärä tiedostomuoto!`, 'alert')
-    }    
+    }
   }
 
   // Remove beer from db
@@ -289,10 +289,10 @@ const Login = () => {
     if (!ok) {
       return
     }
-    
+
     // Find the correct sub array from beers
     const filteredBeers = beers.find(beer => beer.products.find(product => product.category === beerCategory.category))
-    
+
     // Remove old entry from array
     const newBeersCategory = filteredBeers.products.filter(beer => beer.id !== id)
 
@@ -350,10 +350,10 @@ const Login = () => {
     if (!ok) {
       return
     }
-    
+
     openingHoursService.remove(id).then(() => {
       setOpeningHours(openingHours.filter(openingHours => openingHours.id !== id))
-      notify(`${toRemove.day} ${toRemove.openinghours} poistettiin onnistuneesti!`)      
+      notify(`${toRemove.day} ${toRemove.openinghours} poistettiin onnistuneesti!`)
     }).catch(exception => {
       notify('Tapahtui virhe', 'alert')
     })
@@ -415,7 +415,7 @@ const Login = () => {
     beer.products.sort((a, b) => a.name.localeCompare(b.name))
     return beer
   })
-  
+
   const sortedWhiskies = whiskies.map(whisky => {
     whisky.whiskies.sort((a, b) => a.name.localeCompare(b.name))
     return whisky
@@ -435,7 +435,7 @@ const Login = () => {
   return (
     <LoginPageContainer>
       <LoginPageWrapper>
-        <Notification notification={notification} />        
+        <Notification notification={notification} />
         <LoginPageP>{user.name} logged in</LoginPageP>
         <LoginPageButton background = 'dark' onClick={logout}>Logout</LoginPageButton>
       </LoginPageWrapper>
@@ -459,14 +459,14 @@ const Login = () => {
           </LoginPageInputForm>
           <LoginPageGridItem>
             {openingHours.map(openingHours =>
-              <OpeningHoursList 
-                key = {openingHours.id} 
-                openingHour = {openingHours} 
-                removeOpeningHour = {removeOpeningHours} 
+              <OpeningHoursList
+                key = {openingHours.id}
+                openingHour = {openingHours}
+                removeOpeningHour = {removeOpeningHours}
               />
             )}
           </LoginPageGridItem>
-        </div>      
+        </div>
         <div>
           <LoginPageInputForm>
             <div style = {{justifyContent: 'center'}}>
@@ -500,7 +500,7 @@ const Login = () => {
                 <ProductCategoryList productList = {whisky} removeProduct = {removeWhisky} />
               </div>
               )}
-          </LoginPageGridItem>          
+          </LoginPageGridItem>
         </div>
       </LoginPageGrid>
     </LoginPageContainer>

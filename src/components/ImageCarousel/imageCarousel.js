@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { FaArrowRight, FaArrowLeft } from 'react-icons/fa'
+import {AiFillCaretRight, AiFillCaretLeft} from 'react-icons/ai'
 
 import './styles.css'
 
@@ -13,7 +13,7 @@ const slides = [
   require('../../assets/images/kuva8.jpg'),
   require('../../assets/images/st-michael-tunnelmakuva.jpg'),
   require('../../assets/images/kuva5.jpg'),
-]
+]  
 
 
 const ImageCarousel = () => {
@@ -31,23 +31,33 @@ const ImageCarousel = () => {
     setCurrentSlide(index)
   }
 
+  const slideBackgroundImageStyle = {
+    backgroundImage: `url(${slides[currentSlide]})`,
+    width: '100%',
+    height: '100%',
+    backgroundSize: 'cover',
+    backgroundPosition: 'center',
+    borderRadius: '10px',
+  }
+
   return (
     <>
       <div className="carousel">
         <div className="carousel__track-container">
           <ul className="carousel__track"> 
               <li className="carousel__slide">
-                <img className='carousel__image' src={slides[currentSlide]}></img>
+                <div className="carousel__image" style={slideBackgroundImageStyle}></div>
+                {/* <img className='carousel__image' src={slides[currentSlide]}></img> */}
               </li>
           </ul>
         </div>
 
         <button className="carousel__button carousel__button--left" onClick={goToPrevious}>
-          <FaArrowLeft className='arrow-symbol' />
+          <AiFillCaretLeft className='arrow-symbol' />
         </button>
 
         <button className="carousel__button carousel__button--right" onClick={goToNext}>
-          <FaArrowRight className='arrow-symbol' />
+          <AiFillCaretRight className='arrow-symbol' />
         </button>
 
         <div className="carousel__nav">

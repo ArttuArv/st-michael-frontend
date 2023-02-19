@@ -12,10 +12,10 @@ const Home = ({ openingHours, beer }) => {
 
   return (
     <>
-      <HeroSection openingHours = {openingHours} />
-      <SlidingPictures />
+      <HeroSection openingHours = {openingHours} />      
       <FrontPageProductMenu beer = {beer} />
       <SportsSection />
+      <SlidingPictures />
       <Footer openingHours = {openingHours} />
     </>
   )

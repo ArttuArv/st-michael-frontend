@@ -1,3 +1,4 @@
+
 let token = null
 
 const STORAGE_KEY = process.env.REACT_APP_STORAGE_KEY
@@ -28,4 +29,4 @@ const clearUser = () => {
 const getToken = () => token
 
 
-export default { setUser, getUser, clearUser, getToken }
+export default { setUser, getUser, clearUser, getToken, }
