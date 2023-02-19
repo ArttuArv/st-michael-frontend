@@ -22,4 +22,9 @@ const remove = async (id) => {
   return response.data
 }
 
-export default { create, remove, }
+const update = async (id, newObject) => {
+  const response = await axios.put(`${baseUrl}/${id}`, newObject, config())
+  return response.data
+}
+
+export default { create, remove, update }

@@ -65,7 +65,7 @@ const App = () => {
         <Sidebar isOpen = {isOpen} toggle = {toggle} />
         <Navbar toggle = {toggle} />
         <Routes>
-          <Route path = '/' exact element = {<Home openingHours = {openingHours} />} />
+          <Route path = '/' exact element = {<Home openingHours = {openingHours} beer = {beer} />} />
           <Route path = '/whisky' element = {
             <Suspense fallback = {<div>Loading...</div>}>
              <WhiskyPage whisky = {whisky} />

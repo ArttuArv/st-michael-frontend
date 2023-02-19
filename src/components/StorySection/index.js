@@ -1,81 +1,61 @@
-import React, { useState } from 'react'
-import {text1, text2, text3} from '../../assets/text/story.js';
+import React, { useState, useEffect } from 'react'
+import { text1, text2, text3 } from '../../assets/text/story.js';
 import textFile from '../../assets/text/story.txt';
-import { StoryPageColumn2spanColumn, StoryPageColumn2SpanRow, StoryPageContainer, StoryPageGridWrapper, StoryPageImage, StoryPageImageWrapper, StoryPageTextWrapper } from './StorySectionElements.js';
+import ImageCarousel from '../ImageCarousel/imageCarousel.js';
 
-const cardStyle = {
-  display: 'flex',
-  flexDirection: 'column',
-  justifyContent: 'center',
-  alignItems: 'center',
-  backgroundColor: '#353535',
-  fontSize: '3rem',
-  color: '#fff',
-  boxShadow: 'rgba(3, 8, 20, 0.1) 0px 0.15rem 0.5rem, rgba(2, 8, 20, 0.1) 0px 0.075rem 0.175rem',
-  height: '100%',
-  width: '100%',
-  borderRadius: '4px',
-  transition: 'all 500ms',
-  overflow: 'hidden',
-  backgroundSize: 'cover',
-  backgroundPosition: 'center',
-  backgroundRepeat: 'no-repeat',
-  // backgroundImage: `url(${images.kuva5})`,
-  // border: '1px solid gold',
-
-  hover: [
-      {
-          boxShadow: 'rgba(2, 8, 20, 0.1) 0px 0.35rem 1.175rem, rgba(2, 8, 20, 0.08) 0px 0.175rem 0.5rem',
-          transform: 'translateY(-3px) scale(1.1)',
-      },
-  ],
-}
-
-
+// import styles.css
+import './styles.css'
 
 const images = [
-  '../../assets/images/kuva1.png',
-  '../../assets/images/kuva2.png',
-  '../../assets/images/kuva3.png',
-  '../../assets/images/kuva4.png',
+  require('../../assets/images/kuva1.png'),
+  require('../../assets/images/kuva2.jpg'),
+  require('../../assets/images/kuva3.png'),
+  require('../../assets/images/kuva4.png'),  
+  require('../../assets/images/kuva6.jpg'),
+  require('../../assets/images/kuva7.jpg'),
+  require('../../assets/images/kuva8.jpg'),
+  require('../../assets/images/st-michael-tunnelmakuva.jpg'),
+  require('../../assets/images/kuva5.jpg'),
 ]
+
 
 const Story = () => {
   const [text, setText] = useState();
 
-  const getText = () => {
+  useEffect(() => {
     fetch(textFile)
       .then(response => response.text())
       .then((textContent) => {
         setText(textContent);
-      });
-    return text || 'Loading...';
-  }
+      })
+      .catch((error) => {
+        setText('...ladataan tekstiä')
+      })
+  }, [])
+  
 
   return (
-    <StoryPageContainer>    
-        <StoryPageGridWrapper>
-          {/* <StoryPageTextWrapper>1
-            <div style = {{ backgroundColor: 'purple', width: '800px', height: '800px'}}>
-              text1
-            </div>            
-          </StoryPageTextWrapper> */}
-          <StoryPageColumn2SpanRow>           
-            {/* {images.map((image, index) => (<StoryPageImageWrapper key = {index} style = {{backgroundImage: `url(${image})`}}> */}
-            <StoryPageImageWrapper>
-              {images.map((image, index) => (              
-                <StoryPageImage key = {index} src = {image} />                 
-              ))}
-            </StoryPageImageWrapper> 
-          </StoryPageColumn2SpanRow>
-            <StoryPageTextWrapper>
-              <h1 style = {{ fontWeight: '400', fontSize: '3rem'}}>Tarinan otsikko</h1>
-              <p style = {{ textAlign: 'justify' }}>{getText()}</p>
-            </StoryPageTextWrapper>
-          <StoryPageColumn2spanColumn>
-          </StoryPageColumn2spanColumn>
-        </StoryPageGridWrapper>
-    </StoryPageContainer>
+    <>
+      <div className="story-page-container">
+        <div className="story-page-flex">
+          <section className='story-page-title'>
+            <h2>Tarinan otsikko</h2>
+            <h3>{text3}</h3>
+          </section>
+          <ImageCarousel />
+          <div className="story-page-grid">
+            {images.map(image =>
+              <img key={image} src={image}></img>
+            )}
+          </div>     
+          <h2>Tarinan otsikko</h2> 
+          <section className='story-page-text'>
+            <p>{text}</p>
+            <p>{text2}</p>
+          </section>          
+        </div>
+      </div>
+    </>
   )
 }
 

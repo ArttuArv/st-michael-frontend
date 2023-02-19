@@ -6,6 +6,7 @@ import LoginForm from "../components/LoginForm"
 import NewOpeningHoursForm from "../components/AdminPageForms/NewOpeningHoursForm"
 import UpdateOpeningHoursForm from "../components/AdminPageForms/UpdateOpeningHoursForm"
 import NewBeerForm from "../components/AdminPageForms/NewBeerForm"
+import UpdateBeerForm from "../components/AdminPageForms/UpdateBeerForm"
 import NewWhiskyForm from "../components/AdminPageForms/NewWhiskyForm"
 
 import loginService from '../services/login'
@@ -19,7 +20,7 @@ import whiskyCsvService from '../services/whiskyCsv'
 
 import { checkIfFileIsCsv } from '../utils/utils'
 
-import { 
+import {
   LoginPageContainer,
   LoginPageH1,
   LoginPageH3,
@@ -29,6 +30,7 @@ import {
   LoginPageButton,
   LoginPageInputForm,
   LoginPageRemoveButton,
+  LoginPageHideButton,
   LoginPageWrapper
 } from '../components/LoginPageStyledComponents/LoginPageElements'
 
@@ -45,7 +47,7 @@ const OpeningHoursList = ({ openingHour, removeOpeningHour }) => {
     <div key={openingHour.id}>
       <LoginPageP><b>{openingHour.day}</b></LoginPageP>
       <LoginPageP>{openingHour.openinghours}</LoginPageP>
-      <LoginPageRemoveButton background = 'light' onClick = {() => removeOpeningHour(openingHour.id)}>
+      <LoginPageRemoveButton onClick = {() => removeOpeningHour(openingHour.id)}>
         Poista
       </LoginPageRemoveButton>
     </div>
@@ -59,7 +61,7 @@ const ItemList = ({ product, remove }) => {
     return(
       <div style = {{ marginBottom: '25px' }}>
         <FullItemList product={product} remove={remove} setShowAll={setShowAll} />
-        <LoginPageRemoveButton background = 'light' onClick = {() => remove(product.id, product)}>Poista</LoginPageRemoveButton>
+        <LoginPageRemoveButton onClick = {() => remove(product.id, product)}>Poista</LoginPageRemoveButton>
         <LoginPageButton background = 'light' onClick = {() => setShowAll(false)}>Piilota</LoginPageButton>
       </div>
     )
@@ -68,10 +70,10 @@ const ItemList = ({ product, remove }) => {
   return (
     <div style = {{ marginBottom: '25px' }} key={product.id}>
       <LoginPageP><b>{product.name}</b></LoginPageP>
-      <div>     
-        <LoginPageRemoveButton background = 'light' onClick = {() => remove(product.id, product)}>Poista</LoginPageRemoveButton>
+      <div>
+        <LoginPageRemoveButton onClick = {() => remove(product.id, product)}>Poista</LoginPageRemoveButton>
         <LoginPageButton background = 'light' onClick = {() => setShowAll(true)}>Näytä kaikki</LoginPageButton>
-      </div>      
+      </div>
     </div>
   )
 }
@@ -88,6 +90,43 @@ const FullItemList = ({ product, remove }) => {
   )
 }
 
+const ProductCategoryList = ({ productList, removeProduct }) => {
+  const [showAll, setShowAll] = useState(false)
+
+  // if productList contains whiskies instead of products, change the whiskies to products
+  if (productList.whiskies)
+    productList.products = productList.whiskies
+
+  // Goes to top of the page when showAll is set to false
+  useEffect(() => {
+    if (!showAll) {
+      window.scrollTo(0, 0)
+    }
+  }, [showAll])
+
+  if (showAll) {
+    return(
+      <>
+        <LoginPageH3 fontsize = 'large' >{productList.name}</LoginPageH3>
+        <div style = {{ marginBottom: '25px' }}>
+          <LoginPageHideButton onClick = {() => setShowAll(false)}>Piilota</LoginPageHideButton>
+          {productList.products.map(product =>
+            <ItemList key = {product.id} product = {product} remove = {removeProduct} />
+          )}
+          <LoginPageHideButton onClick = {() => setShowAll(false)}>Piilota</LoginPageHideButton>
+        </div>
+      </>
+    )
+  }
+
+  return (
+    <>
+      <LoginPageH3 fontsize = 'small' >{productList.name}</LoginPageH3>
+      <LoginPageButton background = 'light' onClick = {() => setShowAll(true)}>Avaa lista</LoginPageButton>
+    </>
+  )
+}
+
 const Login = () => {
   const [user, setUser] = useState(null)
   const [notification, setNotification] = useState(null)
@@ -100,6 +139,7 @@ const Login = () => {
   const whiskyFormRef = useRef()
   const openingHoursFormRef = useRef()
   const openingHoursUpdateRef = useRef()
+  const beerUpdateRef = useRef()
 
   // Get logged in user from localStorage
   useEffect(() => {
@@ -128,7 +168,7 @@ const Login = () => {
     userService.clearUser()
   }
 
-  // Get all beers from db  
+  // Get all beers from db
   useEffect(() => {
     beersService.getAll()
       .then(beers => {
@@ -169,7 +209,7 @@ const Login = () => {
       }))
       notify(`Lisätty ${returnedBeer.name}`)
       beerFormRef.current.toggleVisibility()
-    }).catch(exception => { 
+    }).catch(exception => {
       notify(exception.response.data.error, 'alert')
       console.log('Exception: ', exception)
     })
@@ -212,7 +252,7 @@ const Login = () => {
       notify('Valitse tiedosto', 'alert')
       return
     }
-    
+
     if (checkIfFileIsCsv(file)) {
 
       whiskyCsvService
@@ -225,8 +265,8 @@ const Login = () => {
               whisky.whiskies = whisky.whiskies.concat(returnedWhiskies)
             }
             return whisky
-          }))  
-          
+          }))
+
           notify(`Ladattu ${returnedWhiskies.length} tuotetta! Päivitä selain heten kuluttua!`)
           setFile(() => null)
 
@@ -238,7 +278,7 @@ const Login = () => {
         })
     } else {
       notify(`Väärä tiedostomuoto!`, 'alert')
-    }    
+    }
   }
 
   // Remove beer from db
@@ -249,10 +289,10 @@ const Login = () => {
     if (!ok) {
       return
     }
-    
+
     // Find the correct sub array from beers
     const filteredBeers = beers.find(beer => beer.products.find(product => product.category === beerCategory.category))
-    
+
     // Remove old entry from array
     const newBeersCategory = filteredBeers.products.filter(beer => beer.id !== id)
 
@@ -310,22 +350,49 @@ const Login = () => {
     if (!ok) {
       return
     }
-    
+
     openingHoursService.remove(id).then(() => {
       setOpeningHours(openingHours.filter(openingHours => openingHours.id !== id))
-      notify(`${toRemove.day} ${toRemove.openinghours} poistettiin onnistuneesti!`)      
+      notify(`${toRemove.day} ${toRemove.openinghours} poistettiin onnistuneesti!`)
     }).catch(exception => {
       notify('Tapahtui virhe', 'alert')
     })
   }
 
   // Update opening hours
-  const updateOpeningHours = (id, newOpeningHours) => {
+  const updateOpeningHours = (id, updatedOpeningHours) => {
     openingHoursService
-      .update(id, newOpeningHours)
+      .update(id, updatedOpeningHours)
       .then(returnedOpeningHours => {
         setOpeningHours(openingHours.map(openingHours => openingHours.id !== id ? openingHours : returnedOpeningHours))
         notify(`Muokattiin ${returnedOpeningHours.day} ${returnedOpeningHours.openinghours}`)
+      }).catch(exception => {
+        notify(`${exception.response.data.error}`, 'alert')
+        console.log('Exception: ', exception)
+      })
+  }
+
+  // Update beer
+  const updateBeer = (id, existingBeerCategory, updatedBeer) => {
+    beerService
+      .update(id, updatedBeer)
+      .then(returnedBeer => {
+
+        setBeers(beers.map(beers => {
+          if (beers.name === existingBeerCategory) {
+            beers.products = beers.products.filter(beer => beer.id !== id)
+          }
+          return beers
+        }))
+
+        setBeers(beers.map(beers => {
+          if (beers.name === updatedBeer.category) {
+            beers.products.push(returnedBeer)
+          }
+          return beers
+        }))
+
+        notify(`Muokattiin ${returnedBeer.name}`)
       }).catch(exception => {
         notify(`${exception.response.data.error}`, 'alert')
         console.log('Exception: ', exception)
@@ -343,12 +410,12 @@ const Login = () => {
     setFile(event.target.files[0])
   }
 
-  // Alphabetically sorted beers
+  // Alphabetically sorted beers and whiskies
   const sortedBeers = beers.map(beer => {
     beer.products.sort((a, b) => a.name.localeCompare(b.name))
     return beer
   })
-  
+
   const sortedWhiskies = whiskies.map(whisky => {
     whisky.whiskies.sort((a, b) => a.name.localeCompare(b.name))
     return whisky
@@ -368,15 +435,15 @@ const Login = () => {
   return (
     <LoginPageContainer>
       <LoginPageWrapper>
-        <Notification notification={notification} />        
+        <Notification notification={notification} />
         <LoginPageP>{user.name} logged in</LoginPageP>
         <LoginPageButton background = 'dark' onClick={logout}>Logout</LoginPageButton>
       </LoginPageWrapper>
-      <div className="csv-file-upload">
+      <div style={{margin: '0 10px'}} className="csv-file-upload">
         <LoginPageInputForm>
           <LoginPageH1>Lataa Excelin csv-tiedosto</LoginPageH1>
           <input type="file" accept='.csv' lang='fin' onChange={handleFileChange} />
-          <LoginPageButton background = 'light' onClick={() => uploadWhiskies(file)}>Upload</LoginPageButton>
+          <LoginPageButton background = 'light' onClick={() => uploadWhiskies(file)}>Lataa palvelimelle</LoginPageButton>
         </LoginPageInputForm>
       </div>
       <LoginPageGrid>
@@ -387,19 +454,19 @@ const Login = () => {
               <NewOpeningHoursForm createNewHours = {createOpeningHours} />
             </Togglable>
             <Togglable buttonLabel='Päivitä aika' ref = {openingHoursUpdateRef} >
-              <UpdateOpeningHoursForm updateOpeningHours = {updateOpeningHours} />
+              <UpdateOpeningHoursForm currentOpeningHours = {openingHours} updateOpeningHours = {updateOpeningHours} />
             </Togglable>
           </LoginPageInputForm>
           <LoginPageGridItem>
             {openingHours.map(openingHours =>
-              <OpeningHoursList 
-                key = {openingHours.id} 
-                openingHour = {openingHours} 
-                removeOpeningHour = {removeOpeningHours} 
+              <OpeningHoursList
+                key = {openingHours.id}
+                openingHour = {openingHours}
+                removeOpeningHour = {removeOpeningHours}
               />
             )}
           </LoginPageGridItem>
-        </div>      
+        </div>
         <div>
           <LoginPageInputForm>
             <div style = {{justifyContent: 'center'}}>
@@ -408,14 +475,14 @@ const Login = () => {
             <Togglable buttonLabel='Uusi olut' ref = {beerFormRef}>
               <NewBeerForm createNewBeer={createBeer} />
             </Togglable>
+            <Togglable buttonLabel='Päivitä olut' ref = {beerUpdateRef}>
+              <UpdateBeerForm currentBeers = {beers} updateBeer = {updateBeer} />
+            </Togglable>
           </LoginPageInputForm>
           <LoginPageGridItem>
             {sortedBeers.map(beer =>
               <div style = {{ paddingTop: '10px' }} key={beer.id}>
-                <LoginPageH3>{beer.name}</LoginPageH3>
-                {beer.products.map(product =>
-                  <ItemList key = {product.id} product = {product} remove = {removeBeer} />
-                )}
+                <ProductCategoryList productList = {beer} removeProduct ={removeBeer} />
               </div>
             )}
           </LoginPageGridItem>
@@ -424,19 +491,16 @@ const Login = () => {
           <LoginPageInputForm>
             <LoginPageH1>Viskilista</LoginPageH1>
             <Togglable buttonLabel='Uusi viski' ref = {whiskyFormRef} >
-              <NewWhiskyForm createNewWhisky = {createWhisky} />
+              <NewWhiskyForm createNewWhisky = {createWhisky} currentWhiskies = {whiskies} />
             </Togglable>
           </LoginPageInputForm>
           <LoginPageGridItem>
             {sortedWhiskies.map(whisky =>
-              <div key={whisky.name}>
-                <LoginPageH3>{whisky.name}</LoginPageH3>
-                {whisky.whiskies.map(product =>
-                  <ItemList key = {product.id} product = {product} remove = {removeWhisky} />
-                )}
+              <div style = {{ paddingTop: '10px' }} key={whisky.name}>
+                <ProductCategoryList productList = {whisky} removeProduct = {removeWhisky} />
               </div>
               )}
-          </LoginPageGridItem>          
+          </LoginPageGridItem>
         </div>
       </LoginPageGrid>
     </LoginPageContainer>

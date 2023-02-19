@@ -25,9 +25,9 @@ const Sidebar = ({ isOpen, toggle }) => {
           <SidebarLink to = "/whisky" onClick = {() => toggle} >
             Viskit
           </SidebarLink>
-          <SidebarLink to = "/sports" onClick = {() => toggle} >
+          {/* <SidebarLink to = "/sports" onClick = {() => toggle} >
             Urheilu
-          </SidebarLink>
+          </SidebarLink> */}
           <SidebarLink to = "/story" onClick = {() => toggle} >
             Tarina
           </SidebarLink>

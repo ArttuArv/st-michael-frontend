@@ -10,6 +10,7 @@ import {
   NavItem, 
   NavLogoImg,
   NavLinkTo,
+  NavLinks
 } from './NavbarElements'
 
 const Navbar  = ({ toggle }) => {
@@ -55,11 +56,11 @@ const Navbar  = ({ toggle }) => {
                 Viskit
               </NavLinkTo>
             </NavItem>
-            <NavItem>
+            {/* <NavItem>
               <NavLinkTo to = '/sports' >
                 Urheilu
               </NavLinkTo>
-            </NavItem>
+            </NavItem> */}
             <NavItem>
               <NavLinkTo to = '/story' >
                 Tarina
@@ -103,6 +104,17 @@ const Navbar  = ({ toggle }) => {
                 Viskit
               </NavLinks>
               </NavItem>*/}
+            {/* <NavItem>
+              <NavLinks 
+                to = 'sports'  
+                smooth = {true} 
+                duration = {500} 
+                spy = {true}
+                exact = 'true' 
+                offset = {-80}>
+                Urheilu
+              </NavLinks>
+            </NavItem> */}
           </NavMenu>
         </NavbarContainer>
       </Nav>

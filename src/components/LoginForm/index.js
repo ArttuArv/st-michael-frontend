@@ -9,6 +9,7 @@ import {
   LoginFormInput,
   LoginFormButton
 } from './LoginFormElements'
+import userService from '../../services/user'
 
 const LoginForm = ({ onLogin }) => {
   const [username, setUsername] = useState('')
