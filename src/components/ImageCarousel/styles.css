@@ -99,8 +99,13 @@
     position: relative;
     height: 500px;
     width: 80%;
-    padding: 0 20px;
-    
+    padding: 0 20px;    
+  }
+
+  .carousel__button > .arrow-symbol {
+    width: 30px;
+    height: 30px;
+    fill: #F5BD30
   }
 }
 
@@ -110,8 +115,7 @@
     position: relative;
     height: 300px;
     width: 80%;
-    padding: 0 20px;
-    
+    padding: 0 20px;    
   }
 }
 
@@ -121,13 +125,6 @@
     position: relative;
     height: 200px;
     width: 70%;
-    padding: 0 20px;
-    
+    padding: 0 20px;    
   }
 }
-
-.carousel__button:hover > .arrow-symbol {
-  transform: scale(1.5);
-  transition: transform 0.5s ease;
-}
-

@@ -64,7 +64,7 @@
   right: 0px;
 }
 
-.image-carousel__button > .arrow-symbol {
+.image-carousel__button > .image-arrow-symbol {
   width: 60px;
   height: 60px;
   fill: #F5BD30
@@ -100,10 +100,10 @@
     width: 100%;    
     padding: 2px;
   }
-}
 
-.image-carousel__button:hover > .arrow-symbol {
-  transform: scale(1.5);
-  transition: transform 0.5s ease;
+  .image-carousel__button > .image-arrow-symbol {
+    width: 30px;
+    height: 30px;
+    fill: #F5BD30
+  }
 }
-
