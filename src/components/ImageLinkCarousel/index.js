@@ -48,10 +48,10 @@ const ImageLinkCarousel = ({slides}) => {
 
   return (
     <>
-      <div className="carousel">
-        <div className="carousel__track-container">
-          <ul className="carousel__track"> 
-              <li className="carousel__slide">
+      <div className="image-carousel">
+        <div className="image-carousel__track-container">
+          <ul className="image-carousel__track"> 
+              <li className="image-carousel__slide">
                 <div key={slides[currentSlide].id} style={slideBackgroundImageStyle}>
                   <LinkRouter style = {hrefStyles} to={slides[currentSlide].to}>
                     <h2 style={linkH2Styles}>{slides[currentSlide].header}</h2>
@@ -61,12 +61,12 @@ const ImageLinkCarousel = ({slides}) => {
           </ul>
         </div>
 
-        <button className="carousel__button carousel__button--left" onClick={goToPrevious}>
-          <AiFillCaretLeft className='arrow-symbol' />
+        <button className="image-carousel__button image-carousel__button--left" onClick={goToPrevious}>
+          <AiFillCaretLeft className='image-arrow-symbol' />
         </button>
 
-        <button className="carousel__button carousel__button--right" onClick={goToNext}>
-          <AiFillCaretRight className='arrow-symbol' />
+        <button className="image-carousel__button image-carousel__button--right" onClick={goToNext}>
+          <AiFillCaretRight className='image-arrow-symbol' />
         </button>
       </div>
     </>
