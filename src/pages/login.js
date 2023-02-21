@@ -31,7 +31,12 @@ import {
   LoginPageInputForm,
   LoginPageRemoveButton,
   LoginPageHideButton,
-  LoginPageWrapper
+  LoginPageWrapper,
+  LoginPageWhiskyViewContainer,
+  LoginPageWhiskyViewList,
+  LoginPageWhiskyViewUl,
+  LoginPageWhiskyViewLi,
+  LoginPageWhiskyRemoveButton,
 } from '../components/LoginPageStyledComponents/LoginPageElements'
 
 const loginWrapper = {
@@ -127,6 +132,54 @@ const ProductCategoryList = ({ productList, removeProduct }) => {
   )
 }
 
+const WhiskyView = ({ whiskyList, removeWhisky }) => {
+  const [showAll, setShowAll] = useState(false)
+
+  if (!showAll) {
+    return (
+      <LoginPageWhiskyViewContainer>
+        <div style={{display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+          <LoginPageH3 fontsize = 'small' >Näytä kaikki viskit</LoginPageH3>
+          <LoginPageButton background = 'light' onClick = {() => setShowAll(true)}>Avaa lista</LoginPageButton>
+        </div>
+      </LoginPageWhiskyViewContainer>
+    )
+  }
+
+  return (
+    <LoginPageWhiskyViewContainer>
+      <div style={{display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+        <LoginPageH3 fontsize = 'large' >ViskiLista</LoginPageH3>
+        <LoginPageButton background = 'light' onClick = {() => setShowAll(false)}>Piilota</LoginPageButton>
+      </div>
+      {whiskyList.map(whiskies => 
+        <div key = {whiskies.id}>
+          <LoginPageH3 style={{marginTop: '20px'}}>{whiskies.name}</LoginPageH3>
+          <LoginPageWhiskyViewUl>
+            {whiskies.whiskies.map(whisky =>
+              <LoginPageWhiskyViewList key={whisky.id}>   
+                <WhiskyListItem whisky={whisky} remove={removeWhisky} />
+              </LoginPageWhiskyViewList>
+            )}
+          </LoginPageWhiskyViewUl>
+        </div>
+      )}            
+    </LoginPageWhiskyViewContainer>
+  )
+}
+
+const WhiskyListItem = ({ whisky, remove }) => {
+
+  return (
+    <>
+      <LoginPageWhiskyViewLi>{whisky.name}</LoginPageWhiskyViewLi>
+      <LoginPageWhiskyViewLi>{whisky.price}</LoginPageWhiskyViewLi>
+      <LoginPageWhiskyRemoveButton onClick={() => remove(whisky.id, whisky)}>Poista</LoginPageWhiskyRemoveButton>
+    </>
+  )
+}
+
+
 const Login = () => {
   const [user, setUser] = useState(null)
   const [notification, setNotification] = useState(null)
@@ -139,7 +192,7 @@ const Login = () => {
   const whiskyFormRef = useRef()
   const openingHoursFormRef = useRef()
   const openingHoursUpdateRef = useRef()
-  const beerUpdateRef = useRef()
+  const beerUpdateRef = useRef()  
 
   // Get logged in user from localStorage
   useEffect(() => {
@@ -160,6 +213,13 @@ const Login = () => {
     }).catch(() => {
       notify('Wrong credentials', 'alert')
     })
+  }
+
+  console.log('user from storage:', userService.getUser())
+
+  if (userService.getUser() === null) {
+    console.log('user is null')
+    logout()
   }
 
   // Handle user logout
@@ -494,16 +554,17 @@ const Login = () => {
               <NewWhiskyForm createNewWhisky = {createWhisky} currentWhiskies = {whiskies} />
             </Togglable>
           </LoginPageInputForm>
-          <LoginPageGridItem>
+          {/* <LoginPageGridItem>
             {sortedWhiskies.map(whisky =>
               <div style = {{ paddingTop: '10px' }} key={whisky.name}>
                 <ProductCategoryList productList = {whisky} removeProduct = {removeWhisky} />
               </div>
               )}
-          </LoginPageGridItem>
+          </LoginPageGridItem> */}
         </div>
       </LoginPageGrid>
-    </LoginPageContainer>
+      <WhiskyView whiskyList = {sortedWhiskies} removeWhisky = {removeWhisky} />
+    </LoginPageContainer>    
   )
 }
 

@@ -2,8 +2,9 @@ import styled from 'styled-components';
 
 export const InputFormButton = styled.button`
   padding: 10px;
-  margin: 5px;
+  margin-top: 5px;
   width: 100%;
+  height: 100%;
   max-width: 300px;
   border-radius: 5px;
   font-size: 1rem;
@@ -20,7 +21,7 @@ export const InputFormButton = styled.button`
 
   @media screen and (max-width: 500px) {
     font-size: 1.5rem;
-    height: 60px;
+    height: 100%;
   }
 `;
 
@@ -38,15 +39,14 @@ export const InputFormP = styled.p`
 `;
 
 export const InputFormForm = styled.form`
-  width: 100%;
-  max-width: 700px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  margin: 0 auto;
-  padding: 10px;
-
+  // width: 100%;
+  // max-width: 700px;
+  // display: flex;
+  // flex-direction: column;
+  // align-items: center;
+  // justify-content: center;
+  // margin: 0 auto;
+  // padding: 10px;
 `;
 
 export const InputFormItems = styled.div`
@@ -61,7 +61,6 @@ export const InputFormItems = styled.div`
 
 export const InputFormInput = styled.input`
   width: 100%;
-  max-width: 700px;
   padding: 10px;
   margin: 5px;
   border-radius: 5px;

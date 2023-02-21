@@ -2,7 +2,6 @@ import styled from 'styled-components';
 
 export const LoginPageContainer = styled.div`
   width: 100%;
-  text-align: center;
 `;
 
 export const LoginPageWrapper = styled.div`
@@ -154,5 +153,72 @@ export const LoginPageHideButton = styled.button`
   @media screen and (max-width: 500px) {
     font-size: 1.5rem;
     height: 60px;
+  }
+`;
+
+export const LoginPageWhiskyViewContainer = styled.div`
+  margin: 5px;
+  background: #A69666;
+  border-radius: 5px;
+  padding: 5px;
+`;
+
+export const LoginPageWhiskyViewList = styled.div`
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  // align-items: center;
+  justify-content: space-between;
+  margin-bottom: 5px;
+  border-bottom: 1px solid #32231F;
+`;
+
+export const LoginPageWhiskyViewUl = styled.ul`
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  list-style-type: none;
+
+  @media screen and (max-width: 1310px) {
+    grid-template-columns: repeat(4, 1fr);
+  }
+
+  @media screen and (max-width: 1075px) {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  @media screen and (max-width: 820px) {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  @media screen and (max-width: 580px) {
+    grid-template-columns: repeat(1, 1fr);
+  }
+`;
+
+export const LoginPageWhiskyViewLi = styled.li`
+  width: 100%;
+  padding-left: 10px;
+  text-align: start;
+  align-self: center;
+`;
+
+export const LoginPageWhiskyRemoveButton = styled.button`
+  max-width: 100px;
+  padding: 5px;
+  border-radius: 5px;
+  font-size: 1rem;
+  background: #84172C;
+  color: gold;
+  font-weight: bold;
+  cursor: pointer;
+  
+  &:hover {
+    transition: all 0.2s ease-in-out;
+    transform: scale(1.01);
+    box-shadow: 0 1px 3px rgba(255, 203, 5, 0.9);
+  }
+
+  @media screen and (max-width: 500px) {
+    font-size: 1.5rem;
   }
 `;
