@@ -141,9 +141,9 @@ export const SocialMediaIconLink = styled.a`
   font-size: 24px;
 
   &:hover {
-    color: #F5BD30;
+    color: #FDEA9F;
     transform: scale(1.5);
-    transition: 0.2s ease-in-out;
+    transition: 0.5s ease-in-out;
   }
 `;
 
