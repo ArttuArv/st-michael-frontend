@@ -76,12 +76,13 @@ export const FooterLinkItems = styled.div`    // LinkHeading
     margin: 0;
     padding: 10px;
     width: 100%;
+    align-items: center;
   }
 `;
 
 export const FooterLinkTitle = styled.h1`
   color: #F5BD30;
-  font-size: 18px;
+  font-size: 20px;
   margin-bottom: 4px;
   padding-left: 5px;
 `;
@@ -97,6 +98,9 @@ export const FooterLink = styled(Link)`
     font-weight: bold;
     transition: 0.3 ease-out;
   }
+
+  @media screen and (max-width: 1000px) {
+    padding: 10px;
 `;
 
 export const SocialMedia = styled.section`
@@ -178,7 +182,7 @@ export const FooterTableData = styled.td`
 
 export const FooterTableH3 = styled.h3`
   color: #F5BD30;
-  font-size: 18px;
+  font-size: 20px;
   margin-bottom: 4px;
   padding-left: 5px;
 `;

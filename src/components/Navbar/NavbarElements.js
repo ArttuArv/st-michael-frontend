@@ -130,6 +130,7 @@ export const NavItem = styled.li`
   font-size: 1.2rem;
   height: 30px;
   margin-top: 20px;
+  font-weight: 400;
 `;
 
 export const NavLinkTo = styled(LinkRouter)`

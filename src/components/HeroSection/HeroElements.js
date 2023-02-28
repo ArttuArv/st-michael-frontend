@@ -22,8 +22,8 @@ export const HeroContainer = styled.div`
     bottom: 0;
     background: linear-gradient(
       180deg, 
-      rgba(0, 0, 0, 0.2) 0%, 
-      rgba(0, 0, 0, 0.6) 100%),
+      rgba(0, 0, 0, 0.8) 10%, 
+      rgba(0, 0, 0, 0.3) 100%),
       linear-gradient(
         180deg, 
         rgba(0, 0, 0, 0.2) 0%, 
@@ -151,14 +151,14 @@ export const HeroP = styled.p`
   font-size: 38px;
   text-align: center;
   max-width: 600px;
-  text-shadow: 3px 5px 3px #000;
+  text-shadow: 2px 4px 2px #000;
 
   @media screen and (max-width: 768px) {
     font-size: 30px;
   }
 
   @media screen and (max-width: 480px) {
-    font-size: 22px;
+    font-size: 26px;
   }  
 `;
 

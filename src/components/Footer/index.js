@@ -43,7 +43,6 @@ const Footer = ({ openingHours }) => {
                 <FooterLinkTitle>Sisältö</FooterLinkTitle>
                 <FooterLink to = 'beer'>Hanatuotteet</FooterLink>
                 <FooterLink to = 'whisky'>Viskit</FooterLink>
-                <FooterLink to = 'sports'>Urheilu</FooterLink>
                 <FooterLink to = 'story'>Tarina</FooterLink>
               </FooterLinkItems>
             </FooterLinksWrapper>
