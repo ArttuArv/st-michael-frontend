@@ -12,6 +12,8 @@ import {
   InputFormOption
 } from '../InputFormElements'
 
+import Notification from '../../Notification/Notification'
+
 const NewBeerForm = ({ createNewBeer }) => {
   const [name, setName] = useState('')
   const [style, setStyle] = useState('')
@@ -30,6 +32,20 @@ const NewBeerForm = ({ createNewBeer }) => {
   const handleSubmit = (event) => {
     event.preventDefault()
 
+    
+
+    if (category === 'Valitse listasta' || !category) {
+      notify('Valitse kategoria', 'alert')
+
+      return
+    } 
+
+    if (!name || !style || !country) {
+      notify('Täytä kaikki kentät', 'alert')
+
+      return
+    }
+
     const newBeer = {
       name,
       style,
@@ -38,15 +54,11 @@ const NewBeerForm = ({ createNewBeer }) => {
       category,
     }
 
-    if (category === 'Valitse listasta' || !category) {
-      alert('Valitse kategoria')
-    } else {
+    createNewBeer(newBeer)
 
-      createNewBeer(newBeer)
-
-      // Nollataan syöttökentät
-      resetStates()
-    }
+    // Nollataan syöttökentät
+    resetStates()
+    
   }
 
   const resetStates = () => {
@@ -71,6 +83,17 @@ const NewBeerForm = ({ createNewBeer }) => {
 
   const handleCategoryChange = (event) => {
     setCategory(event.target.value)
+  }
+
+  const notify = (message, type = 'info') => {
+
+    new Notification({
+      text: message,
+      position: "top-center",
+      pauseOnHover: true,
+      pauseOnFocusLoss: true,
+      color: type === 'info' ? '##1DB954' : '#FF4136',
+    })
   }
 
 

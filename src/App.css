@@ -1,4 +1,15 @@
-* {
+@import url('./fonts.css');
+@import url('./components/Notification/styles.css');
+
+:root {
+  --clr-neutral-900: hsl(207, 19%, 9%);
+  --clr-neutral-100: hsl(0, 0%, 100%);
+  --clr-neutral-400: hsl(142, 90%, 61%);
+}
+
+*,
+*::before,
+*::after  {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
@@ -47,7 +58,7 @@ canvas {
   position: absolute;
   top: 9rem;
   left: 7rem;
-  width: 55%;
+  /* width: 55%; */
   padding: 3rem;
   z-index: 10;
 }
@@ -58,4 +69,3 @@ canvas {
   font-weight: 400;
   text-shadow: 3px 3px 0.3rem #000;
 }
-

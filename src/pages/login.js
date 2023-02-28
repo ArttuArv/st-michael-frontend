@@ -1,7 +1,6 @@
 import { useState, useEffect, useRef } from 'react'
 
 import Togglable from "../components/Togglable"
-import Notification from "../components/Notification"
 import LoginForm from "../components/LoginForm"
 import NewOpeningHoursForm from "../components/AdminPageForms/NewOpeningHoursForm"
 import UpdateOpeningHoursForm from "../components/AdminPageForms/UpdateOpeningHoursForm"
@@ -19,6 +18,8 @@ import openingHoursService from '../services/openinghours'
 import whiskyCsvService from '../services/whiskyCsv'
 
 import { checkIfFileIsCsv } from '../utils/utils'
+
+import Notification from '../components/Notification/Notification.js'
 
 import {
   LoginPageContainer,
@@ -173,7 +174,7 @@ const WhiskyListItem = ({ whisky, remove }) => {
   return (
     <>
       <LoginPageWhiskyViewLi>{whisky.name}</LoginPageWhiskyViewLi>
-      <LoginPageWhiskyViewLi>{whisky.price}</LoginPageWhiskyViewLi>
+      <LoginPageWhiskyViewLi>{whisky.price} € / 4 cl</LoginPageWhiskyViewLi>
       <LoginPageWhiskyRemoveButton onClick={() => remove(whisky.id, whisky)}>Poista</LoginPageWhiskyRemoveButton>
     </>
   )
@@ -182,7 +183,6 @@ const WhiskyListItem = ({ whisky, remove }) => {
 
 const Login = () => {
   const [user, setUser] = useState(null)
-  const [notification, setNotification] = useState(null)
   const [beers, setBeers] = useState([])
   const [whiskies, setWhiskies] = useState([])
   const [openingHours, setOpeningHours] = useState([])
@@ -211,21 +211,15 @@ const Login = () => {
       userService.setUser(user)
       notify(`Login succesful! Welcome ${user.name}!`)
     }).catch(() => {
-      notify('Wrong credentials', 'alert')
+      notify('Väärä salasana tai käyttäjätunnus', 'alert')
     })
-  }
-
-  console.log('user from storage:', userService.getUser())
-
-  if (userService.getUser() === null) {
-    console.log('user is null')
-    logout()
   }
 
   // Handle user logout
   const logout = () => {
     setUser(null)
     userService.clearUser()
+    notify('Logout succesful! See you soon!')
   }
 
   // Get all beers from db
@@ -460,10 +454,14 @@ const Login = () => {
   }
 
   const notify = (message, type = 'info') => {
-    setNotification({ message, type })
-    setTimeout(() => {
-      setNotification(null)
-    }, 5000)
+
+    new Notification({
+      text: message,
+      position: "top-center",
+      pauseOnHover: true,
+      pauseOnFocusLoss: true,
+      color: type === 'info' ? '##1DB954' : '#FF4136',
+    })
   }
 
   const handleFileChange = (event) => {
@@ -482,27 +480,26 @@ const Login = () => {
   })
 
   if (user === null) {
-    return (
-      <div style={loginWrapper}>
-        <div>
-          <Notification notification={notification} />
-          <LoginForm onLogin={login} />
-        </div>
+    return (    
+      <div style={loginWrapper}>       
+        <LoginForm onLogin={login} />
       </div>
     )
   }
 
   return (
-    <LoginPageContainer>
-      <LoginPageWrapper>
-        <Notification notification={notification} />
+    <LoginPageContainer>    
+      <LoginPageWrapper>        
         <LoginPageP>{user.name} logged in</LoginPageP>
         <LoginPageButton background = 'dark' onClick={logout}>Logout</LoginPageButton>
       </LoginPageWrapper>
       <div style={{margin: '0 10px'}} className="csv-file-upload">
         <LoginPageInputForm>
           <LoginPageH1>Lataa Excelin csv-tiedosto</LoginPageH1>
-          <input type="file" accept='.csv' lang='fin' onChange={handleFileChange} />
+          <div className='file-upload'>
+            <input type="file" accept='.csv' lang='fin' onChange={handleFileChange} />
+            <label for='file-input' className='custom-file-upload'>Valitse tiedosto</label>
+          </div>
           <LoginPageButton background = 'light' onClick={() => uploadWhiskies(file)}>Lataa palvelimelle</LoginPageButton>
         </LoginPageInputForm>
       </div>

@@ -12,6 +12,8 @@ import {
   InputFormLabel
 } from '../InputFormElements'
 
+import Notification from '../../Notification/Notification'
+
 const UpdateBeerForm = ({ currentBeers, updateBeer }) => {
   const [id, setId] = useState('')
   const [name, setName] = useState('')
@@ -25,6 +27,24 @@ const UpdateBeerForm = ({ currentBeers, updateBeer }) => {
   const handleSubmit = (event) => {
     event.preventDefault()
 
+    if (category === 'Valitse listasta' || !category) {
+      notify('Valitse kategoria', 'alert')
+
+      return
+    }
+
+    if (!style || !country) {
+      notify('Täytä kaikki kentät', 'alert')
+
+      return
+    }
+
+    if (!id) {
+      notify('Valitse olut listasta', 'alert')
+
+      return
+    }
+
     let existingBeerCategory
     const existingBeerName = currentBeers.map(beers => beers.products).flat().find(beer => beer.id === id)
 
@@ -37,13 +57,7 @@ const UpdateBeerForm = ({ currentBeers, updateBeer }) => {
     }
 
     if (name === '' || !name)
-      updatedBeer.name = existingBeerName.name
-
-    if (category === 'Valitse listasta' || !category) {
-      alert('Valitse kategoria')
-
-      return
-    }
+      updatedBeer.name = existingBeerName.name    
 
     existingBeerCategory = existingBeerName.category
 
@@ -83,6 +97,17 @@ const UpdateBeerForm = ({ currentBeers, updateBeer }) => {
 
   const handlePriceChange = (event) => {
     setPrice(event.target.value)
+  }
+
+  const notify = (message, type = 'info') => {
+
+    new Notification({
+      text: message,
+      position: "top-center",
+      pauseOnHover: true,
+      pauseOnFocusLoss: true,
+      color: type === 'info' ? '##1DB954' : '#FF4136',
+    })
   }
 
   return (

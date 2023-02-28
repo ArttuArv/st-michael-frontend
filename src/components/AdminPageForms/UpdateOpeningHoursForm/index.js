@@ -12,6 +12,8 @@ import {
   InputFormLabel
 } from '../InputFormElements'
 
+import Notification from '../../Notification/Notification'
+
 const NewOpeningHoursForm = ({ currentOpeningHours, updateOpeningHours }) => {
   const [day, setDay] = useState('')
   const [id, setId] = useState('')
@@ -37,10 +39,16 @@ const NewOpeningHoursForm = ({ currentOpeningHours, updateOpeningHours }) => {
     }
     
     if (id === 'Valitse listasta' || !id) {
-      alert('Et valinnut muutettavaa päivää')
+      notify('Et valinnut muutettavaa päivää', 'alert')
 
       return
-    }      
+    }
+
+    if (!day || !openinghours) {
+      notify('Täytä kaikki kentät', 'alert')
+
+      return
+    }
 
     updateOpeningHours(id, updatedHours) 
 
@@ -65,6 +73,18 @@ const NewOpeningHoursForm = ({ currentOpeningHours, updateOpeningHours }) => {
   const handleHoursChange = (event) => {
     setOpeningHours(event.target.value)
   }
+
+  const notify = (message, type = 'info') => {
+
+    new Notification({
+      text: message,
+      position: "top-center",
+      pauseOnHover: true,
+      pauseOnFocusLoss: true,
+      color: type === 'info' ? '##1DB954' : '#FF4136',
+    })
+  }
+
 
   return (
     <>

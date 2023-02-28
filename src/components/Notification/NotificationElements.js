@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
 export const NotificationContainer = styled.div`
-  color: #fff;
+  color: gold;
   background: ${props => props.type === 'alert' ? 'red' : 'green'};
   font-size: 20px;
   border-style: solid;

@@ -12,6 +12,8 @@ import {
   InputFormOption
 } from '../InputFormElements'
 
+import Notification from '../../Notification/Notification'
+
 const NewWhiskyForm = ({ createNewWhisky, currentWhiskies }) => {
   const [name, setName] = useState('')
   const [area, setArea] = useState('')
@@ -29,14 +31,22 @@ const NewWhiskyForm = ({ createNewWhisky, currentWhiskies }) => {
     }
 
     if (area === 'Valitse listasta' || !area) {
-      alert('Valitse alue')
-    } else {
-
-      createNewWhisky(newWhisky, area)
-
-      // Nollataan syöttökentät
-      resetStates()
+      notify('Valitse alue', 'alert')
+    
+      return
     }
+
+    if (!name || !price) {
+      notify('Täytä kaikki kentät', 'alert')
+
+      return
+    }
+
+    createNewWhisky(newWhisky, area)
+
+    // Nollataan syöttökentät
+    resetStates()
+    
   }
 
   const resetStates = () => {
@@ -55,6 +65,17 @@ const NewWhiskyForm = ({ createNewWhisky, currentWhiskies }) => {
 
   const handlePriceChange = (event) => {
     setPrice(event.target.value)
+  }
+
+  const notify = (message, type = 'info') => {
+
+    new Notification({
+      text: message,
+      position: "top-center",
+      pauseOnHover: true,
+      pauseOnFocusLoss: true,
+      color: type === 'info' ? '##1DB954' : '#FF4136',
+    })
   }
 
   return (

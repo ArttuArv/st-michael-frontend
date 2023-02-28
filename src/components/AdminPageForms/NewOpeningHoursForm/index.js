@@ -9,12 +9,20 @@ import {
   InputFormInput, 
 } from '../InputFormElements'
 
+import Notification from '../../Notification/Notification'
+
 const NewOpeningHoursForm = ({ createNewHours }) => {
   const [day, setDay] = useState('')
   const [openingHours, setOpeningHours] = useState('')
 
   const handleSubmit = (event) => {
     event.preventDefault()
+
+    if (!day || !openingHours) {
+      notify('Täytä kaikki kentät', 'alert')
+
+      return
+    }
 
     const newHours = {
       day,
@@ -34,6 +42,17 @@ const NewOpeningHoursForm = ({ createNewHours }) => {
 
   const handleHoursChange = (event) => {
     setOpeningHours(event.target.value)
+  }
+
+  const notify = (message, type = 'info') => {
+
+    new Notification({
+      text: message,
+      position: "top-center",
+      pauseOnHover: true,
+      pauseOnFocusLoss: true,
+      color: type === 'info' ? '##1DB954' : '#FF4136',
+    })
   }
 
   return (
