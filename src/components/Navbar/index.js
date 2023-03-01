@@ -10,7 +10,6 @@ import {
   NavItem, 
   NavLogoImg,
   NavLinkTo,
-  NavLinks
 } from './NavbarElements'
 
 const Navbar  = ({ toggle }) => {
@@ -32,6 +31,14 @@ const Navbar  = ({ toggle }) => {
     scroll.scrollToTop();
   }
 
+  const links = [
+    {id: 1, path: '/', text: 'Etusivu'},
+    {id: 2, path: '/beer', text: 'Hanatuotteet'},
+    {id: 3, path: '/whisky', text: 'Viskit'},
+    {id: 4, path: '/story', text: 'Tarina'},
+    {id: 5, path: '/login', text: 'Kirjaudu'},
+  ]
+
   return (
     <>
       <Nav scrollNav = {scrollNav}>        
@@ -41,80 +48,13 @@ const Navbar  = ({ toggle }) => {
             <FaBars onClick = {toggle}/>
           </MobileIcon>
           <NavMenu>
-            <NavItem>
-              <NavLinkTo to = '/' >
-                Etusivu
-              </NavLinkTo>
-            </NavItem>
-            <NavItem>
-              <NavLinkTo to = '/beer' >
-                Hanatuotteet
-              </NavLinkTo>
-            </NavItem>
-            <NavItem>
-              <NavLinkTo to = '/whisky' >
-                Viskit
-              </NavLinkTo>
-            </NavItem>
-            {/* <NavItem>
-              <NavLinkTo to = '/sports' >
-                Urheilu
-              </NavLinkTo>
-            </NavItem> */}
-            <NavItem>
-              <NavLinkTo to = '/story' >
-                Tarina
-              </NavLinkTo>
-            </NavItem>
-            <NavItem>
-              <NavLinkTo to = '/login' >
-                Kirjaudu
-              </NavLinkTo>
-            </NavItem>
-            {/* <NavItem>
-              <NavLinks 
-                to = '/' 
-                smooth = {true} 
-                duration = {500} 
-                spy = {true}
-                exact = 'true' 
-                offset = {-80}>
-                Etusivu
-              </NavLinks>
-            </NavItem>
-            <NavItem>
-              <NavLinks 
-                to = 'whisky'
-                smooth = {true} 
-                duration = {500} 
-                spy = {true}
-                exact = 'true' 
-                offset = {-80}>
-                Hanasta
-              </NavLinks>
-            </NavItem>
-            <NavItem>
-              <NavLinks 
-                to = 'whisky'  
-                smooth = {true} 
-                duration = {500} 
-                spy = {true}
-                exact = 'true' 
-                offset = {-80}>
-                Viskit
-              </NavLinks>
-              </NavItem>*/}
-            {/* <NavItem>
-              <NavLinks 
-                to = 'sports'  
-                smooth = {true} 
-                duration = {500} 
-                spy = {true}
-                exact = 'true' 
-                offset = {-80}>
-                Urheilu
-              </NavLinks>
-            </NavItem> */}
+            {links.map(link => (
+              <NavItem key = {link.id}>
+                <NavLinkTo to = {link.path}>
+                  {link.text}
+                </NavLinkTo>
+              </NavItem>
+            ))}
           </NavMenu>
         </NavbarContainer>
       </Nav>

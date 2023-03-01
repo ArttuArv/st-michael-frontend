@@ -140,7 +140,7 @@ export const NavLinkTo = styled(LinkRouter)`
   text-decoration: none;
   padding: 0 1rem;
   height: 100%;
-  cursor: pointer;  
+  cursor: pointer;
 
   &:hover {
     border-bottom: 3px solid #F5BD30;
@@ -169,6 +169,7 @@ export const NavLinks = styled(LinkScroll)`
   &.active {
     border-bottom: 9px solid #F5BD30;
   }
+
 `;
 
 export const NavBtn = styled.nav`

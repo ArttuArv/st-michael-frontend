@@ -174,7 +174,7 @@ const WhiskyListItem = ({ whisky, remove }) => {
   return (
     <>
       <LoginPageWhiskyViewLi>{whisky.name}</LoginPageWhiskyViewLi>
-      <LoginPageWhiskyViewLi>{whisky.price} € / 4 cl</LoginPageWhiskyViewLi>
+      {/* <LoginPageWhiskyViewLi>{whisky.price} € / 4 cl</LoginPageWhiskyViewLi> */}
       <LoginPageWhiskyRemoveButton onClick={() => remove(whisky.id, whisky)}>Poista</LoginPageWhiskyRemoveButton>
     </>
   )

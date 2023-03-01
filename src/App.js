@@ -15,7 +15,6 @@ import openingHoursService from './services/openinghours'
 const WhiskyPage = lazy(() => import('./pages/whisky'))
 const Login = lazy(() => import('./pages/login'))
 const StoryPage = lazy(() => import('./pages/story'))
-const SportsPage = lazy(() => import('./pages/sports'))
 const BeerPage = lazy(() => import('./pages/beer'))
 
 
@@ -24,6 +23,7 @@ const App = () => {
   const [whisky, setWhisky] = useState([])
   const [beer, setBeer] = useState([])
   const [openingHours, setOpeningHours] = useState([])
+  
 
   const toggle = () => {   
     setIsOpen(open => !open)
@@ -65,7 +65,9 @@ const App = () => {
         <Sidebar isOpen = {isOpen} toggle = {toggle} />
         <Navbar toggle = {toggle} />
         <Routes>
-          <Route path = '/' exact element = {<Home openingHours = {openingHours} beer = {beer} />} />
+          <Route path = '/' exact element = {
+            <Home openingHours = {openingHours} beer = {beer}/>} 
+          />
           <Route path = '/whisky' element = {
             <Suspense fallback = {<div>Loading...</div>}>
              <WhiskyPage whisky = {whisky} />
@@ -74,11 +76,6 @@ const App = () => {
           <Route path = '/beer' element = {
             <Suspense>
               <BeerPage beer = {beer} />
-            </Suspense>} 
-          />
-          <Route path = '/sports' element = {
-            <Suspense fallback = {<div>Loading...</div>}>
-              <SportsPage />
             </Suspense>} 
           />
           <Route path = '/story' element = {

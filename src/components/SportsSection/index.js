@@ -1,7 +1,9 @@
-import React from 'react'
+import { useState, useEffect } from 'react'
 
 // import css file
 import './styles.css';
+
+import liveMusicService from '../../services/liveMusic';
 
 import fiLogo from '../../assets/images/sportLogos/F1.svg';
 import valioliigaLogo from '../../assets/images/sportLogos/Premier_League-Logo.wine.svg';
@@ -10,20 +12,31 @@ import vsportLogo from '../../assets/images/sportLogos/vsport_logo_pos.png';
 import karppaLogo from '../../assets/images/sportLogos/Oulun_Kärpät_logo.png';
 
 const SportsSection = () => {
+  const [liveMusic, setLiveMusic] = useState([])
+
+  // Get all liveMusic from db
+  useEffect(() => {
+    liveMusicService.getAll()
+      .then(liveMusic => {
+        setLiveMusic(liveMusic)
+      }).catch(error => {
+        console.log(error)
+      })
+  }, [])
 
   return (
-    <>
-      <div className="page-container">
-        <div className='info-box'>
-          <div className='info-content'>
-            <h2>Urheilu</h2>
-            <ul>
-              <li>Pystytään näyttämään kolmea lähetystä yhtä aikaa.</li>
-              {/* <li>Jääkiekkoa, jalkapalloa, Formula 1</li>
-              <li>Jääkiekkoa, jalkapalloa, Formula 1</li>
-              <li>Jääkiekkoa, jalkapalloa, Formula 1</li>
-              <li>Rivejä näyttämään kuinka paljon asiaa tänne mahtuu ja miten teksti skaalautuu.</li> */}
-            </ul>
+    <div className='live-page-container'>
+      <div className="live-page-wrapper">
+        <div className='live-music-box'>
+          <div className='live-music-content'>
+            <h2>Live-musiikki</h2>
+            {liveMusic.map(liveMusic => (
+              <section className='live-music-info' key={liveMusic.id}>
+                <h3>{liveMusic.name}</h3>
+                <p>{liveMusic.date} klo. {liveMusic.time}</p>
+                <p></p>
+              </section>
+            ))}
           </div>
         </div>
         <div className='card-grid-container'>
@@ -31,7 +44,7 @@ const SportsSection = () => {
             <div className='karppa-content'>
               <img src={karppaLogo} alt='Karppa logo' />
               <h2>Kärppäpelit</h2>
-              <h3>Bussikuljetukset jäähallille Kärppien kotiotteluihin.</h3>
+              <h3>Bussikuljetukset jäähallille Kärppien Liiga-kotiotteluihin.</h3>
               <h3>Kyyti lähtee baarin edestä 20min ennen pelin alkua, liput ilmaiseen bussikyytiin saat tiskiltä.</h3>
               <h3 className='h3-bold-yellow'>Näytämme kaikki Kärppien pelit myös TV:sta.</h3>
             </div>
@@ -60,7 +73,7 @@ const SportsSection = () => {
           </div>
         </div>
       </div>
-    </>
+    </div>
   )
 }
 
