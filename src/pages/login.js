@@ -7,6 +7,7 @@ import UpdateOpeningHoursForm from "../components/AdminPageForms/UpdateOpeningHo
 import NewBeerForm from "../components/AdminPageForms/NewBeerForm"
 import UpdateBeerForm from "../components/AdminPageForms/UpdateBeerForm"
 import NewWhiskyForm from "../components/AdminPageForms/NewWhiskyForm"
+import UpdateWhiskyForm from "../components/AdminPageForms/UpdateWhiskyForm"
 
 import loginService from '../services/login'
 import userService from '../services/user'
@@ -38,7 +39,9 @@ import {
   LoginPageWhiskyViewUl,
   LoginPageWhiskyViewLi,
   LoginPageWhiskyRemoveButton,
+  LoginPageWhiskyUpdateButton,
 } from '../components/LoginPageStyledComponents/LoginPageElements'
+
 
 const loginWrapper = {
   display: 'flex',
@@ -170,11 +173,21 @@ const WhiskyView = ({ whiskyList, removeWhisky }) => {
 }
 
 const WhiskyListItem = ({ whisky, remove }) => {
+  const [visible, setVisible] = useState(false)
+
+  const showWhenVisible = { display: visible ? '' : 'none' }
+
+  const toggleVisibility = () => {
+    setVisible(!visible)
+  }
 
   return (
     <>
       <LoginPageWhiskyViewLi>{whisky.name}</LoginPageWhiskyViewLi>
-      {/* <LoginPageWhiskyViewLi>{whisky.price} € / 4 cl</LoginPageWhiskyViewLi> */}
+      <LoginPageWhiskyUpdateButton onClick={toggleVisibility}>Päivitä</LoginPageWhiskyUpdateButton>
+      <div style={showWhenVisible}>
+        <UpdateWhiskyForm whisky={whisky} visibility={toggleVisibility} />
+      </div>
       <LoginPageWhiskyRemoveButton onClick={() => remove(whisky.id, whisky)}>Poista</LoginPageWhiskyRemoveButton>
     </>
   )
@@ -496,9 +509,8 @@ const Login = () => {
       <div style={{margin: '0 10px'}} className="csv-file-upload">
         <LoginPageInputForm>
           <LoginPageH1>Lataa Excelin csv-tiedosto</LoginPageH1>
-          <div className='file-upload'>
+          <div>
             <input type="file" accept='.csv' lang='fin' onChange={handleFileChange} />
-            <label for='file-input' className='custom-file-upload'>Valitse tiedosto</label>
           </div>
           <LoginPageButton background = 'light' onClick={() => uploadWhiskies(file)}>Lataa palvelimelle</LoginPageButton>
         </LoginPageInputForm>

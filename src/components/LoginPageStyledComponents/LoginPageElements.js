@@ -132,6 +132,30 @@ export const LoginPageRemoveButton = styled.button`
   }
 `;
 
+export const LoginPageWhiskyUpdateButton = styled.button`
+  padding: 10px;
+  width: 100%;
+  margin: 0 5px;
+  max-width: 80px;
+  border-radius: 5px;
+  font-size: 1rem;
+  background: #06260F;
+  color: gold;
+  font-weight: bold;
+  cursor: pointer;
+
+  &:hover {
+    transition: all 0.2s ease-in-out;
+    transform: scale(1.01);
+    box-shadow: 0 1px 3px rgba(255, 203, 5, 0.9);
+  }
+
+  @media screen and (max-width: 500px) {
+    font-size: 1.5rem;
+    height: 60px;
+  }
+`;
+
 export const LoginPageHideButton = styled.button`
   padding: 10px;
   margin: 0 0 1.5rem 0;
