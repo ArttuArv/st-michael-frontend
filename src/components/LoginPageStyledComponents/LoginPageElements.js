@@ -153,6 +153,8 @@ export const LoginPageWhiskyUpdateButton = styled.button`
   @media screen and (max-width: 500px) {
     font-size: 1.5rem;
     height: 60px;
+    max-width: 120px;
+    width: 100%;
   }
 `;
 
@@ -202,19 +204,19 @@ export const LoginPageWhiskyViewUl = styled.ul`
   grid-template-columns: repeat(5, 1fr);
   list-style-type: none;
 
-  @media screen and (max-width: 1310px) {
+  @media screen and (max-width: 1500px) {
     grid-template-columns: repeat(4, 1fr);
   }
 
-  @media screen and (max-width: 1075px) {
+  @media screen and (max-width: 1200px) {
     grid-template-columns: repeat(3, 1fr);
   }
 
-  @media screen and (max-width: 820px) {
+  @media screen and (max-width: 900px) {
     grid-template-columns: repeat(2, 1fr);
   }
 
-  @media screen and (max-width: 580px) {
+  @media screen and (max-width: 625px) {
     grid-template-columns: repeat(1, 1fr);
   }
 `;

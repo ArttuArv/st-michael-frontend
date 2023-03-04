@@ -161,7 +161,7 @@ const WhiskyView = ({ whiskyList, removeWhisky }) => {
           <LoginPageH3 style={{marginTop: '20px'}}>{whiskies.name}</LoginPageH3>
           <LoginPageWhiskyViewUl>
             {whiskies.whiskies.map(whisky =>
-              <LoginPageWhiskyViewList key={whisky.id}>   
+              <LoginPageWhiskyViewList key={whisky.id}>
                 <WhiskyListItem whisky={whisky} remove={removeWhisky} />
               </LoginPageWhiskyViewList>
             )}
@@ -186,7 +186,7 @@ const WhiskyListItem = ({ whisky, remove }) => {
       <LoginPageWhiskyViewLi>{whisky.name}</LoginPageWhiskyViewLi>
       <LoginPageWhiskyUpdateButton onClick={toggleVisibility}>Päivitä</LoginPageWhiskyUpdateButton>
       <div style={showWhenVisible}>
-        <UpdateWhiskyForm whisky={whisky} visibility={toggleVisibility} />
+        <UpdateWhiskyForm whiskyToUpdate={whisky} visibility={toggleVisibility} />
       </div>
       <LoginPageWhiskyRemoveButton onClick={() => remove(whisky.id, whisky)}>Poista</LoginPageWhiskyRemoveButton>
     </>
@@ -379,16 +379,16 @@ const Login = () => {
   }
 
   // Remove whisky from db
-  const removeWhisky = (id, whiskyArea ) => {
+  const removeWhisky = (id, whisky) => {
 
-    const ok = window.confirm(`Poistetaanko ${whiskyArea.name} ?`)
+    const ok = window.confirm(`Poistetaanko ${whisky.name} ?`)
 
     if (!ok) {
       return
     }
 
     // Find the correct sub array from whiskies
-    const filteredWhiskies = whiskies.find(whisky => whisky.whiskies.find(product => product.area === whiskyArea.area))
+    const filteredWhiskies = whiskies.find(whiskyArea => whiskyArea.whiskies.find(product => product.name === whisky.name))
 
     // Remove old entry from array
     const newWhiskiesArea = filteredWhiskies.whiskies.filter(whisky => whisky.id !== id)
@@ -401,7 +401,7 @@ const Login = () => {
 
     whiskyService.remove(id).then(() => {
       setWhiskies(whiskies.map(whisky => whisky.id === updatedWhiskies.id ? updatedWhiskies : whisky))
-      notify(`${whiskyArea.name} poistettu!`)
+      notify(`${whisky.name} poistettu!`)
     }).catch(exception => {
       notify(`${exception.response.data.error}`, 'alert')
       console.log('Exception: ', exception)
@@ -563,13 +563,6 @@ const Login = () => {
               <NewWhiskyForm createNewWhisky = {createWhisky} currentWhiskies = {whiskies} />
             </Togglable>
           </LoginPageInputForm>
-          {/* <LoginPageGridItem>
-            {sortedWhiskies.map(whisky =>
-              <div style = {{ paddingTop: '10px' }} key={whisky.name}>
-                <ProductCategoryList productList = {whisky} removeProduct = {removeWhisky} />
-              </div>
-              )}
-          </LoginPageGridItem> */}
         </div>
       </LoginPageGrid>
       <WhiskyView whiskyList = {sortedWhiskies} removeWhisky = {removeWhisky} />

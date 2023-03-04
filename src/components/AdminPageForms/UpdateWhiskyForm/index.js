@@ -1,16 +1,35 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import styled, { keyframes } from 'styled-components';
 
 import Notification from '../../Notification/Notification'
 
+import whiskyService from '../../../services/whisky'
 
 
-const UpdateWhiskyForm = ({ whisky, updateWhisky, visibility }) => {
+const UpdateWhiskyForm = ({ whiskyToUpdate, updateWhisky, visibility }) => {
   const [id, setId] = useState('')
   const [name, setName] = useState('')
   const [area, setArea] = useState('')
+  const [whisky, setWhisky] = useState({})
 
-  console.log(whisky)
+  // get whisky from db
+  // useEffect(() => {
+  //   whiskyService.get(whiskyToUpdate.id)
+  //     .then(whisky => {
+  //       setWhisky(whisky)
+  //     })
+  // }, [])
+
+  const whiskyAreas = [
+    'Highland',
+    'Lowland',
+    'Campbeltown',
+    'Irish',
+    'Islands',
+    'Japan',
+    'Other Countries / Bourbons',
+    'Uutuudet'
+  ]
 
   const handleSubmit = (event) => {
     event.preventDefault()
@@ -28,7 +47,7 @@ const UpdateWhiskyForm = ({ whisky, updateWhisky, visibility }) => {
 
     if (!area) updatedWhisky.area = whisky.area
 
-    console.log('updatedWhisky: ', updatedWhisky)
+    notify(`${updatedWhisky.name} ${updatedWhisky.area} päivitetty`)
 
   }
 
@@ -73,6 +92,7 @@ const UpdateWhiskyForm = ({ whisky, updateWhisky, visibility }) => {
         <div>
           <h2>Päivitä viski</h2>
           <p>{whisky.name}</p>
+          <p>{whisky.area}</p>
         </div>
         <div>
           <form onSubmit={handleSubmit}>
@@ -87,12 +107,15 @@ const UpdateWhiskyForm = ({ whisky, updateWhisky, visibility }) => {
             </div>
             <div>
               <label htmlFor='area'>Alue</label>
-              <input
+              {/* <input
                 type='text'
                 id='area'
                 value={area}
                 onChange={handleAreaChange}
-              />
+              /> */}
+              <select onChange={handleAreaChange}>
+                {whiskyAreas.map(area => <option key={area} value={area}>{area}</option>)}
+              </select>
             </div>
             <button type='submit'>Päivitä</button>
           </form>
