@@ -3,8 +3,6 @@ import styled, { keyframes } from 'styled-components';
 
 import Notification from '../../Notification/Notification'
 
-import whiskyService from '../../../services/whisky'
-
 
 const UpdateWhiskyForm = ({ whiskyToUpdate, updateWhisky, visibility }) => {
   const [id, setId] = useState('')
@@ -12,15 +10,8 @@ const UpdateWhiskyForm = ({ whiskyToUpdate, updateWhisky, visibility }) => {
   const [area, setArea] = useState('')
   const [whisky, setWhisky] = useState({})
 
-  // get whisky from db
-  // useEffect(() => {
-  //   whiskyService.get(whiskyToUpdate.id)
-  //     .then(whisky => {
-  //       setWhisky(whisky)
-  //     })
-  // }, [])
-
   const whiskyAreas = [
+    'Valitse listasta',
     'Highland',
     'Lowland',
     'Campbeltown',
@@ -34,8 +25,11 @@ const UpdateWhiskyForm = ({ whiskyToUpdate, updateWhisky, visibility }) => {
   const handleSubmit = (event) => {
     event.preventDefault()
 
-    if (!name) {
-      notify('Anna uusi nimi', 'alert')
+    console.log('name: ', name)
+    console.log('area: ', area)
+
+    if (area === 'Valitse listasta' || area === '') {
+      notify('Valitse alue', 'error')
 
       return
     }
@@ -45,10 +39,17 @@ const UpdateWhiskyForm = ({ whiskyToUpdate, updateWhisky, visibility }) => {
       area,
     }
 
-    if (!area) updatedWhisky.area = whisky.area
+    if (name === '')
+      setName(whiskyToUpdate.name)
+      updatedWhisky.name = whiskyToUpdate.name   
 
-    notify(`${updatedWhisky.name} ${updatedWhisky.area} päivitetty`)
+    console.log('updatedWhisky: ', updatedWhisky)
 
+    // updateWhisky(whiskyToUpdate.id, whiskyToUpdate, updatedWhisky)
+
+    resetStates()
+
+    closeForm()
   }
 
   const resetStates = () => {
@@ -56,6 +57,7 @@ const UpdateWhiskyForm = ({ whiskyToUpdate, updateWhisky, visibility }) => {
     setName('')
     setArea('')
   }
+
 
   const handleIdChange = (event) => {
     setId(event.target.value)
@@ -91,35 +93,26 @@ const UpdateWhiskyForm = ({ whiskyToUpdate, updateWhisky, visibility }) => {
         <FormClose onClick={closeForm} />
         <div>
           <h2>Päivitä viski</h2>
-          <p>{whisky.name}</p>
-          <p>{whisky.area}</p>
+          <p>{whiskyToUpdate.name}</p>
         </div>
-        <div>
-          <form onSubmit={handleSubmit}>
+          <Form onSubmit={handleSubmit}>
+            <FormH4>Nimi</FormH4>
             <div>
-              <label htmlFor='name'>Nimi</label>
-              <input
+              <FormInput
                 type='text'
                 id='name'
                 value={name}
                 onChange={handleNameChange}
               />
             </div>
+            <FormH4>Alue</FormH4>
             <div>
-              <label htmlFor='area'>Alue</label>
-              {/* <input
-                type='text'
-                id='area'
-                value={area}
-                onChange={handleAreaChange}
-              /> */}
-              <select onChange={handleAreaChange}>
+              <FormSelect onChange={handleAreaChange}>
                 {whiskyAreas.map(area => <option key={area} value={area}>{area}</option>)}
-              </select>
+              </FormSelect>
             </div>
-            <button type='submit'>Päivitä</button>
-          </form>
-        </div>
+            <FormButton type='submit'>Päivitä</FormButton>
+          </Form>
       </FormWrapper>
     </FormContainer>
   )
@@ -190,8 +183,8 @@ const FormWrapper = styled.div`
   width: 300px;
   height: 400px;
   z-index: 200;
-  border: 4px solid red;
-  background-color: #fff;
+  border: 4px solid gold;
+  background-color: #A69666;
   border-radius: 15px;
   padding: 1rem;
 `
@@ -215,4 +208,54 @@ const FormClose = styled.div`
     color: red;
     animation: ${jitter} 0.5s linear infinite;
   }
+`
+
+const Form = styled.form`
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  width: 100%;
+  height: 90%;
+`
+
+const FormInput = styled.input`
+  margin-top: 0.5rem;
+  width: 100%;
+  height: 2rem;
+  border: transparent;
+  border-radius: 5px;
+  background-color: #fff;
+  cursor: pointer;
+`
+
+const FormSelect = styled.select`
+  margin-top: 0.5rem;
+  width: 100%;
+  height: 2rem;
+  border: transparent;
+  border-radius: 5px;
+  background-color: #fff;
+  cursor: pointer;
+`
+
+const FormButton = styled.button`
+  margin-top: 2rem;
+  width: 100%;
+  height: 2rem;
+  border: transparent;
+  border-radius: 5px;
+  background-color: gold;
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
+  font-weight: bold;
+
+  &:hover {
+    background-color: green;
+    color: #fff;
+  }
+`
+const FormH4 = styled.h4`
+  margin-top: 1rem;
+  font-size: 1.2rem;
 `

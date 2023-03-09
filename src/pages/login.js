@@ -136,7 +136,66 @@ const ProductCategoryList = ({ productList, removeProduct }) => {
   )
 }
 
-const WhiskyView = ({ whiskyList, removeWhisky }) => {
+const BeerView = ({ beerList, removeBeer, updateBeer }) => {
+  const [showAll, setShowAll] = useState(false)
+
+  if (!showAll) {
+    return (
+      <LoginPageWhiskyViewContainer>
+        <div style={{display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+          <LoginPageH3 fontsize = 'small' >Näytä kaikki hanatuotteet</LoginPageH3>
+          <LoginPageButton background = 'light' onClick = {() => setShowAll(true)}>Avaa lista</LoginPageButton>
+        </div>
+      </LoginPageWhiskyViewContainer>
+    )
+  }
+
+  return (
+    <LoginPageWhiskyViewContainer>
+      <div style={{display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+        <LoginPageH3 fontsize = 'large' >Hanatuotteet</LoginPageH3>
+        <LoginPageButton background = 'light' onClick = {() => setShowAll(false)}>Piilota</LoginPageButton>
+      </div>
+      {beerList.map(products => 
+        <div key = {products.id}>
+          <LoginPageH3 style={{marginTop: '20px'}}>{products.name}</LoginPageH3>
+          <LoginPageWhiskyViewUl>
+            {products.products.map(beer =>
+              <LoginPageWhiskyViewList key={beer.id}>
+                <BeerListItem product={beer} remove={removeBeer} update={updateBeer} />
+              </LoginPageWhiskyViewList>
+            )}
+          </LoginPageWhiskyViewUl>
+        </div>
+      )}
+    </LoginPageWhiskyViewContainer>
+  )
+}
+
+const BeerListItem = ({ product, remove, update }) => {
+  const [visible, setVisible] = useState(false)
+
+  const showWhenVisible = { display: visible ? '' : 'none' }
+
+  const toggleVisibility = () => {
+    setVisible(!visible)
+  }
+
+  return (
+    <>
+      <LoginPageWhiskyViewLi>{product.name}</LoginPageWhiskyViewLi>
+      <LoginPageWhiskyUpdateButton onClick={toggleVisibility}>Päivitä</LoginPageWhiskyUpdateButton>
+      <div style={showWhenVisible}>
+        <UpdateBeerForm beer = {product} visibility={toggleVisibility} updateBeer = {update} />
+      </div>
+      <LoginPageWhiskyRemoveButton onClick={() => remove(product.id, product)}>Poista</LoginPageWhiskyRemoveButton>
+    </>
+  )
+
+}
+
+
+const WhiskyView = ({ whiskyList, removeWhisky, updateWhisky }) => {
   const [showAll, setShowAll] = useState(false)
 
   if (!showAll) {
@@ -162,7 +221,7 @@ const WhiskyView = ({ whiskyList, removeWhisky }) => {
           <LoginPageWhiskyViewUl>
             {whiskies.whiskies.map(whisky =>
               <LoginPageWhiskyViewList key={whisky.id}>
-                <WhiskyListItem whisky={whisky} remove={removeWhisky} />
+                <WhiskyListItem product={whisky} remove={removeWhisky} update={updateWhisky} />
               </LoginPageWhiskyViewList>
             )}
           </LoginPageWhiskyViewUl>
@@ -172,7 +231,7 @@ const WhiskyView = ({ whiskyList, removeWhisky }) => {
   )
 }
 
-const WhiskyListItem = ({ whisky, remove }) => {
+const WhiskyListItem = ({ product, remove, update }) => {
   const [visible, setVisible] = useState(false)
 
   const showWhenVisible = { display: visible ? '' : 'none' }
@@ -183,12 +242,12 @@ const WhiskyListItem = ({ whisky, remove }) => {
 
   return (
     <>
-      <LoginPageWhiskyViewLi>{whisky.name}</LoginPageWhiskyViewLi>
+      <LoginPageWhiskyViewLi>{product.name}</LoginPageWhiskyViewLi>
       <LoginPageWhiskyUpdateButton onClick={toggleVisibility}>Päivitä</LoginPageWhiskyUpdateButton>
       <div style={showWhenVisible}>
-        <UpdateWhiskyForm whiskyToUpdate={whisky} visibility={toggleVisibility} />
+        <UpdateWhiskyForm whiskyToUpdate={product} visibility={toggleVisibility} updateWhisky={update} />
       </div>
-      <LoginPageWhiskyRemoveButton onClick={() => remove(whisky.id, whisky)}>Poista</LoginPageWhiskyRemoveButton>
+      <LoginPageWhiskyRemoveButton onClick={() => remove(product.id, product)}>Poista</LoginPageWhiskyRemoveButton>
     </>
   )
 }
@@ -466,6 +525,33 @@ const Login = () => {
       })
   }
 
+  // Update Whisky
+  const updateWhisky = (id, existingWhisky, updatedWhisky) => {
+    console.log('TULI TÄNNE')
+    whiskyService
+      .update(id, updatedWhisky)
+      .then(returnedWhisky => {
+
+        setWhiskies(whiskies.map(whiskies => {
+          if (whiskies.name === existingWhisky.area) {
+            whiskies.whiskies = whiskies.whiskies.filter(whisky => whisky.id !== id)
+          }
+          return whiskies
+        }))
+
+        setWhiskies(whiskies.map(whiskies => {
+          if (whiskies.name === updatedWhisky.area) {
+            whiskies.whiskies.push(returnedWhisky)
+          }
+          return whiskies
+        }))
+        notify(`Muokattiin ${returnedWhisky.name}`)
+      }).catch(exception => {
+        notify(`${exception.response.data.error}`, 'alert')
+        console.log('Exception: ', exception)
+      })
+  }
+
   const notify = (message, type = 'info') => {
 
     new Notification({
@@ -544,17 +630,17 @@ const Login = () => {
             <Togglable buttonLabel='Uusi olut' ref = {beerFormRef}>
               <NewBeerForm createNewBeer={createBeer} />
             </Togglable>
-            <Togglable buttonLabel='Päivitä olut' ref = {beerUpdateRef}>
+            {/* <Togglable buttonLabel='Päivitä olut' ref = {beerUpdateRef}>
               <UpdateBeerForm currentBeers = {beers} updateBeer = {updateBeer} />
-            </Togglable>
+            </Togglable> */}
           </LoginPageInputForm>
-          <LoginPageGridItem>
+          {/* <LoginPageGridItem>
             {sortedBeers.map(beer =>
               <div style = {{ paddingTop: '10px' }} key={beer.id}>
                 <ProductCategoryList productList = {beer} removeProduct ={removeBeer} />
               </div>
             )}
-          </LoginPageGridItem>
+          </LoginPageGridItem> */}
         </div>
         <div>
           <LoginPageInputForm>
@@ -565,7 +651,8 @@ const Login = () => {
           </LoginPageInputForm>
         </div>
       </LoginPageGrid>
-      <WhiskyView whiskyList = {sortedWhiskies} removeWhisky = {removeWhisky} />
+      <BeerView beerList = {sortedBeers} removeBeer = {removeBeer} updateBeer = {updateBeer} />
+      <WhiskyView whiskyList = {sortedWhiskies} removeWhisky = {removeWhisky} updateWhisky = {updateWhisky} />
     </LoginPageContainer>    
   )
 }
