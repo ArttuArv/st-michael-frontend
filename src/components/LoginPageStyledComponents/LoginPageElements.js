@@ -43,7 +43,8 @@ export const LoginPageH3 = styled.h3`
 
 export const LoginPageGrid = styled.div`
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  grid-template-columns: 1fr 1fr;
+  // grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
   grid-gap: 1rem;
   padding: 10px;
   // margin: 20px;
@@ -52,8 +53,9 @@ export const LoginPageGrid = styled.div`
   width: 100%;
   text-align: center;
 
-  @media screen and (max-width: 500px) {
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  @media screen and (max-width: 700px) {
+    // grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    grid-template-columns: 1fr;
     padding: 5px 5px;
   }
 `;
@@ -222,6 +224,7 @@ export const LoginPageWhiskyViewUl = styled.ul`
 `;
 
 export const LoginPageWhiskyViewLi = styled.li`
+  list-style-type: none;
   width: 100%;
   padding-left: 10px;
   text-align: start;

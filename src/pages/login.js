@@ -8,6 +8,7 @@ import NewBeerForm from "../components/AdminPageForms/NewBeerForm"
 import UpdateBeerForm from "../components/AdminPageForms/UpdateBeerForm"
 import NewWhiskyForm from "../components/AdminPageForms/NewWhiskyForm"
 import UpdateWhiskyForm from "../components/AdminPageForms/UpdateWhiskyForm"
+import NewLiveMusicForm from "../components/AdminPageForms/NewLiveMusicForm"
 
 import loginService from '../services/login'
 import userService from '../services/user'
@@ -17,6 +18,7 @@ import whiskiesService from '../services/whiskies'
 import whiskyService from '../services/whisky'
 import openingHoursService from '../services/openinghours'
 import whiskyCsvService from '../services/whiskyCsv'
+import liveMusicService from '../services/liveMusic'
 
 import { checkIfFileIsCsv } from '../utils/utils'
 
@@ -136,6 +138,60 @@ const ProductCategoryList = ({ productList, removeProduct }) => {
   )
 }
 
+const OpeningHoursView = ({ openingHoursList, removeOpeningHours, updateOpeningHours }) => {
+  const [showAll, setShowAll] = useState(false)
+
+  if (!showAll) {
+    return (
+      <LoginPageWhiskyViewContainer>
+        <div style={{display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+          <LoginPageH3 fontsize = 'small' >Näytä kaikki aukioloajat</LoginPageH3>
+          <LoginPageButton background = 'light' onClick = {() => setShowAll(true)}>Avaa lista</LoginPageButton>
+        </div>
+      </LoginPageWhiskyViewContainer>
+    )
+  }
+
+  return (
+    <LoginPageWhiskyViewContainer>
+      <div style={{display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+        <LoginPageH3 fontsize = 'large' >Aukioloajat</LoginPageH3>
+        <LoginPageButton background = 'light' onClick = {() => setShowAll(false)}>Piilota</LoginPageButton>
+        {openingHoursList.map(openingHour =>
+          // <LoginPageWhiskyViewUl key={openingHour.id}>
+            <LoginPageWhiskyViewList>
+              <OpeningHoursListItem openingHour={openingHour} remove={removeOpeningHours} update={updateOpeningHours} />
+            </LoginPageWhiskyViewList>
+          // </LoginPageWhiskyViewUl>
+        )}
+      </div>
+    </LoginPageWhiskyViewContainer>
+  )
+}
+
+const OpeningHoursListItem = ({ openingHour, remove, update }) => {
+  const [visible, setVisible] = useState(false)
+
+  const showWhenVisible = { display: visible ? '' : 'none' }
+
+  const toggleVisibility = () => {
+    setVisible(!visible)
+  }
+
+  return (
+    <>
+      <LoginPageWhiskyViewLi>{openingHour.day}</LoginPageWhiskyViewLi>
+      <LoginPageWhiskyViewLi>{openingHour.openinghours}</LoginPageWhiskyViewLi>
+      <LoginPageWhiskyUpdateButton onClick={toggleVisibility}>Päivitä</LoginPageWhiskyUpdateButton>
+      <div style={showWhenVisible}>
+        {/* <UpdateOpeningHoursForm openingHours = {openingHour} visibility={toggleVisibility} updateOpeningHours = {update} /> */}
+        {openingHour.openinghours}
+      </div>
+      <LoginPageWhiskyRemoveButton onClick={() => remove(openingHour.id, openingHour)}>Poista</LoginPageWhiskyRemoveButton>
+    </>
+  )
+}
+
 const BeerView = ({ beerList, removeBeer, updateBeer }) => {
   const [showAll, setShowAll] = useState(false)
 
@@ -194,7 +250,6 @@ const BeerListItem = ({ product, remove, update }) => {
 
 }
 
-
 const WhiskyView = ({ whiskyList, removeWhisky, updateWhisky }) => {
   const [showAll, setShowAll] = useState(false)
 
@@ -252,6 +307,57 @@ const WhiskyListItem = ({ product, remove, update }) => {
   )
 }
 
+const LiveMusicView = ({ liveMusicList, removeLiveMusic, updateLiveMusic }) => {
+  const [showAll, setShowAll] = useState(false)
+
+  if (!showAll) {
+    return (
+      <LoginPageWhiskyViewContainer>
+        <div style={{display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+          <LoginPageH3 fontsize = 'small' >Näytä kaikki live-tapahtumat</LoginPageH3>
+          <LoginPageButton background = 'light' onClick = {() => setShowAll(true)}>Avaa lista</LoginPageButton>
+        </div>
+      </LoginPageWhiskyViewContainer>
+    )
+  }
+
+  return (
+    <LoginPageWhiskyViewContainer>
+      <div style={{display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+        <LoginPageH3 fontsize = 'large' >Live-tapahtumat</LoginPageH3>
+        <LoginPageButton background = 'light' onClick = {() => setShowAll(false)}>Piilota</LoginPageButton>
+      </div>
+      {liveMusicList.map(liveMusic =>
+        <LoginPageWhiskyViewList key={liveMusic.id}>
+          <LiveMusicListItem livemusic={liveMusic} remove={removeLiveMusic} update={updateLiveMusic} />
+        </LoginPageWhiskyViewList>
+      )}
+    </LoginPageWhiskyViewContainer>
+  )
+}
+
+const LiveMusicListItem = ({ livemusic, remove, update }) => {
+  const [visible, setVisible] = useState(false)
+
+  const showWhenVisible = { display: visible ? '' : 'none' }
+
+  const toggleVisibility = () => {
+    setVisible(!visible)
+  }
+
+  return (
+    <>
+      <LoginPageWhiskyViewLi>{livemusic.name}</LoginPageWhiskyViewLi>
+      <LoginPageWhiskyViewLi>{livemusic.date}</LoginPageWhiskyViewLi>
+      <LoginPageWhiskyViewLi>{livemusic.time}</LoginPageWhiskyViewLi>
+      <LoginPageWhiskyUpdateButton onClick={toggleVisibility}>Päivitä</LoginPageWhiskyUpdateButton>
+      <div style={showWhenVisible}>
+        {/* <UpdateLiveMusicForm livemusicToUpdate={livemusic} visibility={toggleVisibility} updateLiveMusic={update} /> */}
+      </div>
+      <LoginPageWhiskyRemoveButton onClick={() => remove(livemusic.id, livemusic)}>Poista</LoginPageWhiskyRemoveButton>
+    </>
+  )
+}
 
 const Login = () => {
   const [user, setUser] = useState(null)
@@ -259,12 +365,14 @@ const Login = () => {
   const [whiskies, setWhiskies] = useState([])
   const [openingHours, setOpeningHours] = useState([])
   const [file, setFile] = useState(null)
+  const [liveMusic, setLiveMusic] = useState([])
 
   const beerFormRef = useRef()
   const whiskyFormRef = useRef()
   const openingHoursFormRef = useRef()
   const openingHoursUpdateRef = useRef()
   const beerUpdateRef = useRef()  
+  const liveMusicFormRef = useRef()
 
   // Get logged in user from localStorage
   useEffect(() => {
@@ -319,6 +427,16 @@ const Login = () => {
     openingHoursService.getAll()
       .then(openingHours => {
         setOpeningHours(openingHours)
+      }).catch(error => {
+        console.log(error)
+      })
+  }, [])
+
+  // Get all live music events from db
+  useEffect(() => {
+    liveMusicService.getAll()
+      .then(liveMusic => {
+        setLiveMusic(liveMusic)
       }).catch(error => {
         console.log(error)
       })
@@ -407,6 +525,20 @@ const Login = () => {
     }
   }
 
+  // Create new live music event
+  const createLiveMusic = (newLiveMusic) => {
+    liveMusicService
+      .create(newLiveMusic)
+      .then(returnedLiveMusic => {
+        setLiveMusic(liveMusic.concat(returnedLiveMusic))
+        notify(`Lisätty ${returnedLiveMusic.name}`)
+        liveMusicFormRef.current.toggleVisibility()
+      }).catch(exception => {
+        notify(`${exception.response.data.error}`, 'alert')
+        console.log('Exception: ', exception)
+      })
+  }
+
   // Remove beer from db
   const removeBeer = (id, beerCategory) => {
 
@@ -485,6 +617,22 @@ const Login = () => {
     })
   }
 
+  // Remove live music event from db
+  const removeLiveMusic = (id) => {
+    const toRemove = liveMusic.find(liveMusic => liveMusic.id === id)
+
+    const ok = window.confirm(`Poistetaanko ${toRemove.name}?`)
+
+    if (!ok) return
+
+    liveMusicService.remove(id).then(() => {
+      setLiveMusic(liveMusic.filter(liveMusic => liveMusic.id !== id))
+      notify(`${toRemove.name} poistettiin onnistuneesti!`)
+    }).catch(exception => {
+      notify('Tapahtui virhe', 'alert')
+    })
+  }
+
   // Update opening hours
   const updateOpeningHours = (id, updatedOpeningHours) => {
     openingHoursService
@@ -492,6 +640,19 @@ const Login = () => {
       .then(returnedOpeningHours => {
         setOpeningHours(openingHours.map(openingHours => openingHours.id !== id ? openingHours : returnedOpeningHours))
         notify(`Muokattiin ${returnedOpeningHours.day} ${returnedOpeningHours.openinghours}`)
+      }).catch(exception => {
+        notify(`${exception.response.data.error}`, 'alert')
+        console.log('Exception: ', exception)
+      })
+  }
+
+  // Update live music event
+  const updateLiveMusic = (id, updatedLiveMusic) => {
+    liveMusicService
+      .update(id, updatedLiveMusic)
+      .then(returnedLiveMusic => {
+        setLiveMusic(liveMusic.map(liveMusic => liveMusic.id !== id ? liveMusic : returnedLiveMusic))
+        notify(`Muokattiin ${returnedLiveMusic.name}`)
       }).catch(exception => {
         notify(`${exception.response.data.error}`, 'alert')
         console.log('Exception: ', exception)
@@ -608,11 +769,11 @@ const Login = () => {
             <Togglable buttonLabel='Uusi aika' ref = {openingHoursFormRef} >
               <NewOpeningHoursForm createNewHours = {createOpeningHours} />
             </Togglable>
-            <Togglable buttonLabel='Päivitä aika' ref = {openingHoursUpdateRef} >
+            {/* <Togglable buttonLabel='Päivitä aika' ref = {openingHoursUpdateRef} >
               <UpdateOpeningHoursForm currentOpeningHours = {openingHours} updateOpeningHours = {updateOpeningHours} />
-            </Togglable>
+            </Togglable> */}
           </LoginPageInputForm>
-          <LoginPageGridItem>
+          {/* <LoginPageGridItem>
             {openingHours.map(openingHours =>
               <OpeningHoursList
                 key = {openingHours.id}
@@ -620,7 +781,7 @@ const Login = () => {
                 removeOpeningHour = {removeOpeningHours}
               />
             )}
-          </LoginPageGridItem>
+          </LoginPageGridItem> */}
         </div>
         <div>
           <LoginPageInputForm>
@@ -650,7 +811,17 @@ const Login = () => {
             </Togglable>
           </LoginPageInputForm>
         </div>
+        <div>
+          <LoginPageInputForm>
+            <LoginPageH1>Live-tapahtuma</LoginPageH1>
+            <Togglable buttonLabel='Uusi tapahtuma' ref = {liveMusicFormRef} >
+              <NewLiveMusicForm createNewLiveMusic = {createLiveMusic} />
+            </Togglable>
+          </LoginPageInputForm>
+        </div>
       </LoginPageGrid>
+      <OpeningHoursView openingHoursList = {openingHours} removeOpeningHours = {removeOpeningHours} updateOpeningHours = {updateOpeningHours} />
+      <LiveMusicView liveMusicList = {liveMusic} removeLiveMusic = {removeLiveMusic} updateLiveMusic = {updateLiveMusic} />
       <BeerView beerList = {sortedBeers} removeBeer = {removeBeer} updateBeer = {updateBeer} />
       <WhiskyView whiskyList = {sortedWhiskies} removeWhisky = {removeWhisky} updateWhisky = {updateWhisky} />
     </LoginPageContainer>    
