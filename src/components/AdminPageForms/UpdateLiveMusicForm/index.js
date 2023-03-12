@@ -1,27 +1,30 @@
 import { useState } from 'react'
 import styled, { keyframes } from 'styled-components';
 
-import Notification from '../../Notification/Notification'
-
-const NewOpeningHoursForm = ({ openingHours, visibility, updateOpeningHours }) => {
-  const [day, setDay] = useState('')  
-  const [openinghours, setOpeningHours] = useState('')
+const UpdateLiveMusicForm = ({ liveMusicToUpdate, visibility, updateLiveMusic }) => {
+  const [artist, setArtist] = useState('')
+  const [date, setDate] = useState('')  
+  const [time, setTime] = useState('')
 
   const handleSubmit = (event) => {
     event.preventDefault()
 
-    const updatedHours = {
-      day,
-      openinghours,
+    const updatedLiveMusic = {
+      name: artist,
+      date,
+      time,
     }
     
-    if (!day)
-      updatedHours.day = openingHours.day
+    if (!artist)
+      updatedLiveMusic.name = liveMusicToUpdate.name
 
-    if (!openinghours)
-      updatedHours.openinghours = openingHours.openinghours    
+    if (!date)
+      updatedLiveMusic.date = liveMusicToUpdate.date
+      
+    if (!time)
+      updatedLiveMusic.time = liveMusicToUpdate.time
 
-    updateOpeningHours(openingHours.id, updatedHours) 
+    updateLiveMusic(liveMusicToUpdate.id, updatedLiveMusic) 
 
     // Nollataan syöttökentät
     resetStates()
@@ -30,27 +33,21 @@ const NewOpeningHoursForm = ({ openingHours, visibility, updateOpeningHours }) =
   }
 
   const resetStates = () => {
-    setDay('')
-    setOpeningHours('')
+    setArtist('')
+    setDate('')
+    setTime('')
   }
 
-  const handleDayChange = (event) => {
-    setDay(event.target.value)
+  const handleArtistChange = (event) => {
+    setArtist(event.target.value)
   }
 
-  const handleHoursChange = (event) => {
-    setOpeningHours(event.target.value)
+  const handleDateChange = (event) => {
+    setDate(event.target.value)
   }
 
-  const notify = (message, type = 'info') => {
-
-    new Notification({
-      text: message,
-      position: "top-center",
-      pauseOnHover: true,
-      pauseOnFocusLoss: true,
-      color: type === 'info' ? '##1DB954' : '#FF4136',
-    })
+  const handleTimeChange = (event) => {
+    setTime(event.target.value)
   }
 
   const closeForm = () => {
@@ -64,27 +61,37 @@ const NewOpeningHoursForm = ({ openingHours, visibility, updateOpeningHours }) =
       <FormWrapper>
         <FormClose onClick={closeForm} />
         <div>
-          <h2>Päivitä aukioloaika</h2>
-          <p>{openingHours.day}</p>
-          <p>{openingHours.openinghours}</p>
+          <h2>Päivitä tapahtuma</h2>
+          <p>{liveMusicToUpdate.name}</p>
+          <p>{liveMusicToUpdate.date}</p>
+          <p>{liveMusicToUpdate.time}</p>
         </div>
           <Form onSubmit={handleSubmit}>
-            <FormH4>Päivät</FormH4>
+            <FormH4>Tapahtuma</FormH4>
             <div>
               <FormInput
                 type='text'
-                id='day'
-                value={day}
-                onChange={handleDayChange}
+                id='artist'
+                value={artist}
+                onChange={handleArtistChange}
               />
             </div>
-            <FormH4>Aukioloaika</FormH4>
+            <FormH4>Päivämäärä</FormH4>
             <div>
               <FormInput
                 type='text'
-                id='openinghours'
-                value={openinghours}
-                onChange={handleHoursChange}
+                id='date'
+                value={date}
+                onChange={handleDateChange}
+              />
+            </div>
+            <FormH4>Alkamisaika</FormH4>
+            <div>
+              <FormInput
+                type='text'
+                id='time'
+                value={time}
+                onChange={handleTimeChange}
               />
             </div>
             <FormButton type='submit'>Päivitä</FormButton>
@@ -94,7 +101,7 @@ const NewOpeningHoursForm = ({ openingHours, visibility, updateOpeningHours }) =
   )
 }
 
-export default NewOpeningHoursForm
+export default UpdateLiveMusicForm
 
 const styles = {
   transparentContainer: () => ({
@@ -157,7 +164,7 @@ const FormWrapper = styled.div`
   right: 50%;
   transform: translate(50%, -50%);
   width: 300px;
-  height: 400px;
+  height: 440px;
   z-index: 200;
   border: 4px solid gold;
   background-color: #A69666;
@@ -197,6 +204,7 @@ const Form = styled.form`
 
 const FormInput = styled.input`
   margin-top: 0.5rem;
+  padding: 0.5rem;
   width: 100%;
   height: 2rem;
   border: transparent;

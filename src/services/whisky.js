@@ -32,8 +32,8 @@ const remove = async (id) => {
   return response.data
 }
 
-const update = async (id, newObject) => {
-  const response = await axios.put(`${baseUrl}/${id}`, newObject, config())
+const update = async (id, updatedObject) => {
+  const response = await axios.put(`${baseUrl}/${id}`, updatedObject, config())
   return response.data
 }
 

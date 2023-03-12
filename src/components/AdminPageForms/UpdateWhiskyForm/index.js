@@ -25,9 +25,6 @@ const UpdateWhiskyForm = ({ whiskyToUpdate, updateWhisky, visibility }) => {
   const handleSubmit = (event) => {
     event.preventDefault()
 
-    console.log('name: ', name)
-    console.log('area: ', area)
-
     if (area === 'Valitse listasta' || area === '') {
       notify('Valitse alue', 'error')
 
@@ -39,13 +36,12 @@ const UpdateWhiskyForm = ({ whiskyToUpdate, updateWhisky, visibility }) => {
       area,
     }
 
-    if (name === '')
+    if (name === '') {
       setName(whiskyToUpdate.name)
       updatedWhisky.name = whiskyToUpdate.name   
+    }
 
-    console.log('updatedWhisky: ', updatedWhisky)
-
-    // updateWhisky(whiskyToUpdate.id, whiskyToUpdate, updatedWhisky)
+    updateWhisky(whiskyToUpdate.id, updatedWhisky)
 
     resetStates()
 

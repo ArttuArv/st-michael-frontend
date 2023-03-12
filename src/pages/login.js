@@ -9,6 +9,7 @@ import UpdateBeerForm from "../components/AdminPageForms/UpdateBeerForm"
 import NewWhiskyForm from "../components/AdminPageForms/NewWhiskyForm"
 import UpdateWhiskyForm from "../components/AdminPageForms/UpdateWhiskyForm"
 import NewLiveMusicForm from "../components/AdminPageForms/NewLiveMusicForm"
+import UpdateLiveMusicForm from "../components/AdminPageForms/UpdateLiveMusicForm"
 
 import loginService from '../services/login'
 import userService from '../services/user'
@@ -159,7 +160,7 @@ const OpeningHoursView = ({ openingHoursList, removeOpeningHours, updateOpeningH
         <LoginPageButton background = 'light' onClick = {() => setShowAll(false)}>Piilota</LoginPageButton>
         {openingHoursList.map(openingHour =>
           // <LoginPageWhiskyViewUl key={openingHour.id}>
-            <LoginPageWhiskyViewList>
+            <LoginPageWhiskyViewList key={openingHour.id}>
               <OpeningHoursListItem openingHour={openingHour} remove={removeOpeningHours} update={updateOpeningHours} />
             </LoginPageWhiskyViewList>
           // </LoginPageWhiskyViewUl>
@@ -184,8 +185,7 @@ const OpeningHoursListItem = ({ openingHour, remove, update }) => {
       <LoginPageWhiskyViewLi>{openingHour.openinghours}</LoginPageWhiskyViewLi>
       <LoginPageWhiskyUpdateButton onClick={toggleVisibility}>Päivitä</LoginPageWhiskyUpdateButton>
       <div style={showWhenVisible}>
-        {/* <UpdateOpeningHoursForm openingHours = {openingHour} visibility={toggleVisibility} updateOpeningHours = {update} /> */}
-        {openingHour.openinghours}
+        <UpdateOpeningHoursForm openingHours = {openingHour} visibility={toggleVisibility} updateOpeningHours = {update} />
       </div>
       <LoginPageWhiskyRemoveButton onClick={() => remove(openingHour.id, openingHour)}>Poista</LoginPageWhiskyRemoveButton>
     </>
@@ -271,7 +271,7 @@ const WhiskyView = ({ whiskyList, removeWhisky, updateWhisky }) => {
         <LoginPageButton background = 'light' onClick = {() => setShowAll(false)}>Piilota</LoginPageButton>
       </div>
       {whiskyList.map(whiskies => 
-        <div key = {whiskies.id}>
+        <div key = {whiskies.name}>
           <LoginPageH3 style={{marginTop: '20px'}}>{whiskies.name}</LoginPageH3>
           <LoginPageWhiskyViewUl>
             {whiskies.whiskies.map(whisky =>
@@ -352,7 +352,7 @@ const LiveMusicListItem = ({ livemusic, remove, update }) => {
       <LoginPageWhiskyViewLi>{livemusic.time}</LoginPageWhiskyViewLi>
       <LoginPageWhiskyUpdateButton onClick={toggleVisibility}>Päivitä</LoginPageWhiskyUpdateButton>
       <div style={showWhenVisible}>
-        {/* <UpdateLiveMusicForm livemusicToUpdate={livemusic} visibility={toggleVisibility} updateLiveMusic={update} /> */}
+        <UpdateLiveMusicForm liveMusicToUpdate={livemusic} visibility={toggleVisibility} updateLiveMusic={update} />
       </div>
       <LoginPageWhiskyRemoveButton onClick={() => remove(livemusic.id, livemusic)}>Poista</LoginPageWhiskyRemoveButton>
     </>
@@ -648,6 +648,7 @@ const Login = () => {
 
   // Update live music event
   const updateLiveMusic = (id, updatedLiveMusic) => {
+
     liveMusicService
       .update(id, updatedLiveMusic)
       .then(returnedLiveMusic => {
@@ -687,23 +688,24 @@ const Login = () => {
   }
 
   // Update Whisky
-  const updateWhisky = (id, existingWhisky, updatedWhisky) => {
-    console.log('TULI TÄNNE')
+  const updateWhisky = (id, updatedWhisky) => {
     whiskyService
       .update(id, updatedWhisky)
       .then(returnedWhisky => {
 
         setWhiskies(whiskies.map(whiskies => {
-          if (whiskies.name === existingWhisky.area) {
-            whiskies.whiskies = whiskies.whiskies.filter(whisky => whisky.id !== id)
+
+          for (let i = 0; i < whiskies.whiskies.length; i++) {
+            if (whiskies.whiskies[i].id === id)
+              whiskies.whiskies.splice(i, 1)
           }
+
           return whiskies
         }))
 
         setWhiskies(whiskies.map(whiskies => {
-          if (whiskies.name === updatedWhisky.area) {
+          if (whiskies.name === updatedWhisky.area)
             whiskies.whiskies.push(returnedWhisky)
-          }
           return whiskies
         }))
         notify(`Muokattiin ${returnedWhisky.name}`)
