@@ -64,7 +64,7 @@ const NewOpeningHoursForm = ({ openingHours, visibility, updateOpeningHours }) =
       <FormWrapper>
         <FormClose onClick={closeForm} />
         <div>
-          <h2>Päivitä aukioloaika</h2>
+          <FormH2>Päivitä aukioloaika</FormH2>
           <p>{openingHours.day}</p>
           <p>{openingHours.openinghours}</p>
         </div>
@@ -231,6 +231,12 @@ const FormButton = styled.button`
     color: #fff;
   }
 `
+
+const FormH2 = styled.h2`
+  font-size: 1.2rem;
+  margin-bottom: 0.5rem;
+`
+
 const FormH4 = styled.h4`
   margin-top: 1rem;
   font-size: 1.2rem;

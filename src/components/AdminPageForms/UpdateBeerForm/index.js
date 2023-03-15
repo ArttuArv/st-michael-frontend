@@ -191,7 +191,7 @@ const UpdateBeerForm = ({ beer, updateBeer, visibility }) => {
       <FormWrapper>
         <FormClose onClick={closeForm} />
         <div>
-          <h2>Päivitä hanatuote</h2>
+          <FormH2>Päivitä hanatuote</FormH2>
           <FormH4>{beer?.name}</FormH4>
           <FormP>{beer?.style}</FormP>
           <FormP>{beer?.country}</FormP>
@@ -384,6 +384,12 @@ const FormButton = styled.button`
     color: #fff;
   }
 `
+
+const FormH2 = styled.h2`
+  font-size: 1.2rem;
+  margin-bottom: 0.5rem;
+`
+
 const FormH4 = styled.h4`
   margin-top: 0.5rem;
   font-size: 1.2rem;

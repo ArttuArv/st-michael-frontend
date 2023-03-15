@@ -19,7 +19,7 @@ const HeroSection = ({ openingHours }) => {
   return (
     <HeroContainer draggable = 'false'>
       <HeroBg>
-        <VideoBg autoPlay loop muted src = {Video} type = 'video/mp4' />
+        <VideoBg autoPlay loop muted src = {Video} type = 'video/mp4' playsInline />
       </HeroBg>
       <HeroContent>
         <HeroLogo draggable = 'false' src = {Logo} alt = 'Logo' />

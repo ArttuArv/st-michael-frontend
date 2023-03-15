@@ -88,7 +88,7 @@ const UpdateWhiskyForm = ({ whiskyToUpdate, updateWhisky, visibility }) => {
       <FormWrapper>
         <FormClose onClick={closeForm} />
         <div>
-          <h2>Päivitä viski</h2>
+          <FormH2>Päivitä viski</FormH2>
           <p>{whiskyToUpdate.name}</p>
         </div>
           <Form onSubmit={handleSubmit}>
@@ -251,6 +251,11 @@ const FormButton = styled.button`
     color: #fff;
   }
 `
+const FormH2 = styled.h2`
+  font-size: 1.2rem;
+  margin-bottom: 0.5rem;
+`
+
 const FormH4 = styled.h4`
   margin-top: 1rem;
   font-size: 1.2rem;

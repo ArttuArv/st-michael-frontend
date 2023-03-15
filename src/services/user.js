@@ -1,5 +1,6 @@
 
 let token = null
+let refreshToken = null
 
 const STORAGE_KEY = process.env.REACT_APP_STORAGE_KEY
 
@@ -7,7 +8,12 @@ const setUser = (user) => {
   window.localStorage.setItem(
     STORAGE_KEY, JSON.stringify(user)
   )
-  token = user.token
+
+  token = user.access
+  refreshToken = user.refresh
+
+  console.log('token: ', token)
+  console.log('refreshToken: ', refreshToken)
 }
 
 const getUser = () => {
@@ -26,7 +32,11 @@ const clearUser = () => {
   token = null
 }
 
-const getToken = () => token
+const getToken = () => {
+  return token
+}
+
+const getRefreshToken = () => { return refreshToken }
 
 
-export default { setUser, getUser, clearUser, getToken, }
+export default { setUser, getUser, clearUser, getToken, getRefreshToken }

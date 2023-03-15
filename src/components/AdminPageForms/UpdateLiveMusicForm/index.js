@@ -61,7 +61,7 @@ const UpdateLiveMusicForm = ({ liveMusicToUpdate, visibility, updateLiveMusic })
       <FormWrapper>
         <FormClose onClick={closeForm} />
         <div>
-          <h2>Päivitä tapahtuma</h2>
+          <FormH2>Päivitä tapahtuma</FormH2>
           <p>{liveMusicToUpdate.name}</p>
           <p>{liveMusicToUpdate.date}</p>
           <p>{liveMusicToUpdate.time}</p>
@@ -238,6 +238,10 @@ const FormButton = styled.button`
     background-color: green;
     color: #fff;
   }
+`
+const FormH2 = styled.h2`
+  font-size: 1.2rem;
+  margin-bottom: 0.5rem;
 `
 const FormH4 = styled.h4`
   margin-top: 1rem;
