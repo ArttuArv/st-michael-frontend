@@ -78,87 +78,71 @@ export const HeroContent = styled.div`
 export const HeroLogo = styled.img`
   height: 100%;
   width: 100%;
-  margin-bottom: 48px;
+  margin-top: -100px;
 
   @media screen and (max-width: 1920px) {
     margin-bottom: 20px;
   }
 
-  @media screen and (max-width: 480px) {
-    margin-bottom: 20px;
-  }
-
-  @media screen and (max-width: 375px) {
-    margin-bottom: 20px;
-  }
+  @media screen and (max-width: 768px) {
+    margin-top: 20px;
 `;
 
 export const HeroH1 = styled.h1`
   color: #F5BD30;
-  font-size: 60px;
+  font-size: 45px;
   text-align: center;
   text-shadow: 3px 5px 3px #000;
   margin-bottom: 8px;
 
   @media screen and (max-width: 1920px) {
-    font-size: 44px;
-  }
-
-  @media screen and (max-width: 983px) {
-    font-size: 50px;
-  }
-
-  @media screen and (max-width: 899px) {
-    font-size: 46px;
-  }
-
-  @media screen and (max-width: 873px) {
-    font-size: 44px;
-  }
-
-  @media screen and (max-width: 768px) {
     font-size: 40px;
   }
 
-  @media screen and (max-width: 480px) {
-    font-size: 32px;
+  @media screen and (max-width: 983px) {
+    font-size: 35px;
   }
 
-  @media screen and (max-width: 375px) {
-    font-size: 32px;
+  @media screen and (max-width: 899px) {
+    font-size: 30px;
   }
+
+  @media screen and (max-width: 545px) {
+    font-size: 25px;
+  }
+  
 `;
 
 export const HeroH3 = styled.h3`
   color: #F5BD30;
-  font-size: 42px;
+  font-size: 35px;
   text-align: center;
   text-shadow: 3px 5px 3px #000;
   margin-bottom: 8px;
   margin-top: 16px;
 
   @media screen and (max-width: 768px) {
-    font-size: 30px;
+    font-size: 25px;
   }
 
   @media screen and (max-width: 480px) {
-    font-size: 24px;
+    font-size: 20px;
   }
 `;
 
 export const HeroP = styled.p`
   color: #F5BD30;
-  font-size: 38px;
+  font-size: 28px;
   text-align: center;
   max-width: 600px;
   text-shadow: 2px 4px 2px #000;
 
   @media screen and (max-width: 768px) {
-    font-size: 30px;
+    font-size: 25px;
   }
 
   @media screen and (max-width: 480px) {
-    font-size: 26px;
+    font-size: 18px;
   }  
 `;
 
@@ -172,6 +156,11 @@ export const HeroTable = styled.table`
   border-collapse: collapse;
   border-spacing: 0;  
   text-shadow: 3px 5px 3px #000;
+  font-size: 28px;
+
+  @media screen and (max-width: 768px) {
+    font-size: 20px;
+  }
 `;
 
 export const HeroTableBody = styled.tbody`
@@ -185,7 +174,6 @@ export const HeroTableRow = styled.tr`
 export const HeroTableHead = styled.th`
   padding: 4px;
   color: #F5BD30;
-  font-size: 30px;
   text-align: left;
   text-shadow: 3px 5px 3px #000;
 `;

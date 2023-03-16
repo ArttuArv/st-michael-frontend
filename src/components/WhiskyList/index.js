@@ -53,7 +53,7 @@ const WhiskyListNavs = ({ whisky }) => {
               to={area.name} 
               spy={true} 
               smooth={true}
-              offset = {-100} 
+              offset = {-180} 
               duration={500}>
                 {area.name}
               </WhiskyListLink>
@@ -75,6 +75,14 @@ const SearchResult = ({ filteredList, input }) => {
       </>
     )
   }
+  // Jos filtteröity lista ei ole tyhjä ja input on tyhjä, poistetaan ilmoitusviesti
+  if (filteredList.length > 0 && input.length === 0) {
+    return (
+      <>
+      </>
+    )
+  }
+
   // Jos filtteröity lista on tyhjä ja input on tyhjä, poistetaan ilmoitusviesti
   if (filteredList.length === 0 && input.length === 0) {
     return (
@@ -91,12 +99,12 @@ const SearchResult = ({ filteredList, input }) => {
           <tbody>
             <tr>
               <th style = {{textAlign: 'left'}}>Nimi</th>
-              <th style = {{textAlign: 'right'}}>Hinta (€ / 4 cl)</th>
+              {/* <th style = {{textAlign: 'right'}}>Hinta (€ / 4 cl)</th> */}
             </tr>      
             {filteredList.map((whisky, index) => (          
               <tr style = {{borderBottom: '1px dashed black', marginBottom: '20px' }} key = {index}>
                 <td style = {{ paddingTop: '10px', paddingBottom: '10px', paddingRight: '10px' }}>{whisky.name}</td>
-                <td style = {{ textAlign: 'right'}}>{whisky.price}</td>
+                {/* <td style = {{ textAlign: 'right'}}>{whisky.price}</td> */}
               </tr>                          
             ))}
             </tbody>
@@ -164,12 +172,12 @@ const WhiskyList = ({ whisky }) => {
                   <tbody>
                     <tr>
                       <th style = {{textAlign: 'left'}}>Nimi</th>
-                      <th style = {{textAlign: 'right'}}>Hinta (€ / 4 cl)</th>
+                      {/* <th style = {{textAlign: 'right'}}>Hinta (€ / 4 cl)</th> */}
                     </tr>      
                     {area.whiskies.map(whisky => (          
                       <tr style = {{borderBottom: '1px dashed black', marginBottom: '20px' }} key = {whisky.id}>
                         <td style = {{ paddingTop: '10px', paddingBottom: '10px', paddingRight: '10px' }}>{whisky.name}</td>
-                        <td style = {{ textAlign: 'right'}}>{whisky.price}</td>
+                        {/* <td style = {{ textAlign: 'right'}}>{whisky.price}</td> */}
                       </tr>                          
                     ))}
                     </tbody>

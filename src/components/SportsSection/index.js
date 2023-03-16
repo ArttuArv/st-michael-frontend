@@ -29,12 +29,11 @@ const SportsSection = () => {
       <div className="live-page-wrapper">
         <div className='live-music-box'>
           <div className='live-music-content'>
-            <h2>Live-musiikki</h2>
+            <h2>Tulevat tapahtumat</h2>
             {liveMusic.map(liveMusic => (
               <section className='live-music-info' key={liveMusic.id}>
                 <h3>{liveMusic.name}</h3>
                 <p>{liveMusic.date} klo. {liveMusic.time}</p>
-                <p></p>
               </section>
             ))}
           </div>
