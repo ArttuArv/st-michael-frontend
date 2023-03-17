@@ -17,12 +17,17 @@ export const LoginPageWrapper = styled.div`
   font-weight: bold;
 `;
 
-export const LoginPageH1 = styled.h1`
+export const LoginPageH1 = styled.h2`
   font-size: 2rem;
   margin-top: 20px;
   margin-bottom: 10px;
   color: gold;
   text-shadow: 1px 1px 0px rgba(0, 0, 0, 1);
+
+  @media screen and (max-width: 500px) {
+    font-size: 1.5rem;
+    align-self: center;
+  }
 `;
 
 export const LoginPageP = styled.p`
@@ -93,7 +98,7 @@ export const LoginPageButton = styled.button`
   }
 
   @media screen and (max-width: 500px) {
-    font-size: 1.5rem;
+    font-size: 1.1rem;
     height: 60px;
   }
 `;
@@ -108,6 +113,7 @@ export const LoginPageInputForm = styled.div`
   color: #32231F;
   background: #A69666;
   border-radius: 5px;
+  padding: 0 10px;
 `;
 
 export const LoginPageRemoveButton = styled.button`
@@ -129,7 +135,7 @@ export const LoginPageRemoveButton = styled.button`
   }
 
   @media screen and (max-width: 500px) {
-    font-size: 1.5rem;
+    font-size: 1.2rem;
     height: 60px;
   }
 `;
@@ -153,7 +159,7 @@ export const LoginPageWhiskyUpdateButton = styled.button`
   }
 
   @media screen and (max-width: 500px) {
-    font-size: 1.5rem;
+    font-size: 1.2rem;
     height: 60px;
     max-width: 120px;
     width: 100%;
@@ -192,13 +198,14 @@ export const LoginPageWhiskyViewContainer = styled.div`
 `;
 
 export const LoginPageWhiskyViewList = styled.div`
-  width: 100%;
   display: flex;
   flex-direction: row;
-  // align-items: center;
   justify-content: space-between;
-  margin-bottom: 5px;
-  border-bottom: 1px solid #32231F;
+  margin: 5px;
+  background: #e4dfd1;
+  border-radius: 5px;
+  padding: 5px;
+  border: 1px solid #32231F;
 `;
 
 export const LoginPageWhiskyViewUl = styled.ul`
@@ -248,6 +255,38 @@ export const LoginPageWhiskyRemoveButton = styled.button`
   }
 
   @media screen and (max-width: 500px) {
-    font-size: 1.5rem;
+    font-size: 1.2rem;
   }
+`;
+
+export const LoginPageShortListGrid = styled.div`
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+
+  @media screen and (max-width: 1500px) {
+    grid-template-columns: repeat(4, 1fr);
+  }
+
+  @media screen and (max-width: 1200px) {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  @media screen and (max-width: 900px) {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  @media screen and (max-width: 625px) {
+    grid-template-columns: repeat(1, 1fr);
+  }
+`;
+
+export const LoginPageShortListGridItem = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin: 5px;
+  background: #e4dfd1;
+  border-radius: 5px;
+  padding: 5px;
+  border: 1px solid #32231F;
 `;

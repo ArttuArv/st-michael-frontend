@@ -13,6 +13,7 @@ import {
   WhiskyListLink,
   WhiskyListInput,
   WhiskyListPageContainer,
+  WhiskyPageHeaderH2,
 } from './WhiskyListElements';
 
 const tableStyle = {
@@ -140,16 +141,16 @@ const WhiskyList = ({ whisky }) => {
 
   return (
     <WhiskyListPageContainer>
-      <WhiskyListContainer style = {{padding: '10px 5px'}}>
-        <WhiskyListH2>Viskilista elää viikottain. Pidätämme oikeudet muutoksiin.</WhiskyListH2>
-        <WhiskyListH2>Lista löytyy myös baaritiskiltä.</WhiskyListH2>
-        <WhiskyListH2>Kysy uutuuksista henkilökunnalta.</WhiskyListH2>
+      <WhiskyListContainer>
+        <WhiskyPageHeaderH2>Lista löytyy myös baaritiskiltä.</WhiskyPageHeaderH2>
+        <WhiskyPageHeaderH2>Viskilista elää viikottain. Pidätämme oikeudet muutoksiin.</WhiskyPageHeaderH2>
+        <WhiskyPageHeaderH2>Kysy uutuuksista henkilökunnalta.</WhiskyPageHeaderH2>
       </WhiskyListContainer>
         <WhiskyListNavs whisky = {whisky} />
       <WhiskyListContainer>
         <WhiskyListWrapper>
           <WhiskyListBox>
-            <WhiskyListH2>Haku</WhiskyListH2>
+            <WhiskyPageHeaderH2>Haku</WhiskyPageHeaderH2>
             <div style = {{width: 'min(250px)', position: 'relative'}}>
               <WhiskyListInput 
               value = {filter} 
@@ -193,3 +194,10 @@ const WhiskyList = ({ whisky }) => {
 }
 
 export default WhiskyList
+
+const h2Style = {
+  color: '#F5BD30',
+  fontWeight: '400',
+  fontSize: '30px',
+  textAlign: 'center',
+}

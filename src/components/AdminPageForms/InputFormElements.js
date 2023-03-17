@@ -20,7 +20,7 @@ export const InputFormButton = styled.button`
   }
 
   @media screen and (max-width: 500px) {
-    font-size: 1.5rem;
+    font-size: 1.2rem;
     height: 100%;
   }
 `;
@@ -76,7 +76,7 @@ export const InputFormInput = styled.input`
   }
 
   @media screen and (max-width: 500px) {
-    font-size: 1.5rem;
+    font-size: 1.2rem;
     height: 60px;
   }
 `;
@@ -102,7 +102,7 @@ export const InputFormSelect = styled.select`
   }
 
   @media screen and (max-width: 500px) {
-    font-size: 1.5rem;
+    font-size: 1.2rem;
     height: 60px;
   }
 `;

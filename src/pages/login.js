@@ -11,6 +11,8 @@ import UpdateWhiskyForm from "../components/AdminPageForms/UpdateWhiskyForm"
 import NewLiveMusicForm from "../components/AdminPageForms/NewLiveMusicForm"
 import UpdateLiveMusicForm from "../components/AdminPageForms/UpdateLiveMusicForm"
 
+import Modal from "../components/AdminPageForms/Modal/modal"
+
 import loginService from '../services/login'
 import userService from '../services/user'
 import beersService from '../services/beers'
@@ -20,6 +22,7 @@ import whiskyService from '../services/whisky'
 import openingHoursService from '../services/openinghours'
 import whiskyCsvService from '../services/whiskyCsv'
 import liveMusicService from '../services/liveMusic'
+
 
 import { checkIfFileIsCsv } from '../utils/utils'
 
@@ -43,6 +46,8 @@ import {
   LoginPageWhiskyViewLi,
   LoginPageWhiskyRemoveButton,
   LoginPageWhiskyUpdateButton,
+  LoginPageShortListGrid,
+  LoginPageShortListGridItem,
 } from '../components/LoginPageStyledComponents/LoginPageElements'
 
 
@@ -158,13 +163,13 @@ const OpeningHoursView = ({ openingHoursList, removeOpeningHours, updateOpeningH
       <div style={{display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
         <LoginPageH3 fontsize = 'large' >Aukioloajat</LoginPageH3>
         <LoginPageButton background = 'light' onClick = {() => setShowAll(false)}>Piilota</LoginPageButton>
-        {openingHoursList.map(openingHour =>
-          // <LoginPageWhiskyViewUl key={openingHour.id}>
-            <LoginPageWhiskyViewList key={openingHour.id}>
+        <LoginPageShortListGrid>
+          {openingHoursList.map(openingHour =>
+            <LoginPageShortListGridItem key={openingHour.id}>
               <OpeningHoursListItem openingHour={openingHour} remove={removeOpeningHours} update={updateOpeningHours} />
-            </LoginPageWhiskyViewList>
-          // </LoginPageWhiskyViewUl>
-        )}
+            </LoginPageShortListGridItem>
+          )}
+        </LoginPageShortListGrid>
       </div>
     </LoginPageWhiskyViewContainer>
   )
@@ -172,8 +177,6 @@ const OpeningHoursView = ({ openingHoursList, removeOpeningHours, updateOpeningH
 
 const OpeningHoursListItem = ({ openingHour, remove, update }) => {
   const [visible, setVisible] = useState(false)
-
-  const showWhenVisible = { display: visible ? '' : 'none' }
 
   const toggleVisibility = () => {
     setVisible(!visible)
@@ -184,9 +187,9 @@ const OpeningHoursListItem = ({ openingHour, remove, update }) => {
       <LoginPageWhiskyViewLi>{openingHour.day}</LoginPageWhiskyViewLi>
       <LoginPageWhiskyViewLi>{openingHour.openinghours}</LoginPageWhiskyViewLi>
       <LoginPageWhiskyUpdateButton onClick={toggleVisibility}>Päivitä</LoginPageWhiskyUpdateButton>
-      <div style={showWhenVisible}>
+      <Modal visible={visible}>
         <UpdateOpeningHoursForm openingHours = {openingHour} visibility={toggleVisibility} updateOpeningHours = {update} />
-      </div>
+      </Modal>
       <LoginPageWhiskyRemoveButton onClick={() => remove(openingHour.id, openingHour)}>Poista</LoginPageWhiskyRemoveButton>
     </>
   )
@@ -231,8 +234,6 @@ const BeerView = ({ beerList, removeBeer, updateBeer }) => {
 const BeerListItem = ({ product, remove, update }) => {
   const [visible, setVisible] = useState(false)
 
-  const showWhenVisible = { display: visible ? '' : 'none' }
-
   const toggleVisibility = () => {
     setVisible(!visible)
   }
@@ -241,9 +242,9 @@ const BeerListItem = ({ product, remove, update }) => {
     <>
       <LoginPageWhiskyViewLi>{product.name}</LoginPageWhiskyViewLi>
       <LoginPageWhiskyUpdateButton onClick={toggleVisibility}>Päivitä</LoginPageWhiskyUpdateButton>
-      <div style={showWhenVisible}>
+      <Modal visible={visible}>
         <UpdateBeerForm beer = {product} visibility={toggleVisibility} updateBeer = {update} />
-      </div>
+      </Modal>
       <LoginPageWhiskyRemoveButton onClick={() => remove(product.id, product)}>Poista</LoginPageWhiskyRemoveButton>
     </>
   )
@@ -289,8 +290,6 @@ const WhiskyView = ({ whiskyList, removeWhisky, updateWhisky }) => {
 const WhiskyListItem = ({ product, remove, update }) => {
   const [visible, setVisible] = useState(false)
 
-  const showWhenVisible = { display: visible ? '' : 'none' }
-
   const toggleVisibility = () => {
     setVisible(!visible)
   }
@@ -299,9 +298,9 @@ const WhiskyListItem = ({ product, remove, update }) => {
     <>
       <LoginPageWhiskyViewLi>{product.name}</LoginPageWhiskyViewLi>
       <LoginPageWhiskyUpdateButton onClick={toggleVisibility}>Päivitä</LoginPageWhiskyUpdateButton>
-      <div style={showWhenVisible}>
+      <Modal visible={visible}>
         <UpdateWhiskyForm whiskyToUpdate={product} visibility={toggleVisibility} updateWhisky={update} />
-      </div>
+      </Modal>
       <LoginPageWhiskyRemoveButton onClick={() => remove(product.id, product)}>Poista</LoginPageWhiskyRemoveButton>
     </>
   )
@@ -327,19 +326,19 @@ const LiveMusicView = ({ liveMusicList, removeLiveMusic, updateLiveMusic }) => {
         <LoginPageH3 fontsize = 'large' >Live-tapahtumat</LoginPageH3>
         <LoginPageButton background = 'light' onClick = {() => setShowAll(false)}>Piilota</LoginPageButton>
       </div>
-      {liveMusicList.map(liveMusic =>
-        <LoginPageWhiskyViewList key={liveMusic.id}>
-          <LiveMusicListItem livemusic={liveMusic} remove={removeLiveMusic} update={updateLiveMusic} />
-        </LoginPageWhiskyViewList>
-      )}
+      <LoginPageShortListGrid>
+        {liveMusicList.map(liveMusic =>
+          <LoginPageShortListGridItem key={liveMusic.id}>
+            <LiveMusicListItem livemusic={liveMusic} remove={removeLiveMusic} update={updateLiveMusic} />
+          </LoginPageShortListGridItem>
+        )}
+       </LoginPageShortListGrid>
     </LoginPageWhiskyViewContainer>
   )
 }
 
 const LiveMusicListItem = ({ livemusic, remove, update }) => {
   const [visible, setVisible] = useState(false)
-
-  const showWhenVisible = { display: visible ? '' : 'none' }
 
   const toggleVisibility = () => {
     setVisible(!visible)
@@ -348,12 +347,10 @@ const LiveMusicListItem = ({ livemusic, remove, update }) => {
   return (
     <>
       <LoginPageWhiskyViewLi>{livemusic.name}</LoginPageWhiskyViewLi>
-      <LoginPageWhiskyViewLi>{livemusic.date}</LoginPageWhiskyViewLi>
-      <LoginPageWhiskyViewLi>{livemusic.time}</LoginPageWhiskyViewLi>
       <LoginPageWhiskyUpdateButton onClick={toggleVisibility}>Päivitä</LoginPageWhiskyUpdateButton>
-      <div style={showWhenVisible}>
+      <Modal visible={visible}>
         <UpdateLiveMusicForm liveMusicToUpdate={livemusic} visibility={toggleVisibility} updateLiveMusic={update} />
-      </div>
+      </Modal>
       <LoginPageWhiskyRemoveButton onClick={() => remove(livemusic.id, livemusic)}>Poista</LoginPageWhiskyRemoveButton>
     </>
   )
@@ -755,7 +752,7 @@ const Login = () => {
         <LoginPageP>{user.name} logged in</LoginPageP>
         <LoginPageButton background = 'dark' onClick={logout}>Logout</LoginPageButton>
       </LoginPageWrapper>
-      <div style={{margin: '0 10px'}} className="csv-file-upload">
+      <div style={{margin: '0 5px'}} className="csv-file-upload">
         <LoginPageInputForm>
           <LoginPageH1>Lataa Excelin csv-tiedosto</LoginPageH1>
           <div>
@@ -771,19 +768,7 @@ const Login = () => {
             <Togglable buttonLabel='Uusi aika' ref = {openingHoursFormRef} >
               <NewOpeningHoursForm createNewHours = {createOpeningHours} />
             </Togglable>
-            {/* <Togglable buttonLabel='Päivitä aika' ref = {openingHoursUpdateRef} >
-              <UpdateOpeningHoursForm currentOpeningHours = {openingHours} updateOpeningHours = {updateOpeningHours} />
-            </Togglable> */}
           </LoginPageInputForm>
-          {/* <LoginPageGridItem>
-            {openingHours.map(openingHours =>
-              <OpeningHoursList
-                key = {openingHours.id}
-                openingHour = {openingHours}
-                removeOpeningHour = {removeOpeningHours}
-              />
-            )}
-          </LoginPageGridItem> */}
         </div>
         <div>
           <LoginPageInputForm>
@@ -793,17 +778,7 @@ const Login = () => {
             <Togglable buttonLabel='Uusi olut' ref = {beerFormRef}>
               <NewBeerForm createNewBeer={createBeer} />
             </Togglable>
-            {/* <Togglable buttonLabel='Päivitä olut' ref = {beerUpdateRef}>
-              <UpdateBeerForm currentBeers = {beers} updateBeer = {updateBeer} />
-            </Togglable> */}
           </LoginPageInputForm>
-          {/* <LoginPageGridItem>
-            {sortedBeers.map(beer =>
-              <div style = {{ paddingTop: '10px' }} key={beer.id}>
-                <ProductCategoryList productList = {beer} removeProduct ={removeBeer} />
-              </div>
-            )}
-          </LoginPageGridItem> */}
         </div>
         <div>
           <LoginPageInputForm>

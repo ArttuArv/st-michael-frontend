@@ -8,4 +8,6 @@ import App from './App';
 document.title = 'St Michael Irish Pub';
 
 // Render the App component into the root element
-ReactDOM.createRoot(document.getElementById('root')).render(<App />);
+ReactDOM.createRoot(
+  document.getElementById('root'))
+    .render(<App />);

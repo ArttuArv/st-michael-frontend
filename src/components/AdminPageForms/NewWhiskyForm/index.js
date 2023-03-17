@@ -17,7 +17,6 @@ import Notification from '../../Notification/Notification'
 const NewWhiskyForm = ({ createNewWhisky, currentWhiskies }) => {
   const [name, setName] = useState('')
   const [area, setArea] = useState('')
-  const [price, setPrice] = useState('')
 
   const whiskyAreas = returnListOfWhiskyAreas(currentWhiskies)
 
@@ -27,7 +26,6 @@ const NewWhiskyForm = ({ createNewWhisky, currentWhiskies }) => {
     const newWhisky = {
       name,
       area,
-      price,
     }
 
     if (area === 'Valitse listasta' || !area) {
@@ -52,7 +50,6 @@ const NewWhiskyForm = ({ createNewWhisky, currentWhiskies }) => {
   const resetStates = () => {
     setName('')
     setArea('')
-    setPrice('')
   }
 
   const handleNameChange = (event) => {
@@ -101,15 +98,6 @@ const NewWhiskyForm = ({ createNewWhisky, currentWhiskies }) => {
                 <InputFormOption key={area} value={area}>{area}</InputFormOption>
               ))}
             </InputFormSelect>
-          </InputFormItems>
-          <InputFormItems>
-            <InputFormP>Hinta</InputFormP>
-            <InputFormInput
-              value={price}
-              onChange={handlePriceChange}
-              id='price'
-              placeholder='Hinta'
-            />
           </InputFormItems>
           <div>
             <InputFormButton background = 'add' id='submit-button' type='submit'>Lisää</InputFormButton>
