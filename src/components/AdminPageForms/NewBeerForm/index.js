@@ -23,9 +23,9 @@ const NewBeerForm = ({ createNewBeer }) => {
 
   const beerCategories = [
     'Valitse listasta',
-    'On Bottle',
-    'On Draught',
-    'Local Draughts',
+    'Seasonal Bottles',
+    'Seasonal Draughts',
+    'Regular Bottles',
     'Regular Draughts',
   ]
 

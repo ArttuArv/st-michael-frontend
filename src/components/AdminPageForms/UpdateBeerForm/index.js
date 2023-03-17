@@ -26,56 +26,28 @@ const UpdateBeerForm = ({ beer, updateBeer, visibility }) => {
 
   const beerCategories = [
     'Valitse listasta',
-    'On Bottle',
-    'On Draught',
-    'Local Draughts',
-    'Regular Draughts'
+    'Seasonal Bottles',
+    'Seasonal Draughts',
+    'Regular Bottles',
+    'Regular Draughts',
   ]
 
   const handleSubmit = (event) => {
     event.preventDefault()
 
-    if (category === 'Valitse listasta' || !category) {
-      notify('Valitse kategoria', 'alert')
-
-      return
-    }
-
-    if (!style) {
-      notify('Täytä tyyli', 'alert')
-
-      return
-    }
-
-    if (!country) {
-      notify('Täytä maa', 'alert')
-
-      return
-    }
-
     // let existingBeerCategory
     // const existingBeerName = currentBeers.map(beers => beers.products).flat().find(beer => beer.id === id)
 
     const updatedBeer = {
-      name,
-      style,
-      country,
-      category,
+      name: name === '' || !name ? beer.name : name,
+      style: style === '' || !style ? beer.style : style,
+      country: country === '' || !country ? beer.country : country,
+      category: category === '' || category === 'Valitse listasta' || !category ? beer.category : category,
     }
-
-    if (name === '' || !name) {
-      setName(beer.name)
-      updatedBeer.name = beer.name
-    }
-
-    console.log('updatedBeer: ', updatedBeer)
-      // updatedBeer.name = existingBeerName.name    
-
-    // existingBeerCategory = existingBeerName.category
 
     updateBeer(beer.id, beer.category, updatedBeer)
 
-    resetStates()
+    closeForm()
 
   }
 

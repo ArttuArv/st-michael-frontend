@@ -194,10 +194,3 @@ const WhiskyList = ({ whisky }) => {
 }
 
 export default WhiskyList
-
-const h2Style = {
-  color: '#F5BD30',
-  fontWeight: '400',
-  fontSize: '30px',
-  textAlign: 'center',
-}

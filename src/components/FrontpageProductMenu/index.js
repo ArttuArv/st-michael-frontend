@@ -3,12 +3,18 @@ import './styles.css'
 
 const FrontPageProductMenu = ({ beer }) => {
 
+  // Alphabetically sorted beers and whiskies
+  const sortedBeers = beer.map(beer => {
+    beer.products.sort((a, b) => a.name.localeCompare(b.name))
+    return beer
+  })
+
 
   return (
     <>
       <div className="menu-page-wrapper">
         <div>
-          {beer.map(category => (
+          {sortedBeers.map(category => (
             <div className='menu-grid-wrapper' key={category.id}>
               <h4>{category.name}</h4>
               <div className='menu-container-grid'>              
