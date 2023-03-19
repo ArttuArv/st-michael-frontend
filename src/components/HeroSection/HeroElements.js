@@ -78,7 +78,7 @@ export const HeroContent = styled.div`
 export const HeroLogo = styled.img`
   height: 100%;
   width: 100%;
-  margin-top: -100px;
+  margin-top: -70px;
 
   @media screen and (max-width: 1920px) {
     margin-bottom: 20px;

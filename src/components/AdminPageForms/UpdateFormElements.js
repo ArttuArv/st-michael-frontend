@@ -11,55 +11,36 @@ export const jitter = keyframes`
     transform: scaleY(1) scaleX(1);
   }
 `
-export const FormContainer = styled.div`
+export const FormContainer = styled.section`
   position: fixed;
-  top: 0;
+  top: 0px;
   left: 0;
   bottom: 0;
   right: 0;
-  z-index: 999;
+  z-index: 201;
   background-color: rgba(0, 0, 0, 0.8);
 `
 
-export const FormWrapperBeer = styled.div`
-  display: block;
+export const FormWrapperLarge = styled.div`
   position: fixed;
   top: 50%;
   right: 50%;
   transform: translate(50%, -50%);
   width: 300px;
-  height: 600px;
-  z-index: 1000;
+  height: 530px;
   border: 4px solid gold;
   background-color: #A69666;
   border-radius: 15px;
   padding: 1.7rem 1rem 1rem 1rem;
 `
 
-export const FormWrapperOpening = styled.div`
-  display: block;
+export const FormWrapperSmall = styled.div`
   position: fixed;
   top: 50%;
   right: 50%;
   transform: translate(50%, -50%);
   width: 300px;
-  height: 400px;
-  z-index: 1000;
-  border: 4px solid gold;
-  background-color: #A69666;
-  border-radius: 15px;
-  padding: 1.7rem 1rem 1rem 1rem;
-`
-
-export const FormWrapperEvent = styled.div`
-  display: block;
-  position: fixed;
-  top: 50%;
-  right: 50%;
-  transform: translate(50%, -50%);
-  width: 300px;
-  height: 500px;
-  z-index: 1000;
+  height: 420px;
   border: 4px solid gold;
   background-color: #A69666;
   border-radius: 15px;
@@ -92,10 +73,6 @@ export const Form = styled.form`
   box-sizing: border-box;
   padding: 0;
   margin: 0;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  align-items: flex-start;
   width: 100%;
   height: 100%;
 `
@@ -107,6 +84,7 @@ export const FormInput = styled.input`
   border: transparent;
   border-radius: 5px;
   background-color: #fff;
+  padding-left: 0.5rem;
   cursor: pointer;
 `
 
@@ -138,14 +116,14 @@ export const FormButton = styled.button`
 `
 
 export const FormH2 = styled.h2`
-  font-size: 1.2rem;
-  margin-bottom: 0.5rem;
-  padding-top: 0.5rem;
+  font-size: 1.1rem;
+  margin-bottom: 0.2rem;
 `
 
 export const FormH4 = styled.h4`
-  margin-top: 1rem;
-  font-size: 1.2rem;
+  margin-top: 0.8rem;
+  font-size: 1rem;
+  line-height: 1.1rem;
 `
 
 export const FormP = styled.p`

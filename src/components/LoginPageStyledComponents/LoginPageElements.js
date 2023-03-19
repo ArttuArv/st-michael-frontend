@@ -210,18 +210,30 @@ export const LoginPageWhiskyViewList = styled.div`
 
 export const LoginPageWhiskyViewUl = styled.ul`
   display: grid;
-  grid-template-columns: repeat(5, 1fr);
+  grid-template-columns: repeat(8, 1fr);
   list-style-type: none;
 
-  @media screen and (max-width: 1500px) {
+  @media screen and (max-width: 2225px) {
+    grid-template-columns: repeat(7, 1fr);
+  }
+
+  @media screen and (max-width: 1955px) {
+    grid-template-columns: repeat(6, 1fr);
+  }
+
+  @media screen and (max-width: 1685px) {
+    grid-template-columns: repeat(5, 1fr);
+  }
+
+  @media screen and (max-width: 1400px) {
     grid-template-columns: repeat(4, 1fr);
   }
 
-  @media screen and (max-width: 1200px) {
+  @media screen and (max-width: 1225px) {
     grid-template-columns: repeat(3, 1fr);
   }
 
-  @media screen and (max-width: 900px) {
+  @media screen and (max-width: 925px) {
     grid-template-columns: repeat(2, 1fr);
   }
 
@@ -232,6 +244,7 @@ export const LoginPageWhiskyViewUl = styled.ul`
 
 export const LoginPageWhiskyViewLi = styled.li`
   list-style-type: none;
+  font-size: 0.8rem;
   width: 100%;
   padding-left: 10px;
   text-align: start;
@@ -261,17 +274,29 @@ export const LoginPageWhiskyRemoveButton = styled.button`
 
 export const LoginPageShortListGrid = styled.div`
   display: grid;
-  grid-template-columns: repeat(5, 1fr);
+  grid-template-columns: repeat(8, 1fr);
 
-  @media screen and (max-width: 1500px) {
+  @media screen and (max-width: 2225px) {
+    grid-template-columns: repeat(7, 1fr);
+  }
+
+  @media screen and (max-width: 1955px) {
+    grid-template-columns: repeat(6, 1fr);
+  }
+
+  @media screen and (max-width: 1685px) {
+    grid-template-columns: repeat(5, 1fr);
+  }
+
+  @media screen and (max-width: 1400px) {
     grid-template-columns: repeat(4, 1fr);
   }
 
-  @media screen and (max-width: 1200px) {
+  @media screen and (max-width: 1225px) {
     grid-template-columns: repeat(3, 1fr);
   }
 
-  @media screen and (max-width: 900px) {
+  @media screen and (max-width: 925px) {
     grid-template-columns: repeat(2, 1fr);
   }
 

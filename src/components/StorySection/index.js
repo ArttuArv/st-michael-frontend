@@ -35,27 +35,25 @@ const Story = () => {
   
 
   return (
-    <>
-      <div className="story-page-container">
-        <div className="story-page-flex">
-          <section className='story-page-title'>
-            <h2>Tarinan otsikko</h2>
-            <h3>{text3}</h3>
-          </section>
-          <ImageCarousel />
-          <div className="story-page-grid">
-            {images.map(image =>
-              <img key={image} src={image}></img>
-            )}
-          </div>     
-          <h2>Tarinan otsikko</h2> 
-          <section className='story-page-text'>
-            <p>{text}</p>
-            <p>{text2}</p>
-          </section>          
-        </div>
+    <div className="story-page-container">
+      <div className="story-page-flex">
+        <section className='story-page-title'>
+          <h2>Tarinan otsikko</h2>
+          <h3>{text3}</h3>
+        </section>
+        <ImageCarousel />
+        <section className="story-page-grid">
+          {images.map(image =>
+            <img key={image} src={image}></img>
+          )}
+        </section>     
+        <h2>Tarinan otsikko</h2> 
+        <section className='story-page-text'>
+          <p>{text}</p>
+          <p>{text2}</p>
+        </section>          
       </div>
-    </>
+    </div>
   )
 }
 

@@ -24,7 +24,7 @@ const SportsSection = () => {
       })
   }, [])
 
-  const sortedEvents = liveMusic.sort((a, b) => {
+  const sortedEvents = [...liveMusic].sort((a, b) => {
     // Convert the date strings to Date objects for comparison
     const eventObjectA = a.date.split('.').reverse().join('-') + '-' + a.time.split('.').join(':') + ':00'
     const eventObjectB = b.date.split('.').reverse().join('-') + '-' + b.time.split('.').join(':') + ':00'

@@ -1,8 +1,8 @@
 import { useState } from 'react'
 
-import { 
+import {
   FormContainer,
-  FormWrapperBeer,
+  FormWrapperLarge,
   FormClose,
   Form,
   FormInput,
@@ -12,8 +12,6 @@ import {
   FormH4,
   FormP,
 } from '../UpdateFormElements'
-
-import Notification from '../../Notification/Notification'
 
 const UpdateBeerForm = ({ beer, updateBeer, visibility }) => {
   const [name, setName] = useState('')
@@ -85,63 +83,42 @@ const UpdateBeerForm = ({ beer, updateBeer, visibility }) => {
     setPrice(event.target.value)
   }
 
-  const notify = (message, type = 'info') => {
-
-    new Notification({
-      text: message,
-      position: "top-center",
-      pauseOnHover: true,
-      pauseOnFocusLoss: true,
-      color: type === 'info' ? '##1DB954' : '#FF4136',
-    })
-  }
-
   return (
     <FormContainer>
-      <FormWrapperBeer>
+      <FormWrapperLarge>
         <FormClose onClick={closeForm} />
-          <Form onSubmit={handleSubmit}>
-            <div>
-              <FormH2>Päivitä hanatuote</FormH2>
-              <FormH4>{beer?.name}</FormH4>
-              <FormP>{beer?.style} : {beer?.country} : {beer?.category}</FormP>
-            </div>
-            <FormH4>Nimi</FormH4>
-            <div>
-              <FormInput
-                type='text'
-                id='name'
-                value={name}
-                onChange={handleNameChange}
-              />
-            </div>
-            <FormH4>Tyyli</FormH4>
-            <div>
-              <FormInput
-                type='text'
-                id='style'
-                value={style}
-                onChange={handleStyleChange}
-              />
-            </div>
-            <FormH4>Maa</FormH4>
-            <div>
-              <FormInput
-                type='text'
-                id='country'
-                value={country}
-                onChange={handleCountryChange}
-              />
-            </div>
-            <FormH4>Kategoria</FormH4>
-            <div>
-              <FormSelect onChange={handleCategoryChange}>
-                {beerCategories.map(category => <option key={category} value={category}>{category}</option>)}
-              </FormSelect>
-            </div>
-            <FormButton type='submit'>Päivitä</FormButton>
-          </Form>
-      </FormWrapperBeer>
+        <Form onSubmit={handleSubmit}>
+          <FormH2>Päivitä hanatuote</FormH2>
+          <FormH4>{beer?.name}</FormH4>
+          <FormP>{beer?.style} : {beer?.country} : {beer?.category}</FormP>
+          <FormH4>Nimi</FormH4>
+          <FormInput
+            type='text'
+            id='name'
+            value={name}
+            onChange={handleNameChange}
+          />
+          <FormH4>Tyyli</FormH4>
+          <FormInput
+            type='text'
+            id='style'
+            value={style}
+            onChange={handleStyleChange}
+          />
+          <FormH4>Maa</FormH4>
+          <FormInput
+            type='text'
+            id='country'
+            value={country}
+            onChange={handleCountryChange}
+          />
+          <FormH4>Kategoria</FormH4>
+          <FormSelect onChange={handleCategoryChange}>
+            {beerCategories.map(category => <option key={category} value={category}>{category}</option>)}
+          </FormSelect>
+          <FormButton type='submit'>Päivitä</FormButton>
+        </Form>
+      </FormWrapperLarge>
     </FormContainer>
   )
 }

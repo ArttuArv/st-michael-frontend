@@ -12,8 +12,8 @@ const setUser = (user) => {
   token = user.access
   refreshToken = user.refresh
 
-  console.log('token: ', token)
-  console.log('refreshToken: ', refreshToken)
+  // console.log('token: ', token)
+  // console.log('refreshToken: ', refreshToken)
 }
 
 const getUser = () => {

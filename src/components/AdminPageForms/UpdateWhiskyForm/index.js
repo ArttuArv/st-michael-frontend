@@ -1,8 +1,8 @@
 import { useState, useEffect } from 'react'
 
-import { 
+import {
   FormContainer,
-  FormWrapperOpening,
+  FormWrapperSmall,
   FormClose,
   Form,
   FormInput,
@@ -12,8 +12,6 @@ import {
   FormH4,
   FormP,
 } from '../UpdateFormElements'
-
-import Notification from '../../Notification/Notification'
 
 
 const UpdateWhiskyForm = ({ whiskyToUpdate, updateWhisky, visibility }) => {
@@ -50,7 +48,7 @@ const UpdateWhiskyForm = ({ whiskyToUpdate, updateWhisky, visibility }) => {
 
     if (name === '') {
       setName(whiskyToUpdate.name)
-      updatedWhisky.name = whiskyToUpdate.name   
+      updatedWhisky.name = whiskyToUpdate.name
     }
 
     updateWhisky(whiskyToUpdate.id, updatedWhisky)
@@ -78,16 +76,6 @@ const UpdateWhiskyForm = ({ whiskyToUpdate, updateWhisky, visibility }) => {
     setArea(event.target.value)
   }
 
-  const notify = (message, type = 'info') => {
-    new Notification({
-      text: message,
-      position: "top-center",
-      pauseOnHover: true,
-      pauseOnFocusLoss: true,
-      color: type === 'info' ? '##1DB954' : '#FF4136',
-    })
-  }
-
   const closeForm = () => {
     resetStates()
 
@@ -96,31 +84,25 @@ const UpdateWhiskyForm = ({ whiskyToUpdate, updateWhisky, visibility }) => {
 
   return (
     <FormContainer>
-      <FormWrapperOpening>
+      <FormWrapperSmall>
         <FormClose onClick={closeForm} />
-          <Form onSubmit={handleSubmit}>
-            <div>
-              <FormH2>Päivitä viski</FormH2>
-              <FormP>{whiskyToUpdate.name}</FormP>
-            </div>
-            <FormH4>Nimi</FormH4>
-            <div>
-              <FormInput
-                type='text'
-                id='name'
-                value={name}
-                onChange={handleNameChange}
-              />
-            </div>
-            <FormH4>Alue</FormH4>
-            <div>
-              <FormSelect onChange={handleAreaChange}>
-                {whiskyAreas.map(area => <option key={area} value={area}>{area}</option>)}
-              </FormSelect>
-            </div>
-            <FormButton type='submit'>Päivitä</FormButton>
-          </Form>
-      </FormWrapperOpening>
+        <Form onSubmit={handleSubmit}>
+          <FormH2>Päivitä viski</FormH2>
+          <FormP>{whiskyToUpdate.name}</FormP>
+          <FormH4>Nimi</FormH4>
+          <FormInput
+            type='text'
+            id='name'
+            value={name}
+            onChange={handleNameChange}
+          />
+          <FormH4>Alue</FormH4>
+          <FormSelect onChange={handleAreaChange}>
+            {whiskyAreas.map(area => <option key={area} value={area}>{area}</option>)}
+          </FormSelect>
+          <FormButton type='submit'>Päivitä</FormButton>
+        </Form>
+      </FormWrapperSmall>
     </FormContainer>
   )
 }

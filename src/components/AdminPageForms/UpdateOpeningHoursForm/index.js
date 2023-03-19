@@ -2,16 +2,15 @@ import { useState } from 'react'
 
 import { 
   FormContainer,
-  FormWrapperOpening,
+  FormWrapperSmall,
   FormClose,
   Form,
   FormInput,
   FormButton,
   FormH2,
   FormH4,
+  FormP,
 } from '../UpdateFormElements'
-
-import Notification from '../../Notification/Notification'
 
 const NewOpeningHoursForm = ({ openingHours, visibility, updateOpeningHours }) => {
   const [day, setDay] = useState('')  
@@ -52,17 +51,6 @@ const NewOpeningHoursForm = ({ openingHours, visibility, updateOpeningHours }) =
     setOpeningHours(event.target.value)
   }
 
-  const notify = (message, type = 'info') => {
-
-    new Notification({
-      text: message,
-      position: "top-center",
-      pauseOnHover: true,
-      pauseOnFocusLoss: true,
-      color: type === 'info' ? '##1DB954' : '#FF4136',
-    })
-  }
-
   const closeForm = () => {
     resetStates()
 
@@ -71,35 +59,29 @@ const NewOpeningHoursForm = ({ openingHours, visibility, updateOpeningHours }) =
 
   return (
     <FormContainer>
-      <FormWrapperOpening>
+      <FormWrapperSmall>
         <FormClose onClick={closeForm} />
           <Form onSubmit={handleSubmit}>
-          <div>
             <FormH2>Päivitä aukioloaika</FormH2>
-            <p>{openingHours.day}</p>
-            <p>{openingHours.openinghours}</p>
-          </div>
+            <FormP>{openingHours.day}</FormP>
+            <FormP>{openingHours.openinghours}</FormP>
             <FormH4>Päivät</FormH4>
-            <div>
               <FormInput
                 type='text'
                 id='day'
                 value={day}
                 onChange={handleDayChange}
               />
-            </div>
             <FormH4>Aukioloaika</FormH4>
-            <div>
               <FormInput
                 type='text'
                 id='openinghours'
                 value={openinghours}
                 onChange={handleHoursChange}
               />
-            </div>
             <FormButton type='submit'>Päivitä</FormButton>
           </Form>
-      </FormWrapperOpening>
+      </FormWrapperSmall>
     </FormContainer>
   )
 }

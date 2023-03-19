@@ -1,8 +1,8 @@
 import { useState } from 'react'
 
-import { 
+import {
   FormContainer,
-  FormWrapperEvent,
+  FormWrapperSmall,
   FormClose,
   Form,
   FormInput,
@@ -15,31 +15,21 @@ import {
 
 const UpdateLiveMusicForm = ({ liveMusicToUpdate, visibility, updateLiveMusic }) => {
   const [artist, setArtist] = useState('')
-  const [date, setDate] = useState('')  
+  const [date, setDate] = useState('')
   const [time, setTime] = useState('')
 
   const handleSubmit = (event) => {
     event.preventDefault()
 
-    const updatedLiveMusic = {
-      name: artist,
-      date,
-      time,
+    let updatedLiveMusic = {
+      name: artist === '' ? liveMusicToUpdate.name : artist,
+      date: date === '' ? liveMusicToUpdate.date : date,
+      time: time === '' ? liveMusicToUpdate.time : time,
     }
-    
-    if (!artist)
-      updatedLiveMusic.name = liveMusicToUpdate.name
 
-    if (!date)
-      updatedLiveMusic.date = liveMusicToUpdate.date
-      
-    if (!time)
-      updatedLiveMusic.time = liveMusicToUpdate.time
+    updatedLiveMusic = formatDateTimeToEuropean(updatedLiveMusic)
 
-    updateLiveMusic(liveMusicToUpdate.id, updatedLiveMusic) 
-
-    // Nollataan syöttökentät
-    resetStates()
+    updateLiveMusic(liveMusicToUpdate.id, updatedLiveMusic)
 
     closeForm()
   }
@@ -69,46 +59,40 @@ const UpdateLiveMusicForm = ({ liveMusicToUpdate, visibility, updateLiveMusic })
   }
 
   return (
-    <FormContainer>
-      <FormWrapperEvent>
-        <FormClose onClick={closeForm} />
+    <>
+      <FormContainer>
+        <FormWrapperSmall>
+          <FormClose onClick={closeForm} />
           <Form onSubmit={handleSubmit}>
-            <div>
-              <FormH2>Päivitä tapahtuma</FormH2>
-              <FormP>{liveMusicToUpdate.date}</FormP>
-              <FormP>{liveMusicToUpdate.time} : {liveMusicToUpdate.name}</FormP>
-            </div>
+            <FormH2>Päivitä tapahtuma</FormH2>
+            <FormP>{liveMusicToUpdate.name}</FormP>
+            <FormP>{liveMusicToUpdate.date} klo {liveMusicToUpdate.time}</FormP>
             <FormH4>Tapahtuma</FormH4>
-            <div>
-              <FormInput
-                type='text'
-                id='artist'
-                value={artist}
-                onChange={handleArtistChange}
-              />
-            </div>
+            <FormInput
+              type='text'
+              id='artist'
+              value={artist}
+              onChange={handleArtistChange}
+            />
             <FormH4>Päivämäärä</FormH4>
-            <div>
-              <FormInput
-                type='text'
-                id='date'
-                value={date}
-                onChange={handleDateChange}
-              />
-            </div>
+            <FormInput
+              type='date'
+              id='date'
+              value={date}
+              onChange={handleDateChange}
+            />
             <FormH4>Alkamisaika</FormH4>
-            <div>
-              <FormInput
-                type='text'
-                id='time'
-                value={time}
-                onChange={handleTimeChange}
-              />
-            </div>
+            <FormInput
+              type='time'
+              id='time'
+              value={time}
+              onChange={handleTimeChange}
+            />
             <FormButton type='submit'>Päivitä</FormButton>
           </Form>
-      </FormWrapperEvent>
-    </FormContainer>
+        </FormWrapperSmall>
+      </FormContainer>
+    </>
   )
 }
 
@@ -147,3 +131,17 @@ const styles = {
     cursor: 'pointer',
   }),
 }
+
+
+function formatDateTimeToEuropean(updatedLiveMusic) {
+  updatedLiveMusic.date = updatedLiveMusic.date.replace(/-/g, '.') // Muutetaan päivämäärä muotoon vvvv.kk.pp
+  const dateArray = updatedLiveMusic.date.split('.')
+  dateArray[1] = dateArray[1].replace(/^0+/, '') // kk
+  dateArray[2] = dateArray[2].replace(/^0+/, '') // pp  
+  updatedLiveMusic.date = dateArray[2] + '.' + dateArray[1] + '.' + dateArray[0] // Muutetaan päivämäärä muotoon pp.kk.vvvv
+
+  updatedLiveMusic.time = updatedLiveMusic.time.replace(/:/g, '.')
+
+  return updatedLiveMusic
+}
+
