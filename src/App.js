@@ -17,6 +17,7 @@ const Login = lazy(() => import('./pages/login'))
 const StoryPage = lazy(() => import('./pages/story'))
 const BeerPage = lazy(() => import('./pages/beer'))
 
+import { rearrangeBeerOrder } from './utils/utils'
 
 const App = () => {
   const [isOpen, setIsOpen] = useState(false)
@@ -33,6 +34,7 @@ const App = () => {
   useEffect(() => {
     beerService.getAll()
       .then(beers => {
+        beers = rearrangeBeerOrder(beers)
         setBeer(beers);
       }).catch(error => {
         console.log(error);

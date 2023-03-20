@@ -122,7 +122,7 @@ export const HeroH3 = styled.h3`
   margin-top: 16px;
 
   @media screen and (max-width: 768px) {
-    font-size: 25px;
+    font-size: 23px;
   }
 
   @media screen and (max-width: 480px) {
@@ -138,7 +138,7 @@ export const HeroP = styled.p`
   text-shadow: 2px 4px 2px #000;
 
   @media screen and (max-width: 768px) {
-    font-size: 25px;
+    font-size: 20px;
   }
 
   @media screen and (max-width: 480px) {
@@ -156,10 +156,10 @@ export const HeroTable = styled.table`
   border-collapse: collapse;
   border-spacing: 0;  
   text-shadow: 3px 5px 3px #000;
-  font-size: 28px;
+  font-size: 24px;
 
   @media screen and (max-width: 768px) {
-    font-size: 20px;
+    font-size: 17px;
   }
 `;
 

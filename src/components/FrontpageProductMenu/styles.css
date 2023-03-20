@@ -145,14 +145,14 @@
 }
 
 .menu-grid-item > h5 {
-  font-size: 0.75rem;
+  font-size: 0.87rem;
   margin-bottom: 0.5rem;
   color: #FCEBC1;
   text-shadow: 2px 2px 1px black;
 }
 
 .menu-grid-item > p {
-  font-size: 0.75rem;
+  font-size: 0.87rem;
   font-weight: 400;
   line-height: 1; 
   margin-bottom: 0.5rem;
@@ -188,6 +188,7 @@
   .menu-container-grid {
     grid-template-columns: repeat(2, 1fr);
   }
+
 }
 
 @media screen and (max-width: 650px) {
@@ -202,11 +203,15 @@
     width: 100%;
   }
 
+  .menu-grid-wrapper > h4 {
+    font-size: 1.5rem;
+  }
+
   .menu-grid-item > h5 {
-    font-size: 1rem;
+    font-size: 0.9rem;
   }
 
   .menu-grid-item > p {
-    font-size: 1rem;
+    font-size: 0.8rem;
   }
 }

@@ -14,10 +14,10 @@ const BeerList = ({ beer }) => {
 
   return (    
     <div style = {{ paddingBottom: '80px'}}>             
-      {beer.map(genre => (
-        <BLTableContainer key = {genre.id}>
-          <BLh1 key = {genre.id}>
-            {genre.name}
+      {beer.map(category => (
+        <BLTableContainer key = {category.id}>
+          <BLh1 key = {category.id}>
+            {category.name}
           </BLh1>
           <BLTableWrapper>
             <BLTable>
@@ -29,7 +29,7 @@ const BeerList = ({ beer }) => {
                 </BLTableRow>
               </BLTableBody>                  
               <BLTableBody>
-                {genre.products.map(beer => (
+                {category.products.map(beer => (
                   <BLTableRow key = {beer.id}>
                     <BLTableData style = {{ paddingRight: '10px' }}>{beer.name}</BLTableData>
                     <BLTableData style = {{ paddingRight: '10px' }}>{beer.style}</BLTableData>
