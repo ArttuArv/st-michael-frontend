@@ -9,6 +9,8 @@ import {
   InputFormInput, 
 } from '../InputFormElements'
 
+import { formatDateTimeToEuropean } from '../../../utils/utils'
+
 import Notification from '../../Notification/Notification'
 
 const NewLiveMusicForm = ({ createNewLiveMusic }) => {
@@ -25,11 +27,15 @@ const NewLiveMusicForm = ({ createNewLiveMusic }) => {
       return
     }
 
-    const newLiveMusic = {
+    let newLiveMusic = {
       name: artist,
       date: day,
       time,
     }
+
+    newLiveMusic = formatDateTimeToEuropean(newLiveMusic)
+
+    console.log(newLiveMusic)
 
     createNewLiveMusic(newLiveMusic)
     
@@ -66,46 +72,38 @@ const NewLiveMusicForm = ({ createNewLiveMusic }) => {
   }
 
   return (
-    <div>
-      <div style = {{ marginBottom: '10px' }}>
+    <>
+      <InputFormForm onSubmit={handleSubmit}>
         <InputFormH2>Lisää uusi</InputFormH2>
         <InputFormH2>tapahtuma</InputFormH2>
-      </div>
-      <div>
-        <InputFormForm onSubmit={handleSubmit}>
-          <InputFormItems>
-            <InputFormP>Tapahtuma</InputFormP>
-            <InputFormInput
-              value={artist}
-              onChange={handleArtistChange}
-              id='artist'
-              placeholder='Aseta tapahtuma'
-            />
-          </InputFormItems>
-          <InputFormItems>
-            <InputFormP>Päivä</InputFormP>
-            <InputFormInput
-              value={day}
-              onChange={handleDayChange}
-              id='day'
-              placeholder='Aseta päivä'
-            />
-          </InputFormItems>
-          <InputFormItems>
-            <InputFormP>Aika</InputFormP>
-            <InputFormInput
-              value={time}
-              onChange={handleTimeChange}
-              id='time'
-              placeholder='Aseta alkamisaika'
-            />
-          </InputFormItems>
-          <InputFormButton background = 'add' id="login-button" type="submit">
-            Lisää
-          </InputFormButton>
-        </InputFormForm>
-      </div>
-    </div>
+          <InputFormP>Tapahtuma</InputFormP>
+          <InputFormInput
+            value={artist}
+            onChange={handleArtistChange}
+            id='artist'
+            placeholder='Aseta tapahtuma'
+          />
+          <InputFormP>Päivä</InputFormP>
+          <InputFormInput
+            type='date'
+            value={day}
+            onChange={handleDayChange}
+            id='day'
+            placeholder='Aseta päivä'
+          />
+          <InputFormP>Aika</InputFormP>
+          <InputFormInput
+            type='time'
+            value={time}
+            onChange={handleTimeChange}
+            id='time'
+            placeholder='Aseta alkamisaika'
+          />
+        <InputFormButton background = 'add' id="login-button" type="submit">
+          Lisää
+        </InputFormButton>
+      </InputFormForm>
+    </>
   )
 }
 

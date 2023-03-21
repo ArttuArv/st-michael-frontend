@@ -36,7 +36,7 @@ import {
   LoginPageGrid,
   LoginPageGridItem,
   LoginPageButton,
-  LoginPageInputForm,
+  LoginPageInputFormWrapper,
   LoginPageRemoveButton,
   LoginPageHideButton,
   LoginPageWrapper,
@@ -161,16 +161,16 @@ const OpeningHoursView = ({ openingHoursList, removeOpeningHours, updateOpeningH
   return (
     <LoginPageWhiskyViewContainer>
       <div style={{display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-        <LoginPageH3 fontsize = 'large' >Aukioloajat</LoginPageH3>
+        <LoginPageH3 fontsize = 'small' >Aukioloajat</LoginPageH3>
         <LoginPageButton background = 'light' onClick = {() => setShowAll(false)}>Piilota</LoginPageButton>
-        <LoginPageShortListGrid>
-          {openingHoursList.map(openingHour =>
-            <LoginPageShortListGridItem key={openingHour.id}>
-              <OpeningHoursListItem openingHour={openingHour} remove={removeOpeningHours} update={updateOpeningHours} />
-            </LoginPageShortListGridItem>
-          )}
-        </LoginPageShortListGrid>
       </div>
+      <LoginPageShortListGrid>
+        {openingHoursList.map(openingHour =>
+          <LoginPageShortListGridItem key={openingHour.id}>
+            <OpeningHoursListItem openingHour={openingHour} remove={removeOpeningHours} update={updateOpeningHours} />
+          </LoginPageShortListGridItem>
+        )}
+      </LoginPageShortListGrid>      
     </LoginPageWhiskyViewContainer>
   )
 }
@@ -212,12 +212,14 @@ const BeerView = ({ beerList, removeBeer, updateBeer }) => {
   return (
     <LoginPageWhiskyViewContainer>
       <div style={{display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-        <LoginPageH3 fontsize = 'large' >Hanatuotteet</LoginPageH3>
+        <LoginPageH3 fontsize = 'small' >Hanatuotteet</LoginPageH3>
         <LoginPageButton background = 'light' onClick = {() => setShowAll(false)}>Piilota</LoginPageButton>
       </div>
       {beerList.map(products => 
         <div key = {products.id}>
-          <LoginPageH3 style={{marginTop: '20px'}}>{products.name}</LoginPageH3>
+          <div style={{display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
+            <LoginPageH3 style={{marginTop: '20px'}}>{products.name}</LoginPageH3>
+          </div>
           <LoginPageWhiskyViewUl>
             {products.products.map(beer =>
               <LoginPageWhiskyViewList key={beer.id}>
@@ -268,12 +270,14 @@ const WhiskyView = ({ whiskyList, removeWhisky, updateWhisky }) => {
   return (
     <LoginPageWhiskyViewContainer>
       <div style={{display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-        <LoginPageH3 fontsize = 'large' >ViskiLista</LoginPageH3>
+        <LoginPageH3 fontsize = 'small' >ViskiLista</LoginPageH3>
         <LoginPageButton background = 'light' onClick = {() => setShowAll(false)}>Piilota</LoginPageButton>
       </div>
       {whiskyList.map(whiskies => 
         <div key = {whiskies.name}>
-          <LoginPageH3 style={{marginTop: '20px'}}>{whiskies.name}</LoginPageH3>
+          <div style={{display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
+            <LoginPageH3 style={{marginTop: '20px'}}>{whiskies.name}</LoginPageH3>
+          </div>
           <LoginPageWhiskyViewUl>
             {whiskies.whiskies.map(whisky =>
               <LoginPageWhiskyViewList key={whisky.id}>
@@ -323,7 +327,7 @@ const LiveMusicView = ({ liveMusicList, removeLiveMusic, updateLiveMusic }) => {
   return (
     <LoginPageWhiskyViewContainer>
       <div style={{display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-        <LoginPageH3 fontsize = 'large' >Live-tapahtumat</LoginPageH3>
+        <LoginPageH3 fontsize = 'small' >Live-tapahtumat</LoginPageH3>
         <LoginPageButton background = 'light' onClick = {() => setShowAll(false)}>Piilota</LoginPageButton>
       </div>
       <LoginPageShortListGrid>
@@ -752,50 +756,36 @@ const Login = () => {
         <LoginPageP>{user.name} logged in</LoginPageP>
         <LoginPageButton background = 'dark' onClick={logout}>Logout</LoginPageButton>
       </LoginPageWrapper>
-      <div style={{margin: '0 5px'}} className="csv-file-upload">
-        <LoginPageInputForm>
-          <LoginPageH1>Lataa Excelin csv-tiedosto</LoginPageH1>
-          <div>
-            <input type="file" accept='.csv' lang='fin' onChange={handleFileChange} />
-          </div>
-          <LoginPageButton background = 'light' onClick={() => uploadWhiskies(file)}>Lataa palvelimelle</LoginPageButton>
-        </LoginPageInputForm>
-      </div>
+      <LoginPageInputFormWrapper style={{margin: '5px 5px'}}>
+        <LoginPageH1>Lataa Excelin csv-tiedosto</LoginPageH1>
+        <input type="file" accept='.csv' lang='fin' onChange={handleFileChange} />
+        <LoginPageButton background = 'light' onClick={() => uploadWhiskies(file)}>Lataa palvelimelle</LoginPageButton>
+      </LoginPageInputFormWrapper>
       <LoginPageGrid>
-        <div>
-          <LoginPageInputForm>
-            <LoginPageH1>Aukioloajat</LoginPageH1>
-            <Togglable buttonLabel='Uusi aika' ref = {openingHoursFormRef} >
-              <NewOpeningHoursForm createNewHours = {createOpeningHours} />
-            </Togglable>
-          </LoginPageInputForm>
-        </div>
-        <div>
-          <LoginPageInputForm>
-            <div style = {{justifyContent: 'center'}}>
-              <LoginPageH1>Hanatuotteet</LoginPageH1>
-            </div>
-            <Togglable buttonLabel='Uusi olut' ref = {beerFormRef}>
-              <NewBeerForm createNewBeer={createBeer} />
-            </Togglable>
-          </LoginPageInputForm>
-        </div>
-        <div>
-          <LoginPageInputForm>
-            <LoginPageH1>Viskilista</LoginPageH1>
-            <Togglable buttonLabel='Uusi viski' ref = {whiskyFormRef} >
-              <NewWhiskyForm createNewWhisky = {createWhisky} currentWhiskies = {whiskies} />
-            </Togglable>
-          </LoginPageInputForm>
-        </div>
-        <div>
-          <LoginPageInputForm>
-            <LoginPageH1>Live-tapahtuma</LoginPageH1>
-            <Togglable buttonLabel='Uusi tapahtuma' ref = {liveMusicFormRef} >
-              <NewLiveMusicForm createNewLiveMusic = {createLiveMusic} />
-            </Togglable>
-          </LoginPageInputForm>
-        </div>
+        <LoginPageInputFormWrapper>
+          <LoginPageH1>Aukioloajat</LoginPageH1>
+          <Togglable buttonLabel='Uusi aika' ref = {openingHoursFormRef} >
+            <NewOpeningHoursForm createNewHours = {createOpeningHours} />
+          </Togglable>
+        </LoginPageInputFormWrapper>
+        <LoginPageInputFormWrapper>
+          <LoginPageH1>Hanatuotteet</LoginPageH1>
+          <Togglable buttonLabel='Uusi olut' ref = {beerFormRef}>
+            <NewBeerForm createNewBeer={createBeer} />
+          </Togglable>
+        </LoginPageInputFormWrapper>
+        <LoginPageInputFormWrapper>
+          <LoginPageH1>Viskilista</LoginPageH1>
+          <Togglable buttonLabel='Uusi viski' ref = {whiskyFormRef} >
+            <NewWhiskyForm createNewWhisky = {createWhisky} currentWhiskies = {whiskies} />
+          </Togglable>
+        </LoginPageInputFormWrapper>
+        <LoginPageInputFormWrapper>
+          <LoginPageH1>Live-tapahtuma</LoginPageH1>
+          <Togglable buttonLabel='Uusi tapahtuma' ref = {liveMusicFormRef} >
+            <NewLiveMusicForm createNewLiveMusic = {createLiveMusic} />
+          </Togglable>
+        </LoginPageInputFormWrapper>
       </LoginPageGrid>
       <OpeningHoursView openingHoursList = {openingHours} removeOpeningHours = {removeOpeningHours} updateOpeningHours = {updateOpeningHours} />
       <LiveMusicView liveMusicList = {liveMusic} removeLiveMusic = {removeLiveMusic} updateLiveMusic = {updateLiveMusic} />

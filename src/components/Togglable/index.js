@@ -1,13 +1,6 @@
 import { useState, useImperativeHandle, forwardRef } from 'react'
 
-import { TogglableButton } from './TogglableElements'
-
-const flexContainer = {
-  display: 'flex',
-  flexDirection: 'column',
-  alignItems: 'center',
-  justifyContent: 'center',
-}
+import { TogglableButton, TogglableWrapper } from './TogglableElements'
 
 
 const Togglable = forwardRef((props, ref) => {
@@ -27,11 +20,11 @@ const Togglable = forwardRef((props, ref) => {
   })
 
   return (
-    <div style={flexContainer}>
-      <div style={hideWhenVisible}>
+    <>
+      <TogglableWrapper style={hideWhenVisible}>
         <TogglableButton background = 'add' onClick={toggleVisibility}>{props.buttonLabel}</TogglableButton>
-      </div>
-      <div style={{...showWhenVisible, margin: '15px'}}>
+      </TogglableWrapper>
+      <TogglableWrapper style={{...showWhenVisible,}}>
         {props.children}
         <TogglableButton 
           background = 'light' 
@@ -39,8 +32,8 @@ const Togglable = forwardRef((props, ref) => {
           >
           Hylkää
         </TogglableButton>
-      </div>
-    </div>
+      </TogglableWrapper>
+    </>
   )
 })
 

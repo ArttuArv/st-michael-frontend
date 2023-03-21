@@ -1,14 +1,14 @@
 import { useState } from 'react'
 
-import { 
-  InputFormButton, 
-  InputFormH2, 
-  InputFormP, 
-  InputFormForm, 
-  InputFormItems, 
-  InputFormInput, 
-  InputFormLabel, 
-  InputFormSelect, 
+import {
+  InputFormButton,
+  InputFormH2,
+  InputFormP,
+  InputFormForm,
+  InputFormItems,
+  InputFormInput,
+  InputFormLabel,
+  InputFormSelect,
   InputFormOption
 } from '../InputFormElements'
 
@@ -32,13 +32,13 @@ const NewBeerForm = ({ createNewBeer }) => {
   const handleSubmit = (event) => {
     event.preventDefault()
 
-    
+
 
     if (category === 'Valitse listasta' || !category) {
       notify('Valitse kategoria', 'alert')
 
       return
-    } 
+    }
 
     if (!name || !style || !country) {
       notify('Täytä kaikki kentät', 'alert')
@@ -58,7 +58,7 @@ const NewBeerForm = ({ createNewBeer }) => {
 
     // Nollataan syöttökentät
     resetStates()
-    
+
   }
 
   const resetStates = () => {
@@ -98,54 +98,40 @@ const NewBeerForm = ({ createNewBeer }) => {
 
 
   return (
-    <div>
-      <div style = {{ marginBottom: '10px' }}>
+    <>
+      <InputFormForm onSubmit={handleSubmit}>
         <InputFormH2>Lisää olut</InputFormH2>
-      </div>
-      <div>
-        <InputFormForm onSubmit={handleSubmit}>
-          <InputFormItems>
-            <InputFormP>Nimi</InputFormP>
-            <InputFormInput
-              value={name}
-              onChange={handleNameChange}
-              id='name'
-              placeholder='Oluen nimi'
-            />
-          </InputFormItems>
-          <InputFormItems>
-            <InputFormP>Tyyppi</InputFormP>
-            <InputFormInput
-              value={style}
-              onChange={handleStyleChange}
-              id='style'
-              placeholder='Oluen tyyppi esim. IPA'
-            />
-          </InputFormItems>
-          <InputFormItems>
-            <InputFormP>Maa</InputFormP>
-            <InputFormInput
-              value={country}
-              onChange={handleCountryChange}
-              id='country'
-              placeholder='Oluen kotimaa'
-            />
-          </InputFormItems>
-          <InputFormItems>
-            <InputFormLabel>Kategoria</InputFormLabel>
-            <InputFormSelect value={category} onChange={handleCategoryChange}>
-              {beerCategories.map(beerArea => (
-                <InputFormOption key={beerArea} value={beerArea}>{beerArea}</InputFormOption>
-              ))}
-            </InputFormSelect>
-          </InputFormItems>
-           <InputFormButton background = 'add' id="login-button" type="submit">
-             Lisää
-           </InputFormButton>
-         </InputFormForm>
-       </div>
-     </div>
-   )
+        <InputFormP>Nimi</InputFormP>
+        <InputFormInput
+          value={name}
+          onChange={handleNameChange}
+          id='name'
+          placeholder='Oluen nimi'
+        />
+        <InputFormP>Tyyppi</InputFormP>
+        <InputFormInput
+          value={style}
+          onChange={handleStyleChange}
+          id='style'
+          placeholder='Oluen tyyppi esim. IPA'
+        />
+        <InputFormP>Maa</InputFormP>
+        <InputFormInput
+          value={country}
+          onChange={handleCountryChange}
+          id='country'
+          placeholder='Oluen kotimaa'
+        />
+        <InputFormLabel>Kategoria</InputFormLabel>
+        <InputFormSelect value={category} onChange={handleCategoryChange}>
+          {beerCategories.map(beerArea => (
+            <InputFormOption key={beerArea} value={beerArea}>{beerArea}</InputFormOption>
+          ))}
+        </InputFormSelect>
+        <InputFormButton background='add' id="login-button" type="submit">Lisää</InputFormButton>
+      </InputFormForm>      
+    </>
+  )
 }
 
 export default NewBeerForm

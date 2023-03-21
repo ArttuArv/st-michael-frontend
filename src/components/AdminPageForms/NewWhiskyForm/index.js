@@ -1,14 +1,14 @@
 import { useState } from 'react'
 
-import { 
-  InputFormButton, 
-  InputFormH2, 
-  InputFormP, 
-  InputFormForm, 
-  InputFormItems, 
-  InputFormInput, 
-  InputFormLabel, 
-  InputFormSelect, 
+import {
+  InputFormButton,
+  InputFormH2,
+  InputFormP,
+  InputFormForm,
+  InputFormItems,
+  InputFormInput,
+  InputFormLabel,
+  InputFormSelect,
   InputFormOption
 } from '../InputFormElements'
 
@@ -30,7 +30,7 @@ const NewWhiskyForm = ({ createNewWhisky, currentWhiskies }) => {
 
     if (area === 'Valitse listasta' || !area) {
       notify('Valitse alue', 'alert')
-    
+
       return
     }
 
@@ -44,7 +44,7 @@ const NewWhiskyForm = ({ createNewWhisky, currentWhiskies }) => {
 
     // Nollataan syöttökentät
     resetStates()
-    
+
   }
 
   const resetStates = () => {
@@ -76,35 +76,25 @@ const NewWhiskyForm = ({ createNewWhisky, currentWhiskies }) => {
   }
 
   return (
-    <div>
-      <div style = {{ marginBottom: '10px' }}>
+    <>
+      <InputFormForm onSubmit={handleSubmit}>
         <InputFormH2>Lisää viski</InputFormH2>
-      </div>
-      <div>
-        <InputFormForm onSubmit={handleSubmit}>
-          <InputFormItems>
-            <InputFormP>Nimi</InputFormP>
-            <InputFormInput
-              value={name}
-              onChange={handleNameChange}
-              id='name'
-              placeholder='Viskin nimi'
-            />
-          </InputFormItems>
-          <InputFormItems>
-            <InputFormLabel>Alue</InputFormLabel>
-            <InputFormSelect value={area} onChange={handleAreaChange}>
-              {whiskyAreas.map((area) => (
-                <InputFormOption key={area} value={area}>{area}</InputFormOption>
-              ))}
-            </InputFormSelect>
-          </InputFormItems>
-          <div>
-            <InputFormButton background = 'add' id='submit-button' type='submit'>Lisää</InputFormButton>
-          </div>
-        </InputFormForm>
-      </div>
-    </div>
+        <InputFormP>Nimi</InputFormP>
+        <InputFormInput
+          value={name}
+          onChange={handleNameChange}
+          id='name'
+          placeholder='Viskin nimi'
+        />
+        <InputFormLabel>Alue</InputFormLabel>
+        <InputFormSelect value={area} onChange={handleAreaChange}>
+          {whiskyAreas.map((area) => (
+            <InputFormOption key={area} value={area}>{area}</InputFormOption>
+          ))}
+        </InputFormSelect>
+        <InputFormButton background='add' id='submit-button' type='submit'>Lisää</InputFormButton>
+      </InputFormForm>
+    </>
   )
 }
 

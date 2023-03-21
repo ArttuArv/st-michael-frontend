@@ -13,6 +13,8 @@ import {
   FormP,
 } from '../UpdateFormElements'
 
+import { formatDateTimeToEuropean } from '../../../utils/utils'
+
 const UpdateLiveMusicForm = ({ liveMusicToUpdate, visibility, updateLiveMusic }) => {
   const [artist, setArtist] = useState('')
   const [date, setDate] = useState('')
@@ -133,15 +135,5 @@ const styles = {
 }
 
 
-function formatDateTimeToEuropean(updatedLiveMusic) {
-  updatedLiveMusic.date = updatedLiveMusic.date.replace(/-/g, '.') // Muutetaan päivämäärä muotoon vvvv.kk.pp
-  const dateArray = updatedLiveMusic.date.split('.')
-  dateArray[1] = dateArray[1].replace(/^0+/, '') // kk
-  dateArray[2] = dateArray[2].replace(/^0+/, '') // pp  
-  updatedLiveMusic.date = dateArray[2] + '.' + dateArray[1] + '.' + dateArray[0] // Muutetaan päivämäärä muotoon pp.kk.vvvv
 
-  updatedLiveMusic.time = updatedLiveMusic.time.replace(/:/g, '.')
-
-  return updatedLiveMusic
-}
 

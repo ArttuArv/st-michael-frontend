@@ -3,7 +3,7 @@ import React, { lazy } from "react"
 const baseUrl = process.env.REACT_APP_PRODUCT_API_URI
 const baseUrlTest = process.env.REACT_APP_PRODUCT_API_TEST_URI
 
-export const getBaseUrl = () => baseUrlTest
+export const getBaseUrl = () => baseUrl
 
 export const lazyLoad = (path, namedExport) => {
 
@@ -52,4 +52,26 @@ export const rearrangeBeerOrder = (beer) => {
     return 0
   })
   return sortedBeers
+}
+
+export function formatDateTimeToEuropean(liveEventObject) {
+
+  const formatter = new Intl.DateTimeFormat('fi', {
+    year: 'numeric',
+    month: '2-digit',
+    day: '2-digit',
+  })
+
+  const date = formatter.format(new Date(liveEventObject.date))
+
+  const dateArray = date.split('.')
+
+  const year = dateArray[2]
+  const month = dateArray[1] < 10 ? dateArray[1].replace(/^0+/, '') : dateArray[1]
+  const day = dateArray[0] < 10 ? dateArray[0].replace(/^0+/, '') : dateArray[0]
+
+  liveEventObject.date = `${day}.${month}.${year}`
+  liveEventObject.time = liveEventObject.time.replace(/:/g, '.')
+
+  return liveEventObject
 }

@@ -56,37 +56,29 @@ const NewOpeningHoursForm = ({ createNewHours }) => {
   }
 
   return (
-    <div>
-      <div style = {{ marginBottom: '10px' }}>
+    <>
+      <InputFormForm onSubmit={handleSubmit}>
         <InputFormH2>Lisää uusi</InputFormH2>
         <InputFormH2>aukioloaika</InputFormH2>
-      </div>
-      <div>
-        <InputFormForm onSubmit={handleSubmit}>
-          <InputFormItems>
-            <InputFormP>Päivä</InputFormP>
-            <InputFormInput
-              value={day}
-              onChange={handleDayChange}
-              id='day'
-              placeholder='Aseta päivä'
-            />
-          </InputFormItems>
-          <InputFormItems>
-            <InputFormP>Aukioloaika</InputFormP>
-            <InputFormInput
-              value={openingHours}
-              onChange={handleHoursChange}
-              id='openingHours'
-              placeholder='Aseta aukioloaika'
-            />
-          </InputFormItems>
-          <InputFormButton background = 'add' id="login-button" type="submit">
-            Lisää
-          </InputFormButton>
-        </InputFormForm>
-      </div>
-    </div>
+          <InputFormP>Päivä</InputFormP>
+          <InputFormInput
+            value={day}
+            onChange={handleDayChange}
+            id='day'
+            placeholder='Aseta päivä'
+          />
+          <InputFormP>Aukioloaika</InputFormP>
+          <InputFormInput
+            value={openingHours}
+            onChange={handleHoursChange}
+            id='openingHours'
+            placeholder='Aseta aukioloaika'
+          />
+        <InputFormButton background = 'add' id="login-button" type="submit">
+          Lisää
+        </InputFormButton>
+      </InputFormForm>
+    </>
   )
 }
 

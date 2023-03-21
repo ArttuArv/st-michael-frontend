@@ -17,17 +17,18 @@ export const FooterWrapper = styled.div`
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   grid-gap: 1rem;
-  max-width: 1700px;
+  max-width: 1800px;
+  width: 100%;
   padding: 0 1rem;
 
   @media screen and (max-width: 1200px) {
-    grid-template-columns: 1fr;
+    grid-template-columns: repeat(auto-fill, minmax(430px, 1fr));
     grid-gap: 2rem;
   }
 
-  @media screen and (max-width: 1000px) {
-    grid-template-columns: 1fr;
-    grid-gap: 2rem;
+  @media screen and (max-width: 925px) {
+    grid-template-columns: repeat(1, 1fr);
+    width: 70%;
   }
 `;
 
@@ -36,11 +37,10 @@ export const FooterGridItem = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: start;
-  width: 100%;
-  max-width: 500px;
+  max-width: 600px;
 
   @media screen and (max-width: 1200px) {
-    justify-content: center;
+    
   }
 `;
 
@@ -220,7 +220,6 @@ export const FooterTableH3 = styled.h3`
 
 export const FooterImage = styled.img`
   width: 100%;
-  max-width: 500px;
   margin-top: -40px;
 
   &:hover {
@@ -232,7 +231,4 @@ export const FooterImage = styled.img`
   @media screen and (max-width: 1400px) {
     margin-top: 0;
   }
-
-  @media screen and (max-width: 1200px) {
-    max-width: 500px;
 `;

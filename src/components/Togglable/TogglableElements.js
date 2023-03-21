@@ -2,9 +2,8 @@ import styled from 'styled-components';
 
 export const TogglableButton = styled.button`
   padding: 10px;
-  margin: 5px;
+  margin: 1rem;
   width: 100%;
-  max-width: 300px;
   border-radius: 5px;
   font-size: 1rem;
   background: ${props => props.background === 'add' ? '#06260F' : '#84172C'};
@@ -20,6 +19,14 @@ export const TogglableButton = styled.button`
 
   @media screen and (max-width: 500px) {
     font-size: 1.2rem;
-    height: 60px;
   }
+`;
+
+export const TogglableWrapper = styled.div`
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 0 10px;
 `;

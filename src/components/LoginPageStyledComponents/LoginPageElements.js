@@ -18,9 +18,8 @@ export const LoginPageWrapper = styled.div`
 `;
 
 export const LoginPageH1 = styled.h2`
-  font-size: 2rem;
-  margin-top: 20px;
-  margin-bottom: 10px;
+  font-size: 1.4rem;
+  margin-top: 10px;
   color: gold;
   text-shadow: 1px 1px 0px rgba(0, 0, 0, 1);
 
@@ -43,22 +42,25 @@ export const LoginPageP = styled.p`
 export const LoginPageH3 = styled.h3`
   font-size: ${props => props.fontsize === 'large' ? '3rem' : '1.5rem'};
   margin-top: ${props => props.fontsize === 'large' ? '10px' : '0px'};
+  color: gold;
+  text-shadow: 1px 1px 0px rgba(0, 0, 0, 1);
   margin-bottom: 10px;
 `;
 
 export const LoginPageGrid = styled.div`
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  // grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
-  grid-gap: 1rem;
-  padding: 10px;
-  // margin: 20px;
-  // border-radius: 5px;
+  grid-template-columns: repeat(4, 1fr);
+  grid-gap: 0.5rem;
+  padding: 5px;
   background: #06260F;
   width: 100%;
   text-align: center;
 
-  @media screen and (max-width: 700px) {
+  @media screen and (max-width: 1300px) {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  @media screen and (max-width: 750px) {
     // grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
     grid-template-columns: 1fr;
     padding: 5px 5px;
@@ -71,8 +73,7 @@ export const LoginPageGridItem = styled.div`
   color: #32231F;
   padding: 10px;
   width: 100%;
-  border-radius: 5px;
-  
+  border-radius: 5px; 
 
   @media screen and (max-width: 500px) {
     padding: 5px 5px;
@@ -103,12 +104,11 @@ export const LoginPageButton = styled.button`
   }
 `;
 
-export const LoginPageInputForm = styled.div`
-  width: 100%;
+export const LoginPageInputFormWrapper = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-bottom: 20px;
+  // justify-content: center;
   font-weight: bold;
   color: #32231F;
   background: #A69666;
@@ -120,9 +120,8 @@ export const LoginPageRemoveButton = styled.button`
   padding: 10px;
   margin: 5px;
   width: 100%;
-  max-width: 300px;
   border-radius: 5px;
-  font-size: 1rem;
+  font-size: 0.9rem;
   background: #84172C;
   color: gold;
   font-weight: bold;
@@ -135,36 +134,11 @@ export const LoginPageRemoveButton = styled.button`
   }
 
   @media screen and (max-width: 500px) {
-    font-size: 1.2rem;
-    height: 60px;
+    font-size: 1rem;
   }
 `;
 
-export const LoginPageWhiskyUpdateButton = styled.button`
-  padding: 10px;
-  width: 100%;
-  margin: 0 5px;
-  max-width: 80px;
-  border-radius: 5px;
-  font-size: 1rem;
-  background: #06260F;
-  color: gold;
-  font-weight: bold;
-  cursor: pointer;
 
-  &:hover {
-    transition: all 0.2s ease-in-out;
-    transform: scale(1.01);
-    box-shadow: 0 1px 3px rgba(255, 203, 5, 0.9);
-  }
-
-  @media screen and (max-width: 500px) {
-    font-size: 1.2rem;
-    height: 60px;
-    max-width: 120px;
-    width: 100%;
-  }
-`;
 
 export const LoginPageHideButton = styled.button`
   padding: 10px;
@@ -206,6 +180,10 @@ export const LoginPageWhiskyViewList = styled.div`
   border-radius: 5px;
   padding: 5px;
   border: 1px solid #32231F;
+
+  @media screen and (max-width: 300px) {
+    flex-direction: column;
+  }
 `;
 
 export const LoginPageWhiskyViewUl = styled.ul`
@@ -248,14 +226,13 @@ export const LoginPageWhiskyViewLi = styled.li`
   width: 100%;
   padding-left: 10px;
   text-align: start;
-  align-self: center;
 `;
 
 export const LoginPageWhiskyRemoveButton = styled.button`
   max-width: 100px;
   padding: 5px;
   border-radius: 5px;
-  font-size: 1rem;
+  font-size: 0.9rem;
   background: #84172C;
   color: gold;
   font-weight: bold;
@@ -268,7 +245,40 @@ export const LoginPageWhiskyRemoveButton = styled.button`
   }
 
   @media screen and (max-width: 500px) {
-    font-size: 1.2rem;
+    font-size: 1rem;
+  }
+
+  @media screen and (max-width: 300px) {
+    font-size: 0.8rem;
+    max-width: 100%;
+    margin: 0 5px;
+  }
+`;
+
+export const LoginPageWhiskyUpdateButton = styled.button`
+  padding: 10px;
+  max-width: 100px;
+  margin: 0 5px;
+  border-radius: 5px;
+  font-size: 0.9rem;
+  background: #06260F;
+  color: gold;
+  font-weight: bold;
+  cursor: pointer;
+
+  &:hover {
+    transition: all 0.2s ease-in-out;
+    transform: scale(1.01);
+    box-shadow: 0 1px 3px rgba(255, 203, 5, 0.9);
+  }
+
+  @media screen and (max-width: 500px) {
+    font-size: 1rem;
+  }
+
+  @media screen and (max-width: 300px) {
+    font-size: 0.8rem;
+    max-width: 100%;
   }
 `;
 
