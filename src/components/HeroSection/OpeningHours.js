@@ -7,20 +7,21 @@ import {
   HeroTableHead, 
 } from './HeroElements'
 
+
 const OpeningHours = ({ openingHours }) => {
 
   return (
     <HeroTableWrapper>
-      <HeroTable>
+      <HeroTable> 
         <HeroTableBody>
           {openingHours.map( (item) => (
             <HeroTableRow key = {item.id}>
-              <HeroTableHead>{item.day}</HeroTableHead>
+              <HeroTableHead key={item.id}>{item.day}</HeroTableHead>
               <HeroTableHead>{item.openinghours}</HeroTableHead>
             </HeroTableRow>
           ))}
         </HeroTableBody>
-      </HeroTable>
+       </HeroTable>
     </HeroTableWrapper>
   )
 }

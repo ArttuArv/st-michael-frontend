@@ -24,7 +24,7 @@ import {
 } from './FooterElements'
 import { FaFacebook, FaInstagram, FaEnvelope } from 'react-icons/fa'
 import Logo from '../../assets/images/Michael-logorigin.png'
-import Kartta from '../../assets/images/stMichael_kartta.svg'
+import Kartta from '../../assets/images/stMichael_kartta_brass.svg'
 
 
 const Footer = ({ openingHours }) => {

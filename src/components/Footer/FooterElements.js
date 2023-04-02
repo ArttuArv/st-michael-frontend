@@ -231,4 +231,5 @@ export const FooterImage = styled.img`
   @media screen and (max-width: 1400px) {
     margin-top: 0;
   }
+
 `;

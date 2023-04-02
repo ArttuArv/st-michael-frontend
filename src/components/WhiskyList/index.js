@@ -16,6 +16,8 @@ import {
   WhiskyPageHeaderH2,
 } from './WhiskyListElements';
 
+import { rearrangeWhiskyOrder } from '../../utils/utils';
+
 const tableStyle = {
   borderCollapse: 'collapse',
   width: '100%',
@@ -135,9 +137,7 @@ const WhiskyList = ({ whisky }) => {
     setWhiskies(flattenedArray);
   }
 
-  // Takaperin järjestys, jotta Uutuudet-kategoria näkyy ensimmäisenä
-  // Tää pitää funtsia paremmaksi
-  const sortedWhisky = whisky.sort((a, b) => b.name.localeCompare(a.name));
+  const whiskyList = rearrangeWhiskyOrder(whisky);
 
   return (
     <WhiskyListPageContainer>
@@ -145,16 +145,16 @@ const WhiskyList = ({ whisky }) => {
         <WhiskyPageHeaderH2>Lista löytyy myös baaritiskiltä.</WhiskyPageHeaderH2>
         <WhiskyPageHeaderH2>Viskilista elää viikottain. Pidätämme oikeudet muutoksiin.</WhiskyPageHeaderH2>
         <WhiskyPageHeaderH2>Kysy uutuuksista henkilökunnalta.</WhiskyPageHeaderH2>
-      </WhiskyListContainer>
-        <WhiskyListNavs whisky = {whisky} />
+      </WhiskyListContainer >
+      <WhiskyListNavs whisky = {whisky} />
       <WhiskyListContainer>
         <WhiskyListWrapper>
           <WhiskyListBox>
-            <WhiskyPageHeaderH2>Haku</WhiskyPageHeaderH2>
+            <WhiskyPageHeaderH2 dark >Haku</WhiskyPageHeaderH2>
             <div style = {{width: 'min(250px)', position: 'relative'}}>
               <WhiskyListInput 
               value = {filter} 
-              placeholder = {'Etsi viskejä...'} 
+              placeholder = 'Etsi viskejä...'
               onChange = {handleChange} />
               <button style = {buttonStyle} onClick = {() => {setFilter(''); setWhiskies([])}}>X</button>
             </div>
@@ -162,10 +162,9 @@ const WhiskyList = ({ whisky }) => {
           </WhiskyListBox>
         </WhiskyListWrapper>
       </WhiskyListContainer>
-      <>
         <WhiskyListContainer>
           <WhiskyListWrapper>
-            {sortedWhisky.map(area => (
+            {whiskyList.map(area => (
               <WhiskyListBox name = {area.name} key={area.id}>
                 <WhiskyListH1>{area.name}</WhiskyListH1>
                 <div style = {tableWrapper}>
@@ -188,7 +187,6 @@ const WhiskyList = ({ whisky }) => {
             ))}
           </WhiskyListWrapper>
         </WhiskyListContainer>
-      </>
     </WhiskyListPageContainer>
   )
 }

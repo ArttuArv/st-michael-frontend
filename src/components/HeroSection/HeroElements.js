@@ -148,7 +148,12 @@ export const HeroP = styled.p`
 
 export const HeroTableWrapper = styled.div`
   display: flex;
-  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-top: 16px;
+  margin-bottom: 16px;
+  max-width: 400px;
+  width: 100%;
 `;
 
 export const HeroTable = styled.table`

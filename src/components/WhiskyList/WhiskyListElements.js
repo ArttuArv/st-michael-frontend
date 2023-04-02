@@ -49,6 +49,7 @@ export const WhiskyListContainer = styled.div`
   align-items: center;
   justify-content: center;
   background-color: #06260F;
+  color: #7B5F18;
 
   @media screen and (max-width: 950px) {
     padding: 0 20px;
@@ -80,7 +81,7 @@ export const WhiskyListBox = styled.div`
 `;
 
 export const WhiskyListH1 = styled.h2`
-  color: #F5BD30;
+  color: #7B5F18;
   font-weight: 400;
   font-size: 44px;          //calc(45px + (20 - 4) * ((100vw - 1000px) / (1600 - 600)));    // font-size: 48px;
   text-align: center;
@@ -94,7 +95,7 @@ export const WhiskyListH1 = styled.h2`
 `;
 
 export const WhiskyPageHeaderH2 = styled.h3`
-  color: #F5BD30;
+  color: ${({dark}) => (dark ? '#7B5F18' : '#F5BD30' )};
   font-weight: 400;
   font-size: 30px;
   text-align: center;
@@ -102,7 +103,6 @@ export const WhiskyPageHeaderH2 = styled.h3`
 
   @media screen and (max-width: 768px) {
     font-size: 24px;
-
   }
 
   @media screen and (max-width: 500px) {
@@ -154,16 +154,14 @@ export const WhiskyListNav = styled.nav`
 
 export const WhiskyListLinksContainer = styled.div`
   display: flex;
+  flex-wrap: wrap;
   justify-content: center;
   width: 100%;
-  max-width: 1100px;
+  max-width: 950px;
+  margin: 1rem 0;
 
-  @media screen and (max-width: 1120px) {
-    flex-wrap: wrap;
-  }
 
   @media screen and (max-width: 600px) {
-    flex-wrap: wrap;
     flex-direction: column;
     align-items: center;
   }
@@ -204,7 +202,7 @@ export const WhiskyListLink = styled(Link)`
 export const WhiskyListInput = styled.input`
   width: 100%;
   height: 40px;
-  border: 2px solid #F5BD30;
+  border: 2px solid #7B5F18;
   border-radius: 30px;
   padding: 0 10px;
   margin-top: 5px;
@@ -218,7 +216,7 @@ export const WhiskyListInput = styled.input`
   transition: 0.1s ease-in-out;
 
   &:hover {
-    border-bottom: 3px solid #F5BD30;
+    border-bottom: 3px solid #7B5F18;
     transition: 0.1s ease-in-out;
   }
 `;

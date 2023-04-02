@@ -4,6 +4,7 @@ import Footer from '../components/Footer'
 import SlidingPictures from '../components/SlidingPictures'
 import SportsSection from '../components/SportsSection'
 import FrontPageProductMenu from '../components/FrontpageProductMenu'
+import GamesAndToys from '../components/GamesAndToys/gamesAndToys'
 
 
 const Home = ({ openingHours, beer }) => {
@@ -15,6 +16,7 @@ const Home = ({ openingHours, beer }) => {
       <HeroSection openingHours = {openingHours} />      
       <FrontPageProductMenu beer = {beer} />
       <SportsSection />
+      <GamesAndToys />
       <SlidingPictures />
       <Footer openingHours = {openingHours} />
     </>

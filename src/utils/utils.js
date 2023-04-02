@@ -3,7 +3,7 @@ import React, { lazy } from "react"
 const baseUrl = process.env.REACT_APP_PRODUCT_API_URI
 const baseUrlTest = process.env.REACT_APP_PRODUCT_API_TEST_URI
 
-export const getBaseUrl = () => baseUrl
+export const getBaseUrl = () => baseUrlTest
 
 export const lazyLoad = (path, namedExport) => {
 
@@ -52,6 +52,71 @@ export const rearrangeBeerOrder = (beer) => {
     return 0
   })
   return sortedBeers
+}
+
+export const rearrangeWhiskyOrder = (whisky) => {
+
+  const sortedWhisky = whisky.map(whisky => {
+    whisky.whiskies.sort((a, b) => a.name.localeCompare(b.name))
+    return whisky
+  }) 
+
+  // Sort categories Uutuudet, Highland, Islands, Campbeltown, Lowland, Irish, Japan, Speyside, Islay, Blended, Blended Malt, Single Malt, Single Grain, Grain, Rye, Other
+  sortedWhisky.sort((a, b) => {
+    if (a.name === 'Uutuudet')
+      return -1
+    if (b.name === 'Uutuudet')
+      return 1
+
+    if (a.name === 'Highland')
+      return -1
+    if (b.name === 'Highland')
+      return 1
+
+    if (a.name === 'Islands')
+      return -1
+    if (b.name === 'Islands')
+      return 1
+
+    if (a.name === 'Speyside')
+      return -1
+    if (b.name === 'Speyside')
+      return 1
+
+    if (a.name === 'Campbeltown')
+      return -1
+    if (b.name === 'Campbeltown')
+      return 1
+
+    if (a.name === 'Lowland')
+      return -1
+    if (b.name === 'Lowland')
+      return 1
+
+    if (a.name == 'Irish')
+      return -1
+    if (b.name == 'Irish')
+      return 1
+
+    if (a.name === 'Japan')
+      return -1
+    if (b.name === 'Japan')
+      return 1
+    
+    if (a.name === 'USA')
+      return -1
+    if (b.name === 'USA')
+      return 1
+
+    if (a.name === 'Canada')
+      return -1
+    if (b.name === 'Canada')
+      return 1
+
+    return 0
+  })
+  
+  return sortedWhisky
 }
 
 export function formatDateTimeToEuropean(liveEventObject) {

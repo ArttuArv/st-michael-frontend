@@ -11,9 +11,9 @@ const images = [
   require('../../assets/images/kuva2.jpg'),
   require('../../assets/images/kuva3.png'),
   require('../../assets/images/kuva4.png'),  
-  require('../../assets/images/kuva6.jpg'),
+  require('../../assets/images/michael_urquel.png'),
   require('../../assets/images/kuva7.jpg'),
-  require('../../assets/images/kuva8.jpg'),
+  require('../../assets/images/michael_hoegaarden.png'),
   require('../../assets/images/st-michael-tunnelmakuva.jpg'),
   require('../../assets/images/kuva5.jpg'),
 ]
@@ -41,7 +41,7 @@ const Story = () => {
           <h2>Tarinan otsikko</h2>
           <h3>{text3}</h3>
         </section>
-        <ImageCarousel />
+        <ImageCarousel images = {images} />
         <section className="story-page-grid">
           {images.map(image =>
             <img key={image} src={image}></img>
