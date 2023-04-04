@@ -5,28 +5,24 @@ const gamesImage = require('../../assets/images/stmichael_pelit.png')
 
 const gamesAndToys = () => {
   return (
-    <>
-      <GamesContainer>
-        <GamesSectionWrapper>
-          <GamesPictureWrapper>
-            <GamesImage src={gamesImage} alt="games" />
-          </GamesPictureWrapper>
-          <GamesTextWrapper>
-            <GamesText>
-              <GamesTextHeader>
-                PELEJÄ MONEEN MAKUUN
-              </GamesTextHeader>
-              <GamesTextParagraphItalic>
-                Lautapelit ovat keskustelun jatkamista toisin keinoin
-              </GamesTextParagraphItalic>
-              <GamesTextParagraph>
-                - tuntematon
-              </GamesTextParagraph>
-            </GamesText>
-          </GamesTextWrapper>
-        </GamesSectionWrapper>
-      </GamesContainer>
-    </>
+    <GamesSectionWrapper>
+      <GamesPictureWrapper>
+        <GamesImage src={gamesImage} alt="games" />
+      </GamesPictureWrapper>
+      <GamesTextWrapper>
+        <GamesText>
+          <GamesTextHeader>
+            PELEJÄ MONEEN MAKUUN
+          </GamesTextHeader>
+          <GamesTextParagraphItalic>
+            Lautapelit ovat keskustelun jatkamista toisin keinoin
+          </GamesTextParagraphItalic>
+          <GamesTextParagraph>
+            - tuntematon
+          </GamesTextParagraph>
+        </GamesText>
+      </GamesTextWrapper>
+    </GamesSectionWrapper>
   )
 }
 
@@ -48,26 +44,41 @@ const GamesContainer = styled.div`
 
 const GamesSectionWrapper = styled.div`
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   height: 100%;
   width: 100%;
-  max-width: 1700px;
   padding: 10px;
+  border: 2px solid #F5BD30; // #D4A24E;
+  border-radius: 30px;
+  margin: 0 15px 0 0;
+  background-color: hsl(207, 19%, 9%); // #06260F;
 
-
-  @media screen and (max-width: 800px) {
-    flex-direction: column; //column-reverse;
-
+  @media screen and (max-width: 1586px) {
+    min-width: 300px;
   }
 
+  @media screen and (max-width: 1400px) {
+    min-width: 250px;
+  }
+
+  @media screen and (max-width: 1330px) {
+    flex-direction: row;
+    margin: 15px 0 0 0;
+  }
+
+  @media screen and (max-width: 865px) {
+    flex-direction: column;
+  }
 `
 
 const GamesPictureWrapper = styled.section`
   width: 100%;
   max-height: 600px;
-  min-width: 500px;
   // overflow: hidden;
   padding: 10px;
+
+  @media screen and (max-width: 800px) {
+    min-width: 100%;
 `
 
 const GamesImage = styled.img`
@@ -98,11 +109,16 @@ const GamesText = styled.div`
 `
 
 const GamesTextHeader = styled.h2`
-  font-size: 2.5rem;
+  font-size: 2rem;
   font-weight: 700;
   text-align: center;
   color: #F5BD30; // #D4A24E;
   margin-bottom: 30px;
+
+  @media screen and (max-width: 585px) {
+    font-size: 2rem;
+  }
+
 `
 
 const GamesTextParagraph = styled.p`
@@ -112,7 +128,7 @@ const GamesTextParagraph = styled.p`
   color: #F5BD30; // #D4A24E;
 `
 const GamesTextParagraphItalic = styled.p`
-  font-size: 1.2rem;
+  font-size: 1rem;
   font-weight: 400;
   text-align: center;
   color: #F5BD30; // #D4A24E;

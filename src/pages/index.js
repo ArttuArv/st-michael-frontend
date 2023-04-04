@@ -2,7 +2,7 @@ import React from 'react'
 import HeroSection from '../components/HeroSection'
 import Footer from '../components/Footer'
 import SlidingPictures from '../components/SlidingPictures'
-import SportsSection from '../components/SportsSection'
+import Events from '../components/SportsSection'
 import FrontPageProductMenu from '../components/FrontpageProductMenu'
 import GamesAndToys from '../components/GamesAndToys/gamesAndToys'
 
@@ -14,9 +14,9 @@ const Home = ({ openingHours, beer }) => {
   return (
     <>
       <HeroSection openingHours = {openingHours} />      
-      <FrontPageProductMenu beer = {beer} />
-      <SportsSection />
-      <GamesAndToys />
+      {/* <FrontPageProductMenu beer = {beer} /> */}
+      <Events />
+      {/* <GamesAndToys /> */}
       <SlidingPictures />
       <Footer openingHours = {openingHours} />
     </>

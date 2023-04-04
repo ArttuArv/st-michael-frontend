@@ -12,6 +12,7 @@ export const HeroContainer = styled.div`
   position: relative;
   z-index: 1;
   user-select: none;
+  border-bottom: 3px solid #F5BD30;
 
   :before {
     content: '';

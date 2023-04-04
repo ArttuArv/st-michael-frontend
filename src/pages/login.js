@@ -512,7 +512,7 @@ const Login = () => {
             return whisky
           }))
 
-          notify(`Ladattu ${returnedWhiskies.length} tuotetta! Päivitä selain heten kuluttua!`)
+          notify(`Ladattu ${returnedWhiskies.length} tuotetta! Päivitä selain hetken kuluttua!`)
           setFile(() => null)
 
         }).catch(exception => {

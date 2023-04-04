@@ -14,6 +14,12 @@
   padding: 1rem;
 }
 
+.sports-events-grid {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: 1fr 1fr;
+}
+
 .card-grid-container {
   display: grid;
   gap: 0.5rem;
@@ -28,7 +34,7 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  color: #F5BD30;  
+  color: #F5BD30;
   width: 100%;
   height: 100%;
   border: 2px solid #F5BD30;
@@ -47,9 +53,9 @@
 
 .live-music-content h2 {
   font-weight: 700;
-  font-size: 3rem;
+  font-size: 2rem;
   margin-bottom: 0.5rem;
-  align-self: center;
+  text-align: center;
   margin-top: 1rem;
 }
 
@@ -74,11 +80,11 @@
 
 .live-music-info > h3 {
   color: #FCEBC1;
-  font-size: 1.5rem;
+  font-size: 1rem;
 }
 
 .live-music-info > p {
-  font-size: 1.1rem;
+  font-size: 1rem;
 }
 
 .karppa-box {
@@ -110,18 +116,19 @@
 
 .karppa-content h2 {
   text-align: center;
-  font-size: 30px;
+  font-size: 1.5rem;
   margin-bottom: 1rem;
   color: yellow;
 }
 
 .karppa-content h3 {
   text-align: center;
+  font-size: 1rem;
 }
 
 .h3-bold-yellow {
   text-align: center;
-  font-size: 20px;
+  font-size: 1.2rem;
   margin: 1rem 0;
   color: yellow;
 }
@@ -131,8 +138,8 @@
   display: grid;
   gap: 1rem;
   grid-template-areas:
-    "card-1 card-2" 
-    "card-3 card-4";
+    "card-1 card-2 card-3 card-4";
+  max-height: 120px;
 }
 
 .card {
@@ -182,7 +189,107 @@
   grid-area: card-4;
 }
 
-@media (max-width: 1300px) {
+
+
+@media screen and (max-width: 1330px) {
+  .live-page-wrapper {
+    flex-direction: column-reverse;
+  }  
+}
+
+@media screen and (max-width: 1080px) {
+
+  .live-music-info {
+    flex-direction: column;
+  }
+
+  .card-grid-container {
+    grid-template-areas:
+      "karppa-box card"
+      "karppa-box card";      
+  }
+
+  .card-grid {
+    grid-template-areas:
+      "card-1" 
+      "card-2" 
+      "card-3" 
+      "card-4";
+
+    max-height: none;
+  }
+
+  .card {
+    border-radius: 2rem;
+    max-width: 150px;
+    max-height: 150px;
+  }
+}
+
+@media screen and (max-width: 865px) {
+  .live-music-info {
+    flex-direction: row;
+  }
+
+  .live-page-wrapper {
+    flex-direction: column-reverse;
+    min-width: none;
+  }
+
+  .sports-events-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .card-grid-container {
+    grid-template-areas:
+      "karppa-box card"
+      "karppa-box card";      
+  }
+
+  .card-grid {
+    grid-template-areas:
+      "card-1" 
+      "card-2" 
+      "card-3" 
+      "card-4";
+  }
+
+  .card {
+    border-radius: 2rem;
+    max-width: 150px;
+    max-height: 150px;
+  }
+}
+
+@media screen and (max-width: 545px) {
+
+  .live-music-info {
+    flex-direction: column;
+  }
+
+  .live-music-info > h3 {
+    text-align: center;
+  }
+
+  .card-grid-container {
+    grid-template-areas:
+      "karppa-box"
+      "card";      
+  }
+
+  .card-grid {
+    grid-template-areas:
+      "card-1 card-2 card-3 card-4";
+  }
+
+  .card {
+    border-radius: 1rem;
+  }
+}
+  
+
+
+/* @media screen and (max-width: 1300px) {
 
   .live-music-info > h3 {
     font-size: 1.2rem;
@@ -194,7 +301,7 @@
 }
 
 
-@media (max-width: 1100px) {
+@media screen and (max-width: 1100px) {
   .live-music-box {
     margin-right: 0;
     margin-bottom: 1rem;
@@ -205,7 +312,7 @@
   }
 }
 
-@media (max-width: 700px) {
+@media screen and (max-width: 700px) {
 
   .live-music-info {
     display: flex;
@@ -231,10 +338,7 @@
 
 }
 
-@media (min-width: 400px) {
-  .live-page-wrapper {
-    flex-direction: column;
-  }
+@media screen and (min-width: 400px) {
 
   .card-grid {
     grid-template-areas:
@@ -246,11 +350,7 @@
   }
 }
 
-@media (min-width: 700px) {
-
-  .live-page-wrapper {
-    flex-direction: column;
-  }
+@media screen and (min-width: 700px) {
 
   .card-grid-container {
     grid-template-areas:
@@ -275,10 +375,7 @@
   }
 }
 
-@media (min-width: 1100px) { 
-  .live-page-wrapper {
-    flex-direction: row;
-  }
+@media screen and (min-width: 1100px) { 
 
   .card-grid-container {
     grid-template-areas:
@@ -302,7 +399,8 @@
 
 }
 
-@media (min-width: 1700px) {
+@media screen and (max-width: 1600px) {
+
   .card-grid-container {
     grid-template-areas:
       "karppa-box card";
@@ -323,12 +421,12 @@
     max-width: 150px;
     max-height: 150px
   }
-}
+} */
 
-@media screen and (max-width: 600px) {
+/* @media screen and (max-width: 600px) {
 
   .live-page-wrapper {
     flex-direction: column;
     border-top: 3px solid #F5BD30;
   }
-}
+} */
