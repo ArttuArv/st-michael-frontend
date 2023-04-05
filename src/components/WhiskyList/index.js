@@ -14,6 +14,7 @@ import {
   WhiskyListInput,
   WhiskyListPageContainer,
   WhiskyPageHeaderH2,
+  WhiskyTableData
 } from './WhiskyListElements';
 
 import { rearrangeWhiskyOrder } from '../../utils/utils';
@@ -106,7 +107,7 @@ const SearchResult = ({ filteredList, input }) => {
             </tr>      
             {filteredList.map((whisky, index) => (          
               <tr style = {{borderBottom: '1px dashed black', marginBottom: '20px' }} key = {index}>
-                <td style = {{ paddingTop: '10px', paddingBottom: '10px', paddingRight: '10px' }}>{whisky.name}</td>
+                <WhiskyTableData>{whisky.name}</WhiskyTableData>
                 {/* <td style = {{ textAlign: 'right'}}>{whisky.price}</td> */}
               </tr>                          
             ))}
@@ -176,7 +177,7 @@ const WhiskyList = ({ whisky }) => {
                     </tr>      
                     {area.whiskies.map(whisky => (          
                       <tr style = {{borderBottom: '1px dashed black', marginBottom: '20px' }} key = {whisky.id}>
-                        <td style = {{ paddingTop: '10px', paddingBottom: '10px', paddingRight: '10px' }}>{whisky.name}</td>
+                        <WhiskyTableData>{whisky.name}</WhiskyTableData>
                         {/* <td style = {{ textAlign: 'right'}}>{whisky.price}</td> */}
                       </tr>                          
                     ))}

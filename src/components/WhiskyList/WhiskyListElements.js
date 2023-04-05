@@ -174,12 +174,16 @@ export const WhiskyListMenu = styled.ul`
 `;
 
 export const WhiskyListMenuItem = styled.li`
-  font-size: 1.2rem;
+  font-size: 1rem;
   height: 30px;
   margin-top: 20px;
 
   @media screen and (max-width: 920px) {
     flex-basis: 100%;
+  }
+
+  @media screen and (max-width: 850px) {
+    font-size: 0.9rem;
   }
 `;
 
@@ -218,5 +222,21 @@ export const WhiskyListInput = styled.input`
   &:hover {
     border-bottom: 3px solid #7B5F18;
     transition: 0.1s ease-in-out;
+  }
+`;
+
+export const WhiskyTableData = styled.td`
+  font-size: 0.95rem;
+  padding-top: 5px;
+  text-align: left;
+  font-weight: 400;
+  width: 100%;
+
+  @media screen and (max-width: 850px) {
+    font-size: 0.85rem;
+  }
+
+  @media screen and (max-width: 600px) {
+    font-size: 0.75rem;
   }
 `;

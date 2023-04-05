@@ -1,6 +1,6 @@
 import React from 'react'
 import { 
-  BLh1, 
+  BLh2, 
   BLTable, 
   BLTableRow, 
   BLTableData, 
@@ -12,13 +12,15 @@ import {
 
 const BeerList = ({ beer }) => {
 
+  beer.map(category => category.products.sort((a, b) => a.country.localeCompare(b.country)))  
+
   return (    
     <div style = {{ paddingBottom: '80px'}}>             
       {beer.map(category => (
         <BLTableContainer key = {category.id}>
-          <BLh1 key = {category.id}>
+          <BLh2 key = {category.id}>
             {category.name}
-          </BLh1>
+          </BLh2>
           <BLTableWrapper>
             <BLTable>
               <BLTableBody>                  
