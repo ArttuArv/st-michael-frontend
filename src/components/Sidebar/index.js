@@ -20,7 +20,7 @@ const Sidebar = ({ isOpen, toggle }) => {
             Etusivu
           </SidebarLink>
           <SidebarLink to = "/beer" onClick = {() => toggle} >
-            Hanatuotteet
+            Tuotteet
           </SidebarLink>
           <SidebarLink to = "/whisky" onClick = {() => toggle} >
             Viskit

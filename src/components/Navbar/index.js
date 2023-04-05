@@ -33,7 +33,7 @@ const Navbar  = ({ toggle }) => {
 
   const links = [
     {id: 1, path: '/', text: 'Etusivu'},
-    {id: 2, path: '/beer', text: 'Hanatuotteet'},
+    {id: 2, path: '/beer', text: 'Tuotteet'},
     {id: 3, path: '/whisky', text: 'Viskit'},
     {id: 4, path: '/story', text: 'Tarina'},
     {id: 5, path: '/login', text: 'Kirjaudu'},
