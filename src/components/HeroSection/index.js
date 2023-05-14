@@ -1,4 +1,5 @@
 import React from 'react'
+import { useTranslation } from 'react-i18next'
 import Video from '../../assets/video/guinness.mp4'
 import Logo from  '../../assets/images/Michael-logo-green-glow.png' //'../../assets/images/Michael-logorigin.png'  //'../../assets/images/Michael-logo-vari.png'
 import OpeningHours from './OpeningHours'
@@ -15,6 +16,7 @@ import {
 
 
 const HeroSection = ({ openingHours }) => {
+  const { t } = useTranslation()
   
   return (
     <HeroContainer draggable = 'false'>
@@ -26,7 +28,7 @@ const HeroSection = ({ openingHours }) => {
         <HeroH1>The only piece of Ireland in Oulu</HeroH1>
         <HeroP>Hallituskatu 13 - 17, 90100 Oulu</HeroP>
         <HeroP>Puh. 08 311 7473</HeroP>
-        <HeroH3>Avoinna:</HeroH3>
+        <HeroH3>{t('hero.aukioloHeader')}:</HeroH3>
         <OpeningHours openingHours = {openingHours} />
       </HeroContent>
     </HeroContainer>

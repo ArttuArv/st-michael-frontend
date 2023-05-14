@@ -1,6 +1,8 @@
 import React, { useState, useEffect, Suspense, lazy } from 'react'
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 
+import i18next from './utils/i18next'
+
 import Home from './pages'
 
 import Navbar from './components/Navbar'
@@ -21,10 +23,16 @@ import { rearrangeBeerOrder } from './utils/utils'
 
 const App = () => {
   const [isOpen, setIsOpen] = useState(false)
+  const [isMobile, setIsMobile] = useState(false)
   const [whisky, setWhisky] = useState([])
   const [beer, setBeer] = useState([])
   const [openingHours, setOpeningHours] = useState([])
-  
+  const [language, setLanguage] = useState('fi')
+
+  const toggleLanguage = (event) => {
+    i18next.changeLanguage(event.target.value)
+    setLanguage(event.target.value)
+  } 
 
   const toggle = () => {   
     setIsOpen(open => !open)
@@ -61,11 +69,25 @@ const App = () => {
       })
   }, [])
 
+  // screen size listerer for sidebar
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth <= 769);
+    };
+
+      window.addEventListener('resize', handleResize);
+
+    // Cleanup the event listener when component unmounts
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+  }, []);
+
   return (
     <>
       <Router>
-        <Sidebar isOpen = {isOpen} toggle = {toggle} />
-        <Navbar toggle = {toggle} />
+        <Sidebar toggle = {toggle} isOpen = {isOpen} toggleLang = {toggleLanguage} language = {language} isMobile = {isMobile}/>
+        <Navbar toggle = {toggle} toggleLang = {toggleLanguage} language = {language}/>              
         <Routes>
           <Route path = '/' exact element = {
             <Home openingHours = {openingHours} beer = {beer}/>} 
@@ -76,7 +98,7 @@ const App = () => {
             </Suspense>} 
           />
           <Route path = '/beer' element = {
-            <Suspense>
+            <Suspense fallback = {<div>Loading...</div>}>
               <BeerPage beer = {beer} />
             </Suspense>} 
           />

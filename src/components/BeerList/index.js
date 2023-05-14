@@ -1,4 +1,5 @@
 import React from 'react'
+import { useTranslation } from 'react-i18next'
 import { 
   BLh2, 
   BLTable, 
@@ -11,6 +12,7 @@ import {
 } from './BeerListElements'
 
 const BeerList = ({ beer }) => {
+  const { t } = useTranslation()
 
   beer.map(category => category.products.sort((a, b) => a.country.localeCompare(b.country)))  
 
@@ -25,9 +27,9 @@ const BeerList = ({ beer }) => {
             <BLTable>
               <BLTableBody>                  
                 <BLTableRow>                
-                  <BLTableHeader>Nimi</BLTableHeader>
-                  <BLTableHeader>Tyyppi</BLTableHeader>
-                  <BLTableHeader style = {{ textAlign: 'right' }}>Maa</BLTableHeader>
+                  <BLTableHeader>{t('tuotteet.nimi')}</BLTableHeader>
+                  <BLTableHeader>{t('tuotteet.tyyppi')}</BLTableHeader>
+                  <BLTableHeader style = {{ textAlign: 'right' }}>{t('tuotteet.maa')}</BLTableHeader>
                 </BLTableRow>
               </BLTableBody>                  
               <BLTableBody>

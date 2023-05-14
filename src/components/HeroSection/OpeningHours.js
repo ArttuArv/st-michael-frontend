@@ -14,10 +14,10 @@ const OpeningHours = ({ openingHours }) => {
     <HeroTableWrapper>
       <HeroTable> 
         <HeroTableBody>
-          {openingHours.map( (item) => (
+          {openingHours.map((item) => (
             <HeroTableRow key = {item.id}>
               <HeroTableHead key={item.id}>{item.day}</HeroTableHead>
-              <HeroTableHead>{item.openinghours}</HeroTableHead>
+              <HeroTableHead style={{ textAlign: 'right' }}>{item.openinghours}</HeroTableHead>
             </HeroTableRow>
           ))}
         </HeroTableBody>

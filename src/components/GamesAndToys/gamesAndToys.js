@@ -1,9 +1,12 @@
 import React from 'react'
 import styled from 'styled-components'
+import { useTranslation } from 'react-i18next'
 
 const gamesImage = require('../../assets/images/stmichael_pelit.png')
 
 const gamesAndToys = () => {
+  const { t } = useTranslation()
+
   return (
     <GamesSectionWrapper>
       <GamesPictureWrapper>
@@ -12,13 +15,13 @@ const gamesAndToys = () => {
       <GamesTextWrapper>
         <GamesText>
           <GamesTextHeader>
-            PELEJÄ MONEEN MAKUUN
+            {t('games.header')}
           </GamesTextHeader>
           <GamesTextParagraphItalic>
-            Lautapelit ovat keskustelun jatkamista toisin keinoin
+            {t('games.text')}
           </GamesTextParagraphItalic>
           <GamesTextParagraph>
-            - tuntematon
+            - {t('games.author')}
           </GamesTextParagraph>
         </GamesText>
       </GamesTextWrapper>
@@ -114,6 +117,7 @@ const GamesTextHeader = styled.h2`
   text-align: center;
   color: #F5BD30; // #D4A24E;
   margin-bottom: 30px;
+  text-transform: uppercase;
 
   @media screen and (max-width: 585px) {
     font-size: 2rem;

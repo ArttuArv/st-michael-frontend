@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
-import { animateScroll as scroll } from 'react-scroll';
-import { FaBars } from 'react-icons/fa';
+import { animateScroll as scroll } from 'react-scroll'
+import { FaBars } from 'react-icons/fa'
+import { useTranslation } from 'react-i18next'
 import Logo from '../../assets/images/michael-logo-nelio.png'
 import { 
   Nav, 
@@ -12,31 +13,35 @@ import {
   NavLinkTo,
 } from './NavbarElements'
 
-const Navbar  = ({ toggle }) => {
-  const [scrollNav, setScrollNav] = useState(false);
+import LanguageSwitch from '../LanguageSwitch/LanguageSwitch.js'
+
+
+const Navbar  = ({ toggle, toggleLang, language, isMobile }) => {
+  const [scrollNav, setScrollNav] = useState(false)
+  const { t } = useTranslation()
 
   const handleScroll = () => {
     if (window.scrollY >= 80) {
-      setScrollNav(true);
+      setScrollNav(true)
     } else {
-      setScrollNav(false);
+      setScrollNav(false)
     }
   }
 
   useEffect(() => {
-    window.addEventListener('scroll', handleScroll);
-  }, []);
+    window.addEventListener('scroll', handleScroll)
+  }, [])
 
   const onTop = () => {
-    scroll.scrollToTop();
+    scroll.scrollToTop()
   }
 
   const links = [
-    {id: 1, path: '/', text: 'Etusivu'},
-    {id: 2, path: '/beer', text: 'Tuotteet'},
-    {id: 3, path: '/whisky', text: 'Viskit'},
-    {id: 4, path: '/story', text: 'Tarina'},
-    {id: 5, path: '/login', text: 'Kirjaudu'},
+    {id: 1, path: '/', text: t('nav.Etusivu')},
+    {id: 2, path: '/beer', text: t('nav.Tuotteet')},
+    {id: 3, path: '/whisky', text: t('nav.Viskit')},
+    {id: 4, path: '/story', text: t('nav.Tarina')},
+    {id: 5, path: '/login', text: t('nav.Kirjaudu')},
   ]
 
   return (
@@ -55,11 +60,14 @@ const Navbar  = ({ toggle }) => {
                 </NavLinkTo>
               </NavItem>
             ))}
+            <LanguageSwitch toggleLang = {toggleLang} language = {language} />
           </NavMenu>
         </NavbarContainer>
       </Nav>
     </>
-  );
+  )
 }
 
-export default Navbar;
+export default Navbar
+
+

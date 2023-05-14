@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import { 
   WhiskyListContainer, 
   WhiskyListWrapper, 
@@ -69,13 +70,13 @@ const WhiskyListNavs = ({ whisky }) => {
   )
 }
 
-const SearchResult = ({ filteredList, input }) => { 
+const SearchResult = ({ filteredList, input, t }) => { 
   
    // Jos filtteröity lista on tyhjä ja inputissa on tekstiä, kerrotaan käyttäjälle ettei hakutuloksia löytynyt
    if (filteredList.length === 0 && input.length > 0) {
     return (
       <>
-        <WhiskyListP>Haulla ei löydy viskin viskiä.</WhiskyListP>
+        <WhiskyListP>{t('viskit.notFound')}</WhiskyListP>
       </>
     )
   }
@@ -102,11 +103,11 @@ const SearchResult = ({ filteredList, input }) => {
         <table style = {tableStyle}>
           <tbody>
             <tr>
-              <th style = {{textAlign: 'left'}}>Nimi</th>
+              <th style = {{textAlign: 'left'}}>{t('viskit.nimi')}</th>
               {/* <th style = {{textAlign: 'right'}}>Hinta (€ / 4 cl)</th> */}
             </tr>      
-            {filteredList.map((whisky, index) => (          
-              <tr style = {{borderBottom: '1px dashed black', marginBottom: '20px' }} key = {index}>
+            {filteredList.map((whisky) => (          
+              <tr style = {{borderBottom: '1px dashed black', marginBottom: '20px' }} key = {whisky.id}>
                 <WhiskyTableData>{whisky.name}</WhiskyTableData>
                 {/* <td style = {{ textAlign: 'right'}}>{whisky.price}</td> */}
               </tr>                          
@@ -118,7 +119,7 @@ const SearchResult = ({ filteredList, input }) => {
   } // Jos hakutuloksia on yli 40, kerrotaan käyttäjälle että tuloksia on liikaa
   else {
     return (
-      <WhiskyListP>Liikaa tuloksia. Rajaa hakua.</WhiskyListP>
+      <WhiskyListP>{t('viskit.tooMany')}</WhiskyListP>
     )
   }
 }
@@ -126,6 +127,7 @@ const SearchResult = ({ filteredList, input }) => {
 const WhiskyList = ({ whisky }) => { 
   const [whiskies, setWhiskies ] = useState([])
   const [filter, setFilter] = useState('')
+  const { t } = useTranslation();
 
   const handleChange = (event) => {
     setFilter(event.target.value);
@@ -143,23 +145,23 @@ const WhiskyList = ({ whisky }) => {
   return (
     <WhiskyListPageContainer>
       <WhiskyListContainer>
-        <WhiskyPageHeaderH2>Lista löytyy myös baaritiskiltä.</WhiskyPageHeaderH2>
-        <WhiskyPageHeaderH2>Viskilista elää viikottain. Pidätämme oikeudet muutoksiin.</WhiskyPageHeaderH2>
-        <WhiskyPageHeaderH2>Kysy uutuuksista henkilökunnalta.</WhiskyPageHeaderH2>
+        <WhiskyPageHeaderH2>{t('viskit.header1')}</WhiskyPageHeaderH2>
+        <WhiskyPageHeaderH2>{t('viskit.header2')}</WhiskyPageHeaderH2>
+        <WhiskyPageHeaderH2>{t('viskit.header3')}</WhiskyPageHeaderH2>
       </WhiskyListContainer >
       <WhiskyListNavs whisky = {whisky} />
       <WhiskyListContainer>
         <WhiskyListWrapper>
           <WhiskyListBox>
-            <WhiskyPageHeaderH2 dark >Haku</WhiskyPageHeaderH2>
+            <WhiskyPageHeaderH2 dark >{t('viskit.haku')}</WhiskyPageHeaderH2>
             <div style = {{width: 'min(250px)', position: 'relative'}}>
               <WhiskyListInput 
               value = {filter} 
-              placeholder = 'Etsi viskejä...'
+              placeholder = {t('viskit.hakuPlaceholder')}
               onChange = {handleChange} />
               <button style = {buttonStyle} onClick = {() => {setFilter(''); setWhiskies([])}}>X</button>
             </div>
-            <SearchResult filteredList = {whiskies} input = {filter} />
+            <SearchResult filteredList = {whiskies} input = {filter} t = {t} />
           </WhiskyListBox>
         </WhiskyListWrapper>
       </WhiskyListContainer>
@@ -172,7 +174,7 @@ const WhiskyList = ({ whisky }) => {
                 <table style = {tableStyle}>
                   <tbody>
                     <tr>
-                      <th style = {{textAlign: 'left'}}>Nimi</th>
+                      <th style = {{textAlign: 'left'}}>{t('viskit.nimi')}</th>
                       {/* <th style = {{textAlign: 'right'}}>Hinta (€ / 4 cl)</th> */}
                     </tr>      
                     {area.whiskies.map(whisky => (          

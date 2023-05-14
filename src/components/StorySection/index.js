@@ -38,8 +38,8 @@ const Story = () => {
     <div className="story-page-container">
       <div className="story-page-flex">
         <section className='story-page-title'>
-          <h2>Tarinan otsikko</h2>
-          <h3>{text3}</h3>
+          <h2>Tarina</h2>
+          <h3>Vasta alkaa..</h3>
         </section>
         <ImageCarousel images = {images} />
         <section className="story-page-grid">
@@ -47,11 +47,11 @@ const Story = () => {
             <img key={image} src={image}></img>
           )}
         </section>     
-        <h2>Tarinan otsikko</h2> 
+        {/* <h2>Tarinan otsikko</h2> 
         <section className='story-page-text'>
           <p>{text}</p>
           <p>{text2}</p>
-        </section>          
+        </section>           */}
       </div>
     </div>
   )

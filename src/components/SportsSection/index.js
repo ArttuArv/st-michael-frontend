@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react'
+import { useTranslation } from 'react-i18next'
 
 // import css file
 import './styles.css'
@@ -15,6 +16,7 @@ import GamesAndToys from '../GamesAndToys/gamesAndToys'
 
 const SportsSection = () => {
   const [liveMusic, setLiveMusic] = useState([])
+  const { t } = useTranslation()
 
   // Get all liveMusic from db
   useEffect(() => {
@@ -27,12 +29,15 @@ const SportsSection = () => {
   }, [])
 
   const sortedEvents = [...liveMusic].sort((a, b) => {
-    // Convert the date strings to Date objects for comparison
-    const eventObjectA = a.date.split('.').reverse().join('-') + '-' + a.time.split('.').join(':') + ':00'
-    const eventObjectB = b.date.split('.').reverse().join('-') + '-' + b.time.split('.').join(':') + ':00'
 
-    const dateA = new Date(eventObjectA)
-    const dateB = new Date(eventObjectB)
+    a.date = a.date.split('.').reverse().join('-')
+    b.date = b.date.split('.').reverse().join('-')
+
+    a.time = a.time.split('.').join(':')
+    b.time = b.time.split('.').join(':')
+
+    const dateA = new Date(timeZoneFormatter.format(new Date(a.date + ' ' + a.time)))
+    const dateB = new Date(timeZoneFormatter.format(new Date(b.date + ' ' + b.time)))
     
     // Sort by latest date first
     if (dateA < dateB) return -1
@@ -43,6 +48,22 @@ const SportsSection = () => {
     if (a.time > b.time) return 1
     
     return 0
+  }).map(event => {
+    const date = new Date(event.date + ' ' + event.time)
+    const formattedDate = date.toLocaleString('fi-FI', { 
+      timeZone: 'Europe/Helsinki',
+      hour: '2-digit',
+      minute: '2-digit',
+      day: '2-digit',
+      month: '2-digit',
+      year: 'numeric'
+    })
+
+    return {
+      ...event,
+      date: formattedDate.split(' ')[0],
+      time: formattedDate.split(' ')[1]
+    }
   })
 
   return (
@@ -52,7 +73,7 @@ const SportsSection = () => {
         <div className='sports-events-grid'>
           <div className='live-music-box'>
             <div className='live-music-content'>
-              <h2>Ajankohtaista</h2>
+              <h2>{t('events.header')}</h2>
               {sortedEvents.map(liveMusic => (
                 <section className='live-music-info' key={liveMusic.id}>
                   <h3>{liveMusic.name}</h3>
@@ -65,10 +86,10 @@ const SportsSection = () => {
             <div className='karppa-box'>
               <div className='karppa-content'>
                 <img src={karppaLogo} alt='Karppa logo' />
-                <h2>Kärppäpelit</h2>
-                <h3>Bussikuljetukset jäähallille Kärppien Liiga-kotiotteluihin.</h3>
-                <h3>Kyyti lähtee baarin edestä 20min ennen pelin alkua, liput ilmaiseen bussikyytiin saat tiskiltä.</h3>
-                <h3 className='h3-bold-yellow'>Näytämme kaikki Kärppien pelit myös TV:sta.</h3>
+                <h2>{t('karppa.header')}</h2>
+                <h3>{t('karppa.paragraph1')}</h3>
+                <h3>{t('karppa.paragraph2')}</h3>
+                <h3 className='h3-bold-yellow'>{t('karppa.paragraph3')}</h3>
               </div>
             </div>
             <div className='card-grid'>
@@ -101,3 +122,13 @@ const SportsSection = () => {
 }
 
 export default SportsSection
+
+const timeZoneFormatter = new Intl.DateTimeFormat('en-US', {
+  timeZone: 'Europe/Helsinki',
+  year: 'numeric',
+  month: '2-digit',
+  day: '2-digit',
+  hour: '2-digit',
+  minute: '2-digit',
+  second: '2-digit'
+})

@@ -1,4 +1,5 @@
 import React from 'react'
+import { useTranslation } from 'react-i18next'
 import { 
   FooterContainer,
   FooterWrapper,
@@ -28,6 +29,7 @@ import Kartta from '../../assets/images/stMichael_kartta_brass.svg'
 
 
 const Footer = ({ openingHours }) => {
+  const { t } = useTranslation()
 
   const onTop = () => {
     window.scrollTo( {
@@ -42,16 +44,16 @@ const Footer = ({ openingHours }) => {
         <FooterGridItem>
           <FooterLinksWrapper>
             <FooterLinkItems>
-              <FooterLinkTitle>Sisältö</FooterLinkTitle>
-              <FooterLink to = 'beer'>Hanatuotteet</FooterLink>
-              <FooterLink to = 'whisky'>Viskit</FooterLink>
-              <FooterLink to = 'story'>Tarina</FooterLink>
+              <FooterLinkTitle>{t('footer.content')}</FooterLinkTitle>
+              <FooterLink to = 'beer'>{t('footer.tuotteet')}</FooterLink>
+              <FooterLink to = 'whisky'>{t('footer.viskit')}</FooterLink>
+              <FooterLink to = 'story'>{t('footer.tarina')}</FooterLink>
             </FooterLinkItems>
           </FooterLinksWrapper>
         </FooterGridItem>
         <FooterGridItem>         
           <FooterTableWrapper>
-            <FooterTableH3>Aukioloajat:</FooterTableH3>              
+            <FooterTableH3>{t('footer.aukioloHeader')}:</FooterTableH3>              
             <FooterTable>
               <FooterTableBody>
                 {openingHours.map( (item) => (

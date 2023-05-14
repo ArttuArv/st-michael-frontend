@@ -5,6 +5,7 @@ import SlidingPictures from '../components/SlidingPictures'
 import Events from '../components/SportsSection'
 import FrontPageProductMenu from '../components/FrontpageProductMenu'
 import GamesAndToys from '../components/GamesAndToys/gamesAndToys'
+import WhiskyFrontpageAdd from '../components/WhiskyFrontpageAdd/whiskyFrontpageAdd'
 
 
 const Home = ({ openingHours, beer }) => {
@@ -15,6 +16,7 @@ const Home = ({ openingHours, beer }) => {
     <>
       <HeroSection openingHours = {openingHours} />      
       {/* <FrontPageProductMenu beer = {beer} /> */}
+      <WhiskyFrontpageAdd />
       <Events />
       {/* <GamesAndToys /> */}
       <SlidingPictures />
