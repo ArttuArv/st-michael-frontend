@@ -1,25 +1,25 @@
 import React from 'react'
-import styled from 'styled-components'
+import styled, { keyframes } from 'styled-components';
 
 const WhiskyFrontpageAdd = () => {
 
   const whiskybottlesImage = require('../../assets/images/whiskybottles.jpg')
-  const whiskybarImage = require('../../assets/images/whiskybar.jpg')
+  const whiskybarImage = require(`../../assets/images/whiskybar.jpg`)
 
   return (
     <>
       <WhiskyFrontpageAddContainer>
         <WhiskyFrontpageAddItemWrapper>
-          <WhiskyFrontpageAddImageWrapper>
-            <WhiskyFrontpageAddImage1 src = {whiskybarImage} />
-            {/* <WhiskyFrontpageAddImage2 src = {whiskybottlesImage} /> */}
+          <WhiskyFrontpageAddImageWrapper image={whiskybarImage}>
+            {/* <WhiskyFrontpageAddImage1 src = {whiskybarImage} />
+            <WhiskyFrontpageAddImage2 src = {whiskybottlesImage} /> */}
           </WhiskyFrontpageAddImageWrapper>
           <WhiskyFrontpageAddTextWrapper>
             <WhiskyFrontpageAddH2>
               Suomen kattavin viskitarjonta
             </WhiskyFrontpageAddH2>
             <WhiskyFrontpageAddP>
-              Jotain tekstiä tähän.
+            Ut id diam at turpis varius varius nec eu dui. Quisque tempor egestas justo, dictum gravida tellus vehicula in. Vestibulum sed augue eget magna vestibulum eleifend id quis ipsum. Suspendisse venenatis quam arcu, vitae ullamcorper mauris feugiat vitae. Duis sed est risus. Integer consequat ligula ut egestas imperdiet. Vivamus vehicula turpis porttitor pellentesque scelerisque. Pellentesque malesuada mattis leo, eget tempus turpis tempus sit amet.
             </WhiskyFrontpageAddP>
           </WhiskyFrontpageAddTextWrapper>
         </WhiskyFrontpageAddItemWrapper>
@@ -30,33 +30,38 @@ const WhiskyFrontpageAdd = () => {
 
 export default WhiskyFrontpageAdd
 
+const fadeIn = keyframes`
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0px);
+  }
+`
+const textGlow = keyframes`
+  0% {
+    text-shadow: 0 0 1px #F3ECDE;
+  }
+  50% {
+    text-shadow: 0 0 10px #F3ECDE;
+  }
+  100% {
+    text-shadow: 0 0 15px #F3ECDE;
+  }
+`
+
 const WhiskyFrontpageAddContainer = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: center;
   align-items: center;
   background: #000; //var(--clr-neutral-900);
-  padding: 0 30px;
+
   height: 100%;
   width: 100%;
   color: #D4A24E;
   border-bottom: 3px solid #D4A24E;
-
-  // :before {
-  //   content: '';
-  //   position: absolute;
-  //   top: 0;
-  //   left: 0;
-  //   right: 0;
-  //   bottom: 0;
-  //   background: linear-gradient(
-  //     180deg,
-  //     rgba(0, 0, 0, 0.2) 0%,
-  //     rgba(0, 0, 0, 0.6) 100%
-  //   ),
-  //   linear-gradient(180deg, rgba(0, 0, 0, 0.2) 0%, transparent 100%);
-  //   z-index: 2;
-  // }
 
   @media screen and (max-width: 768px) {
     height: 100%;
@@ -85,8 +90,23 @@ const WhiskyFrontpageAddImageWrapper = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100%;
+  height: 500px;
   width: 100%;
+
+  background-image: linear-gradient(to right, transparent 70%, rgba(0, 0, 0, 0.95) 80%),
+                    linear-gradient(to left, transparent 80%, rgba(0, 0, 0, 1)),
+                    ${(props) => `url(${props.image})`};
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+
+  @media screen and (max-width: 867px) {
+    background-image: linear-gradient(to bottom, transparent 70%, rgba(0, 0, 0, 0.95) 80%),
+                      linear-gradient(to top, transparent 80%, rgba(0, 0, 0, 1)),
+                      linear-gradient(to left, transparent 50%, rgba(0, 0, 0, 1)),
+                      linear-gradient(to right, transparent 50%, rgba(0, 0, 0, 1)),
+                       ${(props) => `url(${props.image})`};
+  }
 `
 
 const WhiskyFrontpageAddImage1 = styled.img`
@@ -112,34 +132,58 @@ const WhiskyFrontpageAddTextWrapper = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
+  width: 100%;
+  height: 500px;
   align-items: center;
-  padding: 30px;
+  background: linear-gradient(to left, transparent 40%, rgba(0, 0, 0, 1) 90%),
+              linear-gradient(to right, transparent 10%, rgba(0, 0, 0, 0.8) 90%),
+              #000;
+
+  @media screen and (max-width: 867px) {
+    height: 100%;
+  }
+  
 `
 
 const WhiskyFrontpageAddH2 = styled.h2`
-  color: gold; //#D4A24E;
-  font-size: 32px;
+  color: #C49E5B;
+  font-size: 3rem;
   text-align: center;
-  line-height: 1.1;
+  line-height: 1;
+  font-weight: 600;
+  padding: 0 1rem;
+  margin-bottom: 1rem;
+  animation: ${textGlow} 1s ease-in-out infinite alternate;
+  position: relative;
+  z-index: 1;
+  left: -120px;
 
-  @media screen and (max-width: 768px) {
-    font-size: 28px;
+  @media screen and (max-width: 867px) {
+    font-size: 3rem;
+    padding: 0 1.5rem;
+    left: 0px;
+    top: -100px;
   }
 
   @media screen and (max-width: 480px) {
-    font-size: 24px;
+    font-size: 2rem;
   }
 `
 
 const WhiskyFrontpageAddP = styled.p`
-  margin-top: 24px;
-  color: gold; //#D4A24E;
+  color: #C49E5B;
   font-size: 1rem;
   text-align: center;
   max-width: 600px;
+  padding: 0 1.5rem;
+  position: relative;
+  z-index: 1;
+  left: -120px;
 
-  @media screen and (max-width: 768px) {
-    font-size: 0.9rem;
+  @media screen and (max-width: 867px) {
+    font-size: 1rem;
+    left: 0px;
+    top: -100px;
   }
 
   @media screen and (max-width: 480px) {

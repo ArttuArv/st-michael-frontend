@@ -155,6 +155,11 @@ export const HeroTableWrapper = styled.div`
   margin-bottom: 16px;
   max-width: 400px;
   width: 100%;
+
+  @media screen and (max-width: 768px) {
+    margin-top: 0px;
+    margin-bottom: 0px;
+    max-width: 250px;
 `;
 
 export const HeroTable = styled.table`
