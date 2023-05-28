@@ -10,6 +10,7 @@ import NewWhiskyForm from "../components/AdminPageForms/NewWhiskyForm"
 import UpdateWhiskyForm from "../components/AdminPageForms/UpdateWhiskyForm"
 import NewLiveMusicForm from "../components/AdminPageForms/NewLiveMusicForm"
 import UpdateLiveMusicForm from "../components/AdminPageForms/UpdateLiveMusicForm"
+import NewUserForm from "../components/AdminPageForms/NewUserForm/newUserForm"
 
 import Modal from "../components/AdminPageForms/Modal/modal"
 
@@ -760,6 +761,12 @@ const Login = () => {
         <LoginPageH1>Lataa Excelin csv-tiedosto</LoginPageH1>
         <input type="file" accept='.csv' lang='fin' onChange={handleFileChange} />
         <LoginPageButton background = 'light' onClick={() => uploadWhiskies(file)}>Lataa palvelimelle</LoginPageButton>
+      </LoginPageInputFormWrapper>
+      <LoginPageInputFormWrapper>
+        <LoginPageH1>Käyttäjät</LoginPageH1>
+        <Togglable buttonLabel='Lisää uusi käyttäjä'>
+          <NewUserForm />
+        </Togglable>
       </LoginPageInputFormWrapper>
       <LoginPageGrid>
         <LoginPageInputFormWrapper>
