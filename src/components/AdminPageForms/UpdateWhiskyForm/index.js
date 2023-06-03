@@ -13,6 +13,8 @@ import {
   FormP,
 } from '../UpdateFormElements'
 
+import Notification from '../../Notification/Notification'
+
 
 const UpdateWhiskyForm = ({ whiskyToUpdate, updateWhisky, visibility }) => {
   const [id, setId] = useState('')
@@ -35,12 +37,6 @@ const UpdateWhiskyForm = ({ whiskyToUpdate, updateWhisky, visibility }) => {
   const handleSubmit = (event) => {
     event.preventDefault()
 
-    if (area === 'Valitse listasta' || area === '') {
-      notify('Valitse alue', 'error')
-
-      return
-    }
-
     const updatedWhisky = {
       name,
       area,
@@ -49,6 +45,11 @@ const UpdateWhiskyForm = ({ whiskyToUpdate, updateWhisky, visibility }) => {
     if (name === '') {
       setName(whiskyToUpdate.name)
       updatedWhisky.name = whiskyToUpdate.name
+    }
+
+    if (area === 'Valitse listasta' || area === '') {
+      setArea(whiskyToUpdate.area)
+      updatedWhisky.area = whiskyToUpdate.area
     }
 
     updateWhisky(whiskyToUpdate.id, updatedWhisky)
@@ -62,7 +63,6 @@ const UpdateWhiskyForm = ({ whiskyToUpdate, updateWhisky, visibility }) => {
     setName('')
     setArea('')
   }
-
 
   const handleIdChange = (event) => {
     setId(event.target.value)
@@ -80,6 +80,17 @@ const UpdateWhiskyForm = ({ whiskyToUpdate, updateWhisky, visibility }) => {
     resetStates()
 
     visibility(false)
+  }
+
+  const notify = (message, type = 'info') => {
+
+    new Notification({
+      text: message,
+      position: "top-center",
+      pauseOnHover: true,
+      pauseOnFocusLoss: true,
+      color: type === 'info' ? '##1DB954' : '#FF4136',
+    })
   }
 
   return (

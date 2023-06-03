@@ -2,6 +2,8 @@ import { useEffect, useRef, useState } from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCheck, faTimes, faInfoCircle } from '@fortawesome/free-solid-svg-icons'
 
+import registerService from '../../../services/register'
+
 import './newUserForm.css'
 
 const USER_REGEX = /^[A-z][A-z0-9-_]{3,23}$/
@@ -33,15 +35,11 @@ const NewUserForm = () => {
 
   useEffect(() => {
     const result = USER_REGEX.test(user)
-    console.log('user: ', user)
-    console.log('result: ', result)
     setValidName(result)
   }, [user])
 
   useEffect(() => {
     const result = PASSWORD_REGEX.test(password)
-    console.log('password: ', password)
-    console.log('result: ', result)
     setValidPassword(result)
     const match = password === matchPassword
     setValidMatch(match)
@@ -62,14 +60,16 @@ const NewUserForm = () => {
       return
     }
 
+    console.log('user: ', user)
+    console.log('password: ', password)
+
+    const credentials = {
+      username: user,
+      password: password
+    }
+
     try {
-      const response = await axios.post(REGISTER_URL,
-        JSON.stringify({ user, pwd }),
-        {
-            headers: { 'Content-Type': 'application/json' },
-            withCredentials: true
-        }
-      );
+      const response = await registerService.register(credentials)
       console.log(response?.data);
       console.log(response?.accessToken);
       console.log(JSON.stringify(response))
@@ -79,7 +79,7 @@ const NewUserForm = () => {
       setUser('');
       setPwd('');
       setMatchPwd('');
-  } catch (err) {
+    } catch (err) {
       if (!err?.response) {
           setErrMsg('No Server Response');
       } else if (err.response?.status === 409) {
@@ -87,9 +87,9 @@ const NewUserForm = () => {
       } else {
           setErrMsg('Registration Failed')
       }
-      errRef.current.focus();
-  }
 
+      errRef.current.focus();
+    }
   }
 
   return (
@@ -158,7 +158,6 @@ const NewUserForm = () => {
               Hyväksytyt erikoismerkit: <span aria-label="exclamation mark">!</span> <span aria-label="at symbol">@</span> <span aria-label="hashtag">#</span> <span aria-label="dollar sign">$</span> <span aria-label="percent">%</span>
             </p>
 
-
             <label
               className='new-user-label'
               htmlFor="confirm_pwd">
@@ -179,13 +178,13 @@ const NewUserForm = () => {
             />
             <p id="confirmnote" className={matchFocus && !validMatch ? "instructions" : "offscreen"}>
               <FontAwesomeIcon icon={faInfoCircle} />
-              Must match the first password input className='new-user-input' field.
+              Salasanojen täytyy täsmätä.
             </p>
 
             <button
-              className='new-user-button'
+              className={`new-user-button ${validName && validPassword && validMatch ? 'pushable' : ''}`}
               disabled={!validName || !validPassword || !validMatch ? true : false}>
-              Sign Up
+              Luo uusi käyttäjä
             </button>
           </form>
 

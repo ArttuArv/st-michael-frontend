@@ -105,21 +105,21 @@ const NewBeerForm = ({ createNewBeer }) => {
         <InputFormInput
           value={name}
           onChange={handleNameChange}
-          id='name'
+          id='beer-name'
           placeholder='Oluen nimi'
         />
         <InputFormP>Tyyppi</InputFormP>
         <InputFormInput
           value={style}
           onChange={handleStyleChange}
-          id='style'
+          id='beer-style'
           placeholder='Oluen tyyppi esim. IPA'
         />
         <InputFormP>Maa</InputFormP>
         <InputFormInput
           value={country}
           onChange={handleCountryChange}
-          id='country'
+          id='beer-country'
           placeholder='Oluen kotimaa'
         />
         <InputFormLabel>Kategoria</InputFormLabel>
@@ -128,7 +128,7 @@ const NewBeerForm = ({ createNewBeer }) => {
             <InputFormOption key={beerArea} value={beerArea}>{beerArea}</InputFormOption>
           ))}
         </InputFormSelect>
-        <InputFormButton background='add' id="login-button" type="submit">Lisää</InputFormButton>
+        <InputFormButton background='add' id="create-beer-button" type="submit">Lisää</InputFormButton>
       </InputFormForm>      
     </>
   )

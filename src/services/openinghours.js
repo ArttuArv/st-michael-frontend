@@ -5,6 +5,8 @@ import { getBaseUrl } from '../utils/utils'
 const baseUrl = `${getBaseUrl()}/openinghours`
 
 const config = () => {
+
+  console.log('config: ', userService.getToken())
   return {
     headers: {
       Authorization: `bearer ${userService.getToken()}`
@@ -18,6 +20,7 @@ const getAll = () => {
 }
 
 const create = async (newObject) => {
+
   const response = await axios.post(baseUrl, newObject, config())
   return response.data
 }

@@ -1,6 +1,4 @@
-
-
-.new-user-form-container {
+.login-form-container {
     width: 100%;
     max-width: 420px;
     min-height: 400px;
@@ -8,11 +6,14 @@
     flex-direction: column;
     justify-content: flex-start;
     padding: 1rem;
-    background-color: rgba(0,0,0,0.4);
+    background-color: rgba(250, 225, 4, 0.856);
     border-radius: 0.5rem;
+    box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.5);
+    border: 2px solid rgba(0, 0, 0, 1);
+    margin: 5rem auto;
 }
 
-.new-user-form {
+.login-form {
     display: flex;
     flex-direction: column;
     justify-content: space-evenly;
@@ -20,25 +21,22 @@
     padding-bottom: 1rem;
 }
 
-.new-user-link, .new-user-link:visited {
-    color: #fff;
-}
-
-.new-user-input[type="text"],
-.new-user-input[type="password"],
-.new-user-button, textarea {
+.login-form-input[type="text"],
+.login-form-input[type="password"],
+.login-form-button,
+textarea {
   font-family: 'Nunito', sans-serif;
   font-size: 22px;
   padding: 0.25rem;
   border-radius: 0.5rem;
 }
 
-.new-user-label,
-.new-user-button {
+.login-form-label,
+.login-form-button {
   margin-top: 1rem;
 }
 
-.new-user-button {
+.login-form-button {
   padding: 0.5rem;
 }
 
@@ -85,8 +83,4 @@
 
 .line {
     display: inline-block;
-}
-
-.pushable {
-    cursor: pointer;
 }

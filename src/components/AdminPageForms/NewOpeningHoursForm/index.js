@@ -64,7 +64,7 @@ const NewOpeningHoursForm = ({ createNewHours }) => {
           <InputFormInput
             value={day}
             onChange={handleDayChange}
-            id='day'
+            id='openinghours-day'
             placeholder='Aseta päivä'
           />
           <InputFormP>Aukioloaika</InputFormP>
@@ -74,7 +74,7 @@ const NewOpeningHoursForm = ({ createNewHours }) => {
             id='openingHours'
             placeholder='Aseta aukioloaika'
           />
-        <InputFormButton background = 'add' id="login-button" type="submit">
+        <InputFormButton background = 'add' id="create-openinghours-button" type="submit">
           Lisää
         </InputFormButton>
       </InputFormForm>

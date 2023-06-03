@@ -1,7 +1,18 @@
 import React, { lazy } from "react"
+import axios from 'axios';
 
 const baseUrl = process.env.REACT_APP_PRODUCT_API_URI
 const baseUrlTest = process.env.REACT_APP_PRODUCT_API_TEST_URI
+
+export const axiosDefault = axios.create({
+    baseURL: baseUrlTest
+});
+
+export const axiosPrivate = axios.create({
+    baseURL: baseUrlTest,
+    headers: { 'Content-Type': 'application/json' },
+    withCredentials: true
+});
 
 export const getBaseUrl = () => baseUrlTest
 

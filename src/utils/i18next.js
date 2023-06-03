@@ -106,7 +106,7 @@ i18next
   .init({
     lng: 'fi',
     fallbackLng: 'fi',
-    debug: true,
+    debug: false,
     resources: {
       en: {
         translation: translationEn         

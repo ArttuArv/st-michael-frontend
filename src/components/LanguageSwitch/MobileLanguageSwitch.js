@@ -3,7 +3,7 @@ import './toggleStyles.css'
 
 const MobileLanguageSwitch = ({ toggleLang, language }) => {
 
-  console.log('MobileLanguageSwitch: ', language)
+  // console.log('MobileLanguageSwitch: ', language)
 
   return (
     <>

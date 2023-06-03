@@ -34,7 +34,7 @@ const NewWhiskyForm = ({ createNewWhisky, currentWhiskies }) => {
       return
     }
 
-    if (!name || !price) {
+    if (!name) {
       notify('Täytä kaikki kentät', 'alert')
 
       return
@@ -92,7 +92,7 @@ const NewWhiskyForm = ({ createNewWhisky, currentWhiskies }) => {
             <InputFormOption key={area} value={area}>{area}</InputFormOption>
           ))}
         </InputFormSelect>
-        <InputFormButton background='add' id='submit-button' type='submit'>Lisää</InputFormButton>
+        <InputFormButton background='add' id='create-whisky-button' type='submit'>Lisää</InputFormButton>
       </InputFormForm>
     </>
   )

@@ -99,7 +99,7 @@ const NewLiveMusicForm = ({ createNewLiveMusic }) => {
             id='time'
             placeholder='Aseta alkamisaika'
           />
-        <InputFormButton background = 'add' id="login-button" type="submit">
+        <InputFormButton background = 'add' id="create-event-button" type="submit">
           Lisää
         </InputFormButton>
       </InputFormForm>

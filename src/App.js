@@ -7,6 +7,9 @@ import Home from './pages'
 
 import Navbar from './components/Navbar'
 import Sidebar from './components/Sidebar'
+import Layout from './components/Layout/layout'
+import Missing from './components/Missing/missing'
+import RequireAuth from './components/RequireAuth/requireAuth'
 
 import './App.css'
 
@@ -16,10 +19,12 @@ import openingHoursService from './services/openinghours'
 
 const WhiskyPage = lazy(() => import('./pages/whisky'))
 const Login = lazy(() => import('./pages/login'))
+const Admin = lazy(() => import('./pages/admin'))
 const StoryPage = lazy(() => import('./pages/story'))
 const BeerPage = lazy(() => import('./pages/beer'))
 
 import { rearrangeBeerOrder } from './utils/utils'
+
 
 const App = () => {
   const [isOpen, setIsOpen] = useState(false)
@@ -85,16 +90,14 @@ const App = () => {
 
   return (
     <>
-      <Router>
-        <Sidebar toggle = {toggle} isOpen = {isOpen} toggleLang = {toggleLanguage} language = {language} isMobile = {isMobile}/>
-        <Navbar toggle = {toggle} toggleLang = {toggleLanguage} language = {language}/>              
-        <Routes>
-          <Route path = '/' exact element = {
-            <Home openingHours = {openingHours} beer = {beer}/>} 
-          />
+      <Sidebar toggle = {toggle} isOpen = {isOpen} toggleLang = {toggleLanguage} language = {language} isMobile = {isMobile}/>
+      <Navbar toggle = {toggle} toggleLang = {toggleLanguage} language = {language}/>              
+      <Routes>
+        <Route path = '/' element = {<Layout />} >
+          <Route path = '/' exact element = {<Home openingHours = {openingHours} beer = {beer}/>} />
           <Route path = '/whisky' element = {
             <Suspense fallback = {<div>Loading...</div>}>
-             <WhiskyPage whisky = {whisky} />
+            <WhiskyPage whisky = {whisky} />
             </Suspense>} 
           />
           <Route path = '/beer' element = {
@@ -112,8 +115,20 @@ const App = () => {
               <Login />
             </Suspense>} 
           />
-        </Routes>
-      </Router>
+
+          {/* Catch all */}
+          <Route path = '*' element = {<Missing />} />
+
+          {/* These need to be protected by auth */}
+          <Route element = {<RequireAuth />}>
+            <Route path = '/admin' element = {
+              <Suspense fallback = {<div>Loading...</div>}>
+                <Admin />
+              </Suspense>}
+            />
+          </Route>
+        </Route>
+      </Routes>
     </>
   );
 }
