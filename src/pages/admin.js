@@ -1,7 +1,5 @@
 import { useState, useEffect, useRef } from 'react'
-
-import useAuth from '../hooks/useAuth'
-import useRefreshToken from '../hooks/useRefreshToken'
+import { Link, useNavigate, useLocation } from 'react-router-dom'
 
 import useAxiosPrivate from '../hooks/useAxiosPrivate'
 
@@ -271,9 +269,6 @@ const LiveMusicListItem = ({ livemusic, remove, update }) => {
 }
 
 const Admin = () => {
-  const { auth, setAuth } = useAuth()
-
-  const refresh = useRefreshToken()
   const axiosPrivate = useAxiosPrivate()
 
   const [user, setUser] = useState(null)
@@ -287,6 +282,10 @@ const Admin = () => {
   const whiskyFormRef = useRef()
   const openingHoursFormRef = useRef()
   const liveMusicFormRef = useRef()
+
+  const navigate = useNavigate()
+  const location = useLocation()
+  const from = location.state?.from?.pathname || '/'
 
   // Get logged in user from localStorage
   useEffect(() => {
@@ -302,7 +301,17 @@ const Admin = () => {
   const logout = () => {
     setUser(null)
     userService.clearUser()
-    notify('Logout succesful! See you soon!')
+
+    axiosPrivate.get('logout')
+      .then(() => {
+        notify('Uloskirjautuminen onnistui!')
+        
+        navigate(from, { replace: true })
+
+      }).catch(exception => {
+        notify('Tapahtui virhe', 'alert')
+        console.log('Exception: ', exception)
+      })
   }
 
   // Get all beers from db
@@ -654,9 +663,8 @@ const Admin = () => {
 
   return (
     <LoginPageContainer>    
-      <LoginPageWrapper> 
-        <button onClick={() => refresh()}>REFRESH</button>       
-        <LoginPageP>{user?.name} logged in</LoginPageP>
+      <LoginPageWrapper>      
+        <LoginPageP>{user} logged in</LoginPageP>
         <LoginPageButton background = 'dark' onClick={logout}>Logout</LoginPageButton>
       </LoginPageWrapper>
       <LoginPageInputFormWrapper style={{margin: '5px 5px'}}>

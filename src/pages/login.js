@@ -31,13 +31,15 @@ const Login = () => {
       username, password,
     }).then(response => {
       const accessToken = response?.access
+      const name = response?.name
+
+      console.log('login response', response?.name)
       
       setAuth({ username, password, accessToken })
-      
-      userService.setUser(response)
+
+      userService.setUser(name) 
 
       notify('Kirjautuminen onnistui!', 'info')
-
       navigate(from, { replace: true })
 
     }).catch(error => {

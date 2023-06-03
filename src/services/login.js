@@ -9,9 +9,7 @@ const login = async credentials => {
       withCredentials: true,
       headers: {
         'Content-Type': 'application/json',
-        'withCredentials': true,
-        withCredentials: true,
-        Hello: 'Hello from login.js'
+        'withCredentials': true
       }
     }
     // {
