@@ -10,6 +10,7 @@ import Sidebar from './components/Sidebar'
 import Layout from './components/Layout/layout'
 import Missing from './components/Missing/missing'
 import RequireAuth from './components/RequireAuth/requireAuth'
+import PersistLogin from './components/PersistLogin/persistLogin'
 
 import './App.css'
 
@@ -120,12 +121,14 @@ const App = () => {
           <Route path = '*' element = {<Missing />} />
 
           {/* These need to be protected by auth */}
-          <Route element = {<RequireAuth />}>
-            <Route path = '/admin' element = {
-              <Suspense fallback = {<div>Loading...</div>}>
-                <Admin />
-              </Suspense>}
-            />
+          <Route element = {<PersistLogin />}>
+            <Route element = {<RequireAuth />}>
+              <Route path = '/admin' element = {
+                <Suspense fallback = {<div>Loading...</div>}>
+                  <Admin />
+                </Suspense>}
+              />
+            </Route>
           </Route>
         </Route>
       </Routes>

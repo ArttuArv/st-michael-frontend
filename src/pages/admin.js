@@ -2,6 +2,7 @@ import { useState, useEffect, useRef } from 'react'
 import { Link, useNavigate, useLocation } from 'react-router-dom'
 
 import useAxiosPrivate from '../hooks/useAxiosPrivate'
+import useLogout from '../hooks/useLogout'
 
 import Togglable from "../components/Togglable"
 import NewOpeningHoursForm from "../components/AdminPageForms/NewOpeningHoursForm"
@@ -270,6 +271,7 @@ const LiveMusicListItem = ({ livemusic, remove, update }) => {
 
 const Admin = () => {
   const axiosPrivate = useAxiosPrivate()
+  const logout = useLogout()
 
   const [user, setUser] = useState(null)
   const [beers, setBeers] = useState([])
@@ -298,20 +300,13 @@ const Admin = () => {
   }, [])  
 
   // Handle user logout
-  const logout = () => {
+  const signOut = async () => {
     setUser(null)
     userService.clearUser()
+    await logout()
+    navigate('/')
 
-    axiosPrivate.get('logout')
-      .then(() => {
-        notify('Uloskirjautuminen onnistui!')
-        
-        navigate(from, { replace: true })
-
-      }).catch(exception => {
-        notify('Tapahtui virhe', 'alert')
-        console.log('Exception: ', exception)
-      })
+    notify('Kirjauduit ulos', 'info')
   }
 
   // Get all beers from db
@@ -665,7 +660,7 @@ const Admin = () => {
     <LoginPageContainer>    
       <LoginPageWrapper>      
         <LoginPageP>{user} logged in</LoginPageP>
-        <LoginPageButton background = 'dark' onClick={logout}>Logout</LoginPageButton>
+        <LoginPageButton background = 'dark' onClick={signOut}>Logout</LoginPageButton>
       </LoginPageWrapper>
       <LoginPageInputFormWrapper style={{margin: '5px 5px'}}>
         <LoginPageH1>Lataa Excelin csv-tiedosto</LoginPageH1>

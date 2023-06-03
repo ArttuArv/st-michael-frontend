@@ -41,7 +41,7 @@ const Navbar  = ({ toggle, toggleLang, language, isMobile }) => {
     {id: 2, path: '/beer', text: t('nav.Tuotteet')},
     {id: 3, path: '/whisky', text: t('nav.Viskit')},
     {id: 4, path: '/story', text: t('nav.Tarina')},
-    {id: 5, path: '/login', text: t('nav.Kirjaudu')},
+    {id: 5, path: '/admin', text: t('nav.Kirjaudu')},
   ]
 
   return (

@@ -22,7 +22,7 @@ const Login = () => {
 
   const navigate = useNavigate()
   const location = useLocation()
-  const from = location.state?.from?.pathname || '/admin'
+  const from = location.state?.from?.pathname || '/'
 
 
   // Handle user login
@@ -33,8 +33,6 @@ const Login = () => {
       const accessToken = response?.access
       const name = response?.name
 
-      console.log('login response', response?.name)
-      
       setAuth({ username, password, accessToken })
 
       userService.setUser(name) 

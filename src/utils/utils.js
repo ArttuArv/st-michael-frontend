@@ -1,20 +1,20 @@
 import React, { lazy } from "react"
 import axios from 'axios';
 
-const baseUrl = process.env.REACT_APP_PRODUCT_API_URI
+const baseUrlProd = process.env.REACT_APP_PRODUCT_API_URI
 const baseUrlTest = process.env.REACT_APP_PRODUCT_API_TEST_URI
 
 export const axiosDefault = axios.create({
-    baseURL: baseUrlTest
+    baseURL: baseUrlProd
 });
 
 export const axiosPrivate = axios.create({
-    baseURL: baseUrlTest,
+    baseURL: baseUrlProd,
     headers: { 'Content-Type': 'application/json' },
     withCredentials: true
 });
 
-export const getBaseUrl = () => baseUrlTest
+export const getBaseUrl = () => baseUrlProd
 
 export const lazyLoad = (path, namedExport) => {
 
