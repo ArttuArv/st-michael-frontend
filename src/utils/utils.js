@@ -5,16 +5,16 @@ const baseUrlProd = process.env.REACT_APP_PRODUCT_API_URI
 const baseUrlTest = process.env.REACT_APP_PRODUCT_API_TEST_URI
 
 export const axiosDefault = axios.create({
-    baseURL: baseUrlProd
+    baseURL: baseUrlTest
 });
 
 export const axiosPrivate = axios.create({
-    baseURL: baseUrlProd,
+    baseURL: baseUrlTest,
     headers: { 'Content-Type': 'application/json' },
     withCredentials: true
 });
 
-export const getBaseUrl = () => baseUrlProd
+export const getBaseUrl = () => baseUrlTest
 
 export const lazyLoad = (path, namedExport) => {
 

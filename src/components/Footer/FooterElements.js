@@ -92,7 +92,7 @@ export const FooterLinksWrapper = styled.div`
   flex-direction: column; 
   align-items: center;
   justify-content: flex-start;
-  width: 100%;
+  width: 150px;
 `;
 
 export const FooterLinkItems = styled.div`    // LinkHeading
@@ -100,13 +100,14 @@ export const FooterLinkItems = styled.div`    // LinkHeading
   flex-direction: column;
   align-items: flex-start;
   text-align: left;
-  max-width: 160px;
+  // max-width: 160px;
+  width: 150px;
   box-sizing: border-box;
 
   @media screen and (max-width: 1000px) {
     margin: 0;
     padding: 10px;
-    width: 100%;
+    // width: 100%;
     align-items: center;
   }
 `;
@@ -131,7 +132,7 @@ export const FooterLink = styled(Link)`
   }
 
   @media screen and (max-width: 1000px) {
-    padding: 10px;
+    // padding: 10px;
 `;
 
 export const SocialMedia = styled.section`

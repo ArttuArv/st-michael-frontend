@@ -7,6 +7,8 @@ import Home from './pages'
 
 import Navbar from './components/Navbar'
 import Sidebar from './components/Sidebar'
+import Footer from './components/Footer'
+
 import Layout from './components/Layout/layout'
 import Missing from './components/Missing/missing'
 import RequireAuth from './components/RequireAuth/requireAuth'
@@ -92,10 +94,12 @@ const App = () => {
   return (
     <>
       <Sidebar toggle = {toggle} isOpen = {isOpen} toggleLang = {toggleLanguage} language = {language} isMobile = {isMobile}/>
-      <Navbar toggle = {toggle} toggleLang = {toggleLanguage} language = {language}/>              
+      <Navbar toggle = {toggle} toggleLang = {toggleLanguage} language = {language}/>
+
       <Routes>
         <Route path = '/' element = {<Layout />} >
-          <Route path = '/' exact element = {<Home openingHours = {openingHours} beer = {beer}/>} />
+
+          <Route path = '/' element = {<Home openingHours = {openingHours} beer = {beer}/>} />
           <Route path = '/whisky' element = {
             <Suspense fallback = {<div>Loading...</div>}>
             <WhiskyPage whisky = {whisky} />
@@ -122,6 +126,7 @@ const App = () => {
 
           {/* These need to be protected by auth */}
           <Route element = {<PersistLogin />}>
+
             <Route element = {<RequireAuth />}>
               <Route path = '/admin' element = {
                 <Suspense fallback = {<div>Loading...</div>}>
@@ -129,9 +134,12 @@ const App = () => {
                 </Suspense>}
               />
             </Route>
+
           </Route>
         </Route>
       </Routes>
+
+      <Footer openingHours = {openingHours} />
     </>
   );
 }

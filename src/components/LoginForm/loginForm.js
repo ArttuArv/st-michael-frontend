@@ -4,7 +4,7 @@ import AuthContext from '../../context/AuthProvider'
 import './loginFormStyles.css'
 
 const LoginForm = ({ onLogin }) => {
-  const { setAuth } = useContext(AuthContext)
+  const { setAuth, persist, setPersist } = useContext(AuthContext)
 
   const userRef = useRef()
   const errRef = useRef()
@@ -25,6 +25,7 @@ const LoginForm = ({ onLogin }) => {
     event.preventDefault()
     
     onLogin(user, password)
+    
     clearStates()
   }
 
@@ -32,6 +33,14 @@ const LoginForm = ({ onLogin }) => {
     setUser('')
     setPassword('')
   }
+
+  const togglePersist = () => {
+    setPersist(prev => !prev)
+  }
+
+  useEffect(() => {
+    localStorage.setItem('persist', persist)
+  }, [persist])
 
   return (
     <>
@@ -61,6 +70,15 @@ const LoginForm = ({ onLogin }) => {
             required
           />
           <button className='login-form-button'>Kirjaudu</button>
+          <div className='persistCheck'>
+            <input
+              type="checkbox"
+              id="persist"
+              onChange={togglePersist}
+              checked={persist}
+            />
+            <label htmlFor="persist">Luota tähän laitteeseen</label>
+          </div>
         </form>   
       </section>
     </>

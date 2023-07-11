@@ -4,7 +4,6 @@ import useAuth from '../hooks/useAuth'
 
 import LoginForm from '../components/LoginForm/loginForm'
 import loginService from '../services/login'
-import userService from '../services/user'
 
 import Notification from '../components/Notification/Notification.js'
 
@@ -24,18 +23,18 @@ const Login = () => {
   const location = useLocation()
   const from = location.state?.from?.pathname || '/'
 
-
   // Handle user login
   const login = async (username, password) => {
     loginService.login({
       username, password,
     }).then(response => {
       const accessToken = response?.access
-      const name = response?.name
 
-      setAuth({ username, password, accessToken })
-
-      userService.setUser(name) 
+      setAuth({ 
+        username, 
+        password, 
+        accessToken 
+      })
 
       notify('Kirjautuminen onnistui!', 'info')
       navigate(from, { replace: true })

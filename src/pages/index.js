@@ -20,7 +20,7 @@ const Home = ({ openingHours, beer }) => {
       <Events />
       {/* <GamesAndToys /> */}
       <SlidingPictures />
-      <Footer openingHours = {openingHours} />
+      {/* <Footer openingHours = {openingHours} /> */}
     </>
   )
 }

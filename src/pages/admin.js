@@ -286,23 +286,12 @@ const Admin = () => {
   const liveMusicFormRef = useRef()
 
   const navigate = useNavigate()
-  const location = useLocation()
-  const from = location.state?.from?.pathname || '/'
-
-  // Get logged in user from localStorage
-  useEffect(() => {
-    const userFromStorage = userService.getUser()
-    if (userFromStorage) {
-      setUser(userFromStorage)
-    } else {
-      console.log('No user in local storage')
-    }
-  }, [])  
+  // const location = useLocation()
+  // const from = location.state?.from?.pathname || '/'
 
   // Handle user logout
   const signOut = async () => {
-    setUser(null)
-    userService.clearUser()
+
     await logout()
     navigate('/')
 
