@@ -1,6 +1,9 @@
 import { useState, useRef, useEffect, useContext } from 'react'
 import AuthContext from '../../context/AuthProvider'
 
+import useInput from '../../hooks/useInput'
+import useToggle from '../../hooks/useToggle'
+
 import './loginFormStyles.css'
 
 const LoginForm = ({ onLogin }) => {
@@ -9,9 +12,11 @@ const LoginForm = ({ onLogin }) => {
   const userRef = useRef()
   const errRef = useRef()
 
-  const [user, setUser] = useState('')
+  const [user, resetUser, userAttributes] = useInput('user', '')
   const [password, setPassword] = useState('')
   const [errMsg, setErrMsg] = useState('')
+
+  const [check, toggleCheck] = useToggle('persist', false)
 
   useEffect(() => {
     userRef.current.focus()
@@ -30,17 +35,18 @@ const LoginForm = ({ onLogin }) => {
   }
 
   const clearStates = () => {
-    setUser('')
+    // setUser('')
+    //resetUser()
     setPassword('')
   }
 
-  const togglePersist = () => {
-    setPersist(prev => !prev)
-  }
+  // const togglePersist = () => {
+  //   setPersist(prev => !prev)
+  // }
 
-  useEffect(() => {
-    localStorage.setItem('persist', persist)
-  }, [persist])
+  // useEffect(() => {
+  //   localStorage.setItem('persist', persist)
+  // }, [persist])
 
   return (
     <>
@@ -55,8 +61,7 @@ const LoginForm = ({ onLogin }) => {
             id="username"
             ref={userRef}
             autoComplete="off"
-            onChange={(e) => setUser(e.target.value)}
-            value={user}
+            {...userAttributes}
             required
           />
 
@@ -74,8 +79,8 @@ const LoginForm = ({ onLogin }) => {
             <input
               type="checkbox"
               id="persist"
-              onChange={togglePersist}
-              checked={persist}
+              onChange={toggleCheck}
+              checked={check}
             />
             <label htmlFor="persist">Luota tähän laitteeseen</label>
           </div>

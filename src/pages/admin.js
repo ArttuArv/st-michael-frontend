@@ -3,19 +3,21 @@ import { Link, useNavigate, useLocation } from 'react-router-dom'
 
 import useAxiosPrivate from '../hooks/useAxiosPrivate'
 import useLogout from '../hooks/useLogout'
+import useInput from '../hooks/useInput'
 
-import Togglable from "../components/Togglable"
-import NewOpeningHoursForm from "../components/AdminPageForms/NewOpeningHoursForm"
-import UpdateOpeningHoursForm from "../components/AdminPageForms/UpdateOpeningHoursForm"
-import NewBeerForm from "../components/AdminPageForms/NewBeerForm"
-import UpdateBeerForm from "../components/AdminPageForms/UpdateBeerForm"
-import NewWhiskyForm from "../components/AdminPageForms/NewWhiskyForm"
-import UpdateWhiskyForm from "../components/AdminPageForms/UpdateWhiskyForm"
-import NewLiveMusicForm from "../components/AdminPageForms/NewLiveMusicForm"
-import UpdateLiveMusicForm from "../components/AdminPageForms/UpdateLiveMusicForm"
-import NewUserForm from "../components/AdminPageForms/NewUserForm/newUserForm"
+import Togglable from '../components/Togglable'
+import NewOpeningHoursForm from '../components/AdminPageForms/NewOpeningHoursForm'
+import UpdateOpeningHoursForm from '../components/AdminPageForms/UpdateOpeningHoursForm'
+import NewBeerForm from '../components/AdminPageForms/NewBeerForm'
+import UpdateBeerForm from '../components/AdminPageForms/UpdateBeerForm'
+import NewWhiskyForm from '../components/AdminPageForms/NewWhiskyForm'
+import UpdateWhiskyForm from '../components/AdminPageForms/UpdateWhiskyForm'
+import NewLiveMusicForm from '../components/AdminPageForms/NewLiveMusicForm'
+import UpdateLiveMusicForm from '../components/AdminPageForms/UpdateLiveMusicForm'
+import NewUserForm from '../components/AdminPageForms/NewUserForm/newUserForm'
+import UpdateUserForm from '../components/AdminPageForms/UpdateUserForm/updateUserForm'
 
-import Modal from "../components/AdminPageForms/Modal/modal"
+import Modal from '../components/AdminPageForms/Modal/modal'
 
 import userService from '../services/user'
 import beersService from '../services/beers'
@@ -273,7 +275,7 @@ const Admin = () => {
   const axiosPrivate = useAxiosPrivate()
   const logout = useLogout()
 
-  const [user, setUser] = useState(null)
+  const [user, resetUser, userAttributes] = useInput('user', '')
   const [beers, setBeers] = useState([])
   const [whiskies, setWhiskies] = useState([])
   const [openingHours, setOpeningHours] = useState([])
@@ -291,6 +293,8 @@ const Admin = () => {
 
   // Handle user logout
   const signOut = async () => {
+
+    resetUser()
 
     await logout()
     navigate('/')
@@ -623,7 +627,7 @@ const Admin = () => {
   const notify = (message, type = 'info') => {
     new Notification({
       text: message,
-      position: "top-right",
+      position: 'top-right',
       pauseOnHover: true,
       pauseOnFocusLoss: true,
       color: type === 'info' ? '##1DB954' : '#FF4136',
@@ -653,15 +657,23 @@ const Admin = () => {
       </LoginPageWrapper>
       <LoginPageInputFormWrapper style={{margin: '5px 5px'}}>
         <LoginPageH1>Lataa Excelin csv-tiedosto</LoginPageH1>
-        <input type="file" accept='.csv' lang='fin' onChange={handleFileChange} />
+        <input type='file' accept='.csv' lang='fin' onChange={handleFileChange} />
         <LoginPageButton background = 'light' onClick={() => uploadWhiskies(file)}>Lataa palvelimelle</LoginPageButton>
       </LoginPageInputFormWrapper>
-      <LoginPageInputFormWrapper style={{margin: '5px 5px'}}>
-        <LoginPageH1>Käyttäjät</LoginPageH1>
-        <Togglable buttonLabel='Lisää uusi käyttäjä'>
-          <NewUserForm />
-        </Togglable>
-      </LoginPageInputFormWrapper>
+      <LoginPageGrid>
+        <LoginPageInputFormWrapper style={{margin: '5px 5px'}}>
+          <LoginPageH1>Käyttäjät</LoginPageH1>
+          <Togglable buttonLabel='Lisää uusi käyttäjä'>
+            <NewUserForm />
+          </Togglable>
+        </LoginPageInputFormWrapper>
+        <LoginPageInputFormWrapper style={{margin: '5px 5px'}}>
+          <LoginPageH1>Päivitä käyttäjä</LoginPageH1>
+          <Togglable buttonLabel='Päivitä käyttäjä'>
+            <UpdateUserForm />
+          </Togglable>
+        </LoginPageInputFormWrapper>
+      </LoginPageGrid>
       <LoginPageGrid>
         <LoginPageInputFormWrapper>
           <LoginPageH1>Aukioloajat</LoginPageH1>
