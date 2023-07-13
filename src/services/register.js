@@ -21,4 +21,11 @@ const register = async credentials => {
   return response.data
 }
 
-export default { register }
+const update = async credentials => {
+  const response = await axios.put(baseUrl, credentials, config(), {
+    headers: { 'Content-Type': 'application/json' },
+    withCredentials: true
+  })
+}
+
+export default { register, update }

@@ -662,7 +662,7 @@ const Admin = () => {
       </LoginPageInputFormWrapper>
       <LoginPageGrid>
         <LoginPageInputFormWrapper style={{margin: '5px 5px'}}>
-          <LoginPageH1>Käyttäjät</LoginPageH1>
+          <LoginPageH1>Lisää uusi käyttäjä</LoginPageH1>
           <Togglable buttonLabel='Lisää uusi käyttäjä'>
             <NewUserForm />
           </Togglable>

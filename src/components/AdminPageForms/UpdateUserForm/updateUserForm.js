@@ -3,6 +3,9 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCheck, faTimes, faInfoCircle } from '@fortawesome/free-solid-svg-icons'
 
 import useLocalStorage from '../../../hooks/useLocalStorage'
+import useAxiosPrivate from '../../../hooks/useAxiosPrivate'
+
+import Notification from '../../Notification/Notification'
 
 import '../NewUserForm/newUserForm.css'
 
@@ -12,9 +15,8 @@ const PASSWORD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%]).{8,24}$/
 const updateUserForm = () => {
 
   const errRef = useRef()
-
-  const [user, setUser] = useLocalStorage('user', '') 
-    //useState('')
+  
+  const [user, setUser] = useLocalStorage('user', '')
   const [validName, setValidName] = useState(false)
 
   const [password, setPassword] = useState('')
@@ -26,6 +28,8 @@ const updateUserForm = () => {
   const [matchFocus, setMatchFocus] = useState(false)
 
   const [errMsg, setErrMsg] = useState('')
+
+  const axiosPrivate = useAxiosPrivate()
 
   useEffect(() => {
     const result = USER_REGEX.test(user)
@@ -49,17 +53,58 @@ const updateUserForm = () => {
     const v1 = USER_REGEX.test(user)
     const v2 = PASSWORD_REGEX.test(password)
 
-    if (!v1 || !v2) {
-      setErrMsg('Virheellinen käyttäjätunnus tai salasana.')
+    console.log('Hello')
+
+    if (!v2) {
+      setErrMsg('Virheellinen salasana.')
       return
     }
 
-    console.log('user: ', user)
-    console.log('password: ', password)
+    const credentials = {
+      username: user,
+      password: password
+    }
 
+    try {
+      axiosPrivate.put('users', credentials)
+    
+      clearStates()
+
+      notify('Salasana päivitetty')
+
+
+    } catch (err) {
+
+      if (!err?.response) {
+        setErrMsg('Ei yhteyttä palvelimeen');
+        notify('Ei yhteyttä palvelimeen', 'alert')
+      } else {
+        setErrMsg('Päivitys epäonnistui')
+        notify('Päivitys epäonnistui', 'alert')
+      }
+
+      errRef.current.focus();
+    }
   }
 
-  console.log('user: ', user)
+  const clearStates = () => {
+    setUser('')
+    setPassword('')
+    setMatchPassword('')
+
+    setValidPassword(false)
+    setValidMatch(false)
+  }
+
+  const notify = (message, type = 'info') => {
+    new Notification({
+      text: message,
+      position: 'top-right',
+      pauseOnHover: true,
+      pauseOnFocusLoss: true,
+      color: type === 'info' ? '##1DB954' : '#FF4136',
+    })
+  }
 
   return (
     <>
@@ -76,7 +121,7 @@ const updateUserForm = () => {
           </label>
           <input className='new-user-input'
             type="password"
-            id="password"
+            id="update_password"
             onChange={(e) => setPassword(e.target.value)}
             value={password}
             required
@@ -101,7 +146,7 @@ const updateUserForm = () => {
           </label>
           <input className='new-user-input'
             type="password"
-            id="confirm_pwd"
+            id="update_confirm_pwd"
             onChange={(e) => setMatchPassword(e.target.value)}
             value={matchPassword}
             required
@@ -116,8 +161,8 @@ const updateUserForm = () => {
           </p>
 
           <button
-            className={`new-user-button ${validName && validPassword && validMatch ? 'pushable' : ''}`}
-            disabled={!validName || !validPassword || !validMatch ? true : false}>
+            className={`new-user-button ${validPassword && validMatch ? 'pushable' : ''}`}
+            disabled={!validPassword || !validMatch ? true : false}>
             Päivitä salasana
           </button>
         </form>

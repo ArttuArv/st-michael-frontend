@@ -31,8 +31,7 @@ const Login = () => {
       const accessToken = response?.access
 
       setAuth({ 
-        username, 
-        password, 
+        username,  
         accessToken 
       })
 

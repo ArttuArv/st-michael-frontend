@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCheck, faTimes, faInfoCircle } from '@fortawesome/free-solid-svg-icons'
 
-import registerService from '../../../services/register'
+import useAxiosPrivate from '../../../hooks/useAxiosPrivate'
 
 import './newUserForm.css'
 
@@ -28,6 +28,8 @@ const NewUserForm = () => {
 
   const [errMsg, setErrMsg] = useState('')
   const [success, setSuccess] = useState(false)
+
+  const axiosPrivate = useAxiosPrivate()
 
   useEffect(() => {
     userRef.current.focus()
@@ -60,19 +62,14 @@ const NewUserForm = () => {
       return
     }
 
-    console.log('user: ', user)
-    console.log('password: ', password)
-
     const credentials = {
       username: user,
       password: password
     }
 
     try {
-      const response = await registerService.register(credentials)
-      console.log(response?.data);
-      console.log(response?.accessToken);
-      console.log(JSON.stringify(response))
+      await axiosPrivate.post('users', credentials)
+        
       setSuccess(true);
       //clear state and controlled inputs
       //need value attrib on inputs for this
@@ -81,11 +78,11 @@ const NewUserForm = () => {
       setMatchPwd('');
     } catch (err) {
       if (!err?.response) {
-          setErrMsg('No Server Response');
+        setErrMsg('No Server Response');
       } else if (err.response?.status === 409) {
-          setErrMsg('Username Taken');
+        setErrMsg('Username Taken');
       } else {
-          setErrMsg('Registration Failed')
+        setErrMsg('Registration Failed')
       }
 
       errRef.current.focus();
