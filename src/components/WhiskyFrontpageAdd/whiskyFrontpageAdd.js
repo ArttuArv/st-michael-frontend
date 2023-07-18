@@ -1,7 +1,22 @@
-import React from 'react'
+import { useEffect, useRef } from 'react'
+import { motion, useInView, useAnimation } from 'framer-motion'
+
 import styled, { keyframes } from 'styled-components';
 
 const WhiskyFrontpageAdd = () => {
+
+  const ref = useRef(null)
+  const isInView = useInView(ref, { once: true })
+
+  const mainControls = useAnimation()
+
+  useEffect(() => {
+    if (isInView) {
+      mainControls.start('visible')
+    }
+  }, [isInView])
+
+
 
   const whiskybottlesImage = require('../../assets/images/whiskybottles.jpg')
   const whiskybarImage = require(`../../assets/images/whiskybar.jpg`)
@@ -10,17 +25,46 @@ const WhiskyFrontpageAdd = () => {
     <>
       <WhiskyFrontpageAddContainer>
         <WhiskyFrontpageAddItemWrapper>
-          <WhiskyFrontpageAddImageWrapper image={whiskybarImage}>
-            {/* <WhiskyFrontpageAddImage1 src = {whiskybarImage} />
-            <WhiskyFrontpageAddImage2 src = {whiskybottlesImage} /> */}
-          </WhiskyFrontpageAddImageWrapper>
+          <WhiskyFrontpageAddImageWrapper image={whiskybarImage}></WhiskyFrontpageAddImageWrapper>
           <WhiskyFrontpageAddTextWrapper>
-            <WhiskyFrontpageAddH2>
-              Suomen kattavin viskitarjonta
-            </WhiskyFrontpageAddH2>
-            <WhiskyFrontpageAddP>
-            Ut id diam at turpis varius varius nec eu dui. Quisque tempor egestas justo, dictum gravida tellus vehicula in. Vestibulum sed augue eget magna vestibulum eleifend id quis ipsum. Suspendisse venenatis quam arcu, vitae ullamcorper mauris feugiat vitae. Duis sed est risus. Integer consequat ligula ut egestas imperdiet. Vivamus vehicula turpis porttitor pellentesque scelerisque. Pellentesque malesuada mattis leo, eget tempus turpis tempus sit amet.
-            </WhiskyFrontpageAddP>
+            <motion.div 
+              ref = {ref}
+              variants={{
+                visible: {
+                  opacity: 1,
+                  y: 0,
+                },
+                hidden: { 
+                  opacity: 0,
+                  y: 200,
+                },
+              }}
+              initial="hidden"
+              animate={mainControls}
+              transition={{ duration: 0.5, delay: 1 }}
+            >
+              <WhiskyFrontpageAddH2>Suomen kattavin viskitarjonta</WhiskyFrontpageAddH2>
+            </motion.div>
+            <motion.div
+              ref={ref}
+              variants={{
+                visible: {
+                  opacity: 1,
+                  x: 0,
+                },
+                hidden: {
+                  opacity: 0,
+                  x: -200,
+                },
+              }}
+              initial="hidden"
+              animate={mainControls}
+              transition={{ duration: 0.5, delay: 1.5 }}
+            >
+              <WhiskyFrontpageAddP>
+                Ut id diam at turpis varius varius nec eu dui. Quisque tempor egestas justo, dictum gravida tellus vehicula in. Vestibulum sed augue eget magna vestibulum eleifend id quis ipsum. Suspendisse venenatis quam arcu, vitae ullamcorper mauris feugiat vitae. Duis sed est risus. Integer consequat ligula ut egestas imperdiet. Vivamus vehicula turpis porttitor pellentesque scelerisque. Pellentesque malesuada mattis leo, eget tempus turpis tempus sit amet.
+              </WhiskyFrontpageAddP>
+            </motion.div>
           </WhiskyFrontpageAddTextWrapper>
         </WhiskyFrontpageAddItemWrapper>
       </WhiskyFrontpageAddContainer>          
