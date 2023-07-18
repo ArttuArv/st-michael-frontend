@@ -19,7 +19,7 @@ const Home = ({ openingHours, beer }) => {
       <WhiskyFrontpageAdd />
       <Events />
       {/* <GamesAndToys /> */}
-      <SlidingPictures />
+      {/* <SlidingPictures /> */}
       {/* <Footer openingHours = {openingHours} /> */}
     </>
   )

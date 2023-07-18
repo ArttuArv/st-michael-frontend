@@ -41,7 +41,7 @@ const WhiskyFrontpageAdd = () => {
               }}
               initial="hidden"
               animate={mainControls}
-              transition={{ duration: 0.5, delay: 1 }}
+              transition={{ duration: 0.5, delay: 0.25 }}
             >
               <WhiskyFrontpageAddH2>Suomen kattavin viskitarjonta</WhiskyFrontpageAddH2>
             </motion.div>
@@ -59,7 +59,7 @@ const WhiskyFrontpageAdd = () => {
               }}
               initial="hidden"
               animate={mainControls}
-              transition={{ duration: 0.5, delay: 1.5 }}
+              transition={{ duration: 0.5, delay: 0.5 }}
             >
               <WhiskyFrontpageAddP>
                 Ut id diam at turpis varius varius nec eu dui. Quisque tempor egestas justo, dictum gravida tellus vehicula in. Vestibulum sed augue eget magna vestibulum eleifend id quis ipsum. Suspendisse venenatis quam arcu, vitae ullamcorper mauris feugiat vitae. Duis sed est risus. Integer consequat ligula ut egestas imperdiet. Vivamus vehicula turpis porttitor pellentesque scelerisque. Pellentesque malesuada mattis leo, eget tempus turpis tempus sit amet.
