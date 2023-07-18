@@ -87,6 +87,23 @@
   padding-top: 0.1em;
 }
 
+.story-page-images {
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  max-width: 500px;
+  width: 100%;
+  margin: 40px 0;
+}
+
+.story-page-images > img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 5px;
+}
+
 .story-page-grid {
   --gap: 1rem;
   --num-cols: 4;
@@ -236,7 +253,11 @@
 
   .story-page-grid {
     display: none; 
-  }   
+  }
+  
+  .story-page-images {
+    display: flex;
+  }
 }
 
 @media screen and (max-width: 500px) { 

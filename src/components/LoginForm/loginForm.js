@@ -40,36 +40,28 @@ const LoginForm = ({ onLogin }) => {
     setPassword('')
   }
 
-  // const togglePersist = () => {
-  //   setPersist(prev => !prev)
-  // }
-
-  // useEffect(() => {
-  //   localStorage.setItem('persist', persist)
-  // }, [persist])
-
   return (
     <>
       <section className='login-form-container'>
-        <p ref={errRef} className={errMsg ? "errmsg" : "offscreen"} aria-live="assertive">{errMsg}</p>
+        <p ref={errRef} className={errMsg ? 'errmsg' : 'offscreen'} aria-live='assertive'>{errMsg}</p>
         <h2 style={{ textAlign: 'center' }}>Kirjaudu</h2>
         <form className= 'login-form'onSubmit={handleSubmit}>
-          <label className='login-form-label' htmlFor="username">Käyttäjänimi:</label>
+          <label className='login-form-label' htmlFor='username'>Käyttäjänimi:</label>
           <input
             className='login-form-input'
-            type="text"
-            id="username"
+            type='text'
+            id='username'
             ref={userRef}
-            autoComplete="off"
+            autoComplete='off'
             {...userAttributes}
             required
           />
 
-          <label htmlFor="password">Salasana:</label>
+          <label htmlFor='password'>Salasana:</label>
           <input
             className='login-form-input'
-            type="password"
-            id="password"
+            type='password'
+            id='password'
             onChange={(e) => setPassword(e.target.value)}
             value={password}
             required
@@ -77,12 +69,12 @@ const LoginForm = ({ onLogin }) => {
           <button className='login-form-button'>Kirjaudu</button>
           <div className='persistCheck'>
             <input
-              type="checkbox"
-              id="persist"
+              type='checkbox'
+              id='persist'
               onChange={toggleCheck}
               checked={check}
             />
-            <label htmlFor="persist">Luota tähän laitteeseen</label>
+            <label htmlFor='persist'>Luota tähän laitteeseen</label>
           </div>
         </form>   
       </section>

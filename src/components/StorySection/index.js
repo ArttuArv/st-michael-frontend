@@ -41,7 +41,11 @@ const Story = () => {
           <h2>Tarina</h2>
           <h3>Vasta alkaa..</h3>
         </section>
-        <ImageCarousel images = {images} />
+        <section className="story-page-images">
+          {images.map(image =>
+            <img key={image} src={image}></img>
+          )}
+        </section>
         <section className="story-page-grid">
           {images.map(image =>
             <img key={image} src={image}></img>
