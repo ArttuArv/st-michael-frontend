@@ -21,11 +21,13 @@ export const LoginPageWrapper = styled.div`
 export const LoginPageH1 = styled.h2`
   font-size: 1.4rem;
   margin-top: 10px;
+  align-self: center;
+  text-align: center;
   color: gold;
   text-shadow: 1px 1px 0px rgba(0, 0, 0, 1);
 
   @media screen and (max-width: 500px) {
-    font-size: 1.5rem;
+    font-size: 1.3rem;
     align-self: center;
   }
 `;
@@ -46,6 +48,10 @@ export const LoginPageH3 = styled.h3`
   color: gold;
   text-shadow: 1px 1px 0px rgba(0, 0, 0, 1);
   margin-bottom: 10px;
+  text-align: center;
+
+  @media screen and (max-width: 500px) {
+    font-size: 1.2rem;
 `;
 
 export const LoginPageGrid = styled.div`
@@ -166,7 +172,7 @@ export const LoginPageHideButton = styled.button`
 `;
 
 export const LoginPageWhiskyViewContainer = styled.div`
-  margin: 5px;
+  margin: 5px 0px;
   background: #A69666;
   border-radius: 5px;
   padding: 5px;

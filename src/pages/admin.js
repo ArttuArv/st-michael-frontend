@@ -285,18 +285,47 @@ const TabsPanel = ({ notify }) => {
 
   return (
     <>
-      <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
-        <Tabs
-          value={value}
-          onChange={handleTabChange}
-        >
-          <Tab label='Viskit' value='1' />
-          <Tab label='Hanatuotteet' value='2' />
-          <Tab label='Aukioloajat' value='3' />
-          <Tab label='Live-tapahtumat' value='4' />
-          <Tab label='Käyttäjät' value='5' />
-        </Tabs>
-      </Box>
+      <Tabs
+        value={value}
+        onChange={handleTabChange}
+        aria-label='basic tabs example'
+        centered={true}
+        sx={
+          {
+            '& .MuiTabs-indicator': {
+              backgroundColor: '#F5BD30',
+            },
+            '& .MuiTab-root': {
+              color: '#F5BD30',
+            },
+            '& .Mui-selected': {
+              color: '#F5BD30',
+            },
+            '& .MuiTab-textColorInherit.Mui-selected': {
+              color: '#F5BD30',
+            },
+            '& .MuiTab-textColorInherit': {
+              color: '#F5BD30',
+            },
+            '& .MuiTabs-flexContainer': {
+              justifyContent: 'center',
+              flexWrap: 'wrap',
+            },
+            ':hover': {
+              color: 'red',
+            },
+            ':active': {
+              color: 'red',
+            },
+          }
+        }
+      >
+        <Tab label='Viskit' value='1' />
+        <Tab label='Hanatuotteet' value='2' />
+        <Tab label='Aukioloajat' value='3' />
+        <Tab label='Live-tapahtumat' value='4' />
+        <Tab label='Käyttäjät' value='5' />
+      </Tabs>
       <Box sx={{ p: 3 }}>
         {value === '1' && <WhiskyTab axiosPrivate={axiosPrivate} notify={notify} />}
         {value === '2' && <BeerTab axiosPrivate={axiosPrivate} notify={notify} />}
@@ -455,16 +484,16 @@ const WhiskyTab = ({ axiosPrivate, notify }) => {
 
   return (
     <>
-      <LoginPageInputFormWrapper style={{ margin: '5px 5px' }}>
-        <LoginPageH1>Lataa Excelin csv-tiedosto</LoginPageH1>
-        <input type='file' accept='.csv' lang='fin' onChange={handleFileChange} />
-        <LoginPageButton background='light' onClick={() => uploadWhiskies(file)}>Lataa palvelimelle</LoginPageButton>
-      </LoginPageInputFormWrapper>
       <LoginPageInputFormWrapper>
         <LoginPageH1>Viskilista</LoginPageH1>
         <Togglable buttonLabel='Uusi viski' ref={whiskyFormRef} >
           <NewWhiskyForm createNewWhisky={createWhisky} currentWhiskies={whiskies} />
         </Togglable>
+      </LoginPageInputFormWrapper>
+      <LoginPageInputFormWrapper style={{ margin: '5px 0px' }}>
+        <LoginPageH1>Lataa viskilista csv-tiedosto</LoginPageH1>
+        <input type='file' accept='.csv' lang='fin' onChange={handleFileChange} />
+        <LoginPageButton background='light' onClick={() => uploadWhiskies(file)}>Lataa palvelimelle</LoginPageButton>
       </LoginPageInputFormWrapper>
       <WhiskyView whiskyList={sortedWhiskies} removeWhisky={removeWhisky} updateWhisky={updateWhisky} />
     </>
@@ -659,7 +688,7 @@ const LiveMusicTab = ({ axiosPrivate, notify }) => {
   const [liveMusic, setLiveMusic] = useState([])
 
   const liveMusicFormRef = useRef()
-  
+
   // Get all live music events from db
   useEffect(() => {
     liveMusicService.getAll()
@@ -730,8 +759,8 @@ const UserTab = () => {
 
   return (
     <>
-      <LoginPageGrid>
-        <LoginPageInputFormWrapper>
+      {/* <LoginPageGrid> */}
+        <LoginPageInputFormWrapper style={{ margin: '5px 0'}}>
           <LoginPageH1>Lisää uusi käyttäjä</LoginPageH1>
           <Togglable buttonLabel='Lisää uusi käyttäjä'>
             <NewUserForm />
@@ -743,13 +772,13 @@ const UserTab = () => {
             <UpdateUserForm />
           </Togglable>
         </LoginPageInputFormWrapper>
-      </LoginPageGrid>
+      {/* </LoginPageGrid> */}
     </>
   )
 }
 
 const Admin = () => {
-  
+
   const logout = useLogout()
 
   const [user, resetUser, userAttributes] = useInput('user', '')
@@ -768,7 +797,7 @@ const Admin = () => {
 
     notify('Kirjauduit ulos', 'info')
   }
-  
+
   const notify = (message, type = 'info') => {
     new Notification({
       text: message,
@@ -777,7 +806,7 @@ const Admin = () => {
       pauseOnFocusLoss: true,
       color: type === 'info' ? '##1DB954' : '#FF4136',
     })
-  } 
+  }
 
   return (
     <LoginPageContainer>
@@ -786,7 +815,7 @@ const Admin = () => {
         <LoginPageButton background='dark' onClick={signOut}>Logout</LoginPageButton>
       </LoginPageWrapper>
 
-      <TabsPanel notify = {notify} />
+      <TabsPanel notify={notify} />
 
     </LoginPageContainer>
   )

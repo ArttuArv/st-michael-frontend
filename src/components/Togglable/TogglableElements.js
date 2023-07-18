@@ -4,6 +4,7 @@ export const TogglableButton = styled.button`
   padding: 10px;
   margin: 1rem;
   width: 100%;
+  max-width: 300px;
   border-radius: 5px;
   font-size: 1rem;
   background: ${props => props.background === 'add' ? '#06260F' : '#84172C'};

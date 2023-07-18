@@ -2,9 +2,9 @@ import styled from 'styled-components';
 
 export const InputFormButton = styled.button`
   width: 100%;
+  max-width: 300px;
   padding: 10px;
   margin-top: 5px;
-  width: 100%;
   border-radius: 5px;
   font-size: 1rem;
   background: ${props => props.background === 'add' ? '#06260F' : '#84172C'};
@@ -29,9 +29,14 @@ export const InputFormH2 = styled.h2`
   margin: 0 10px;
   color: #06260F;
   text-align: center;
+  align-self: center;
   color: gold;
   font-weight: bold;
   text-shadow: 1px 1px 0px rgba(0, 0, 0, 1);
+
+  @media screen and (max-width: 500px) {
+    font-size: 1.2rem;
+  }
 `;
 
 export const InputFormP = styled.p`
