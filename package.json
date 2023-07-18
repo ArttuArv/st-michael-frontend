@@ -13,6 +13,7 @@
     "@use-gesture/react": "^10.2.23",
     "axios": "0.27.2",
     "formatjs": "^0.1.1",
+    "framer-motion": "^10.12.22",
     "i18next": "^22.4.14",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
