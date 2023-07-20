@@ -18,6 +18,7 @@ import NewUserForm from '../components/AdminPageForms/NewUserForm/newUserForm'
 import UpdateUserForm from '../components/AdminPageForms/UpdateUserForm/updateUserForm'
 
 import Modal from '../components/AdminPageForms/Modal/modal'
+import NotificationModal from '../components/Modal/modal'
 
 import userService from '../services/user'
 import beersService from '../services/beers'
@@ -33,6 +34,9 @@ import { checkIfFileIsCsv } from '../utils/utils'
 import Notification from '../components/Notification/Notification.js'
 
 import { Box, Tab, Tabs, TabPanel } from '@mui/material'
+import { motion, AnimatePresence } from 'framer-motion'
+
+import '../index.css'
 
 import {
   LoginPageContainer,
@@ -55,6 +59,8 @@ import {
   LoginPageShortListGrid,
   LoginPageShortListGridItem,
 } from '../components/LoginPageStyledComponents/LoginPageElements'
+
+const csvHelpText = 'Lataa viskilista csv-tiedosto. Tiedoston tulee olla muotoa: "nimi, alue, tyyppi, ikä, hinta, kuvaus, arvostelu, linkki". Tiedoston tulee olla pilkulla erotettu csv-tiedosto. Tiedoston tulee olla UTF-8 merkistöllä. Tiedoston tulee olla enintään 1MB kokoinen.'
 
 
 const OpeningHoursView = ({ openingHoursList, removeOpeningHours, updateOpeningHours }) => {
@@ -341,7 +347,7 @@ const WhiskyTab = ({ axiosPrivate, notify }) => {
 
   const [whiskies, setWhiskies] = useState([])
   const [file, setFile] = useState(null)
-
+  const [modalOpen, setModalOpen] = useState(false)
   const whiskyFormRef = useRef()
 
   // Get all whiskies from db
@@ -353,6 +359,9 @@ const WhiskyTab = ({ axiosPrivate, notify }) => {
         console.log(error)
       })
   }, [])
+
+  const close = () => setModalOpen(false)
+  const open = () => setModalOpen(true)
 
   // Create new whisky
   const createWhisky = (newWhisky) => {
@@ -484,6 +493,14 @@ const WhiskyTab = ({ axiosPrivate, notify }) => {
 
   return (
     <>
+      <AnimatePresence
+        initial={false}
+        mode='wait'
+        onExitComplete={() => null}
+      >
+      {modalOpen && <NotificationModal  handleClose = {close} text = {csvHelpText} />}
+      </AnimatePresence>
+
       <LoginPageInputFormWrapper>
         <LoginPageH1>Viskilista</LoginPageH1>
         <Togglable buttonLabel='Uusi viski' ref={whiskyFormRef} >
@@ -492,6 +509,14 @@ const WhiskyTab = ({ axiosPrivate, notify }) => {
       </LoginPageInputFormWrapper>
       <LoginPageInputFormWrapper style={{ margin: '5px 0px' }}>
         <LoginPageH1>Lataa viskilista csv-tiedosto</LoginPageH1>
+        <motion.button
+          whileHover={{ scale: 1.1 }}
+          whileTap={{ scale: 0.9 }}
+          className='help-button'
+          onClick={() => (modalOpen ? close() : open())}
+        >
+          Klikkaa ohjeet
+        </motion.button>
         <input type='file' accept='.csv' lang='fin' onChange={handleFileChange} />
         <LoginPageButton background='light' onClick={() => uploadWhiskies(file)}>Lataa palvelimelle</LoginPageButton>
       </LoginPageInputFormWrapper>

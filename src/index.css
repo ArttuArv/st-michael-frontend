@@ -135,3 +135,40 @@ code {
   justify-content: flex-start;
   align-items: flex-end;
 }
+
+.backdrop {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  background: #000000e1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 999;
+}
+
+.help-modal {
+  width: clamp(50%, 700px, 90%);
+  height: min(50%, 400px);
+
+  margin: auto;
+  padding: 2rem;
+  border-radius: 12px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: #A69666;
+  border: 3px solid gold;
+  position: relative;
+}
+
+.help-button {
+  padding: 0.5rem;
+  border-radius: 5px;
+  margin: 0.5rem;
+  background-color: #06260F;
+  color: gold;
+}
