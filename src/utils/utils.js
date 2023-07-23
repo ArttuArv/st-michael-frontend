@@ -14,7 +14,7 @@ export const axiosPrivate = axios.create({
     withCredentials: true
 });
 
-export const getBaseUrl = () => baseUrlTest
+export const getBaseUrl = () => baseUrlProd
 
 export const lazyLoad = (path, namedExport) => {
 

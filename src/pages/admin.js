@@ -58,9 +58,14 @@ import {
   LoginPageWhiskyUpdateButton,
   LoginPageShortListGrid,
   LoginPageShortListGridItem,
+  LoginPageInfoButton
 } from '../components/LoginPageStyledComponents/LoginPageElements'
 
-const csvHelpText = 'Lataa viskilista csv-tiedosto. Tiedoston tulee olla muotoa: "nimi, alue, tyyppi, ikä, hinta, kuvaus, arvostelu, linkki". Tiedoston tulee olla pilkulla erotettu csv-tiedosto. Tiedoston tulee olla UTF-8 merkistöllä. Tiedoston tulee olla enintään 1MB kokoinen.'
+const csvHelpText = 'Laitan tähän youtube-linkin csv-ohjeisiin'
+const updateDeleteHelpText = 'Päivittäminen onnistuu klikkaamalla päivitä-nappia ja täyttämällä lomake. Tietoja joita ei tarvitse päivittää voi jättää tyhjäksi. Jos haluat poistaa tuotteen, klikkaa poista-nappia.'
+const newFormHelpText = 'Lisääminen onnistuu täyttämällä lomake ja klikkaamalla lisää-nappia. Kaikki kentät ovat pakollisia ja lomake herjaa jos jokin kenttä on tyhjä.'
+
+const linkText = 'https://www.youtube.com'
 
 
 const OpeningHoursView = ({ openingHoursList, removeOpeningHours, updateOpeningHours }) => {
@@ -174,6 +179,16 @@ const BeerListItem = ({ product, remove, update }) => {
 
 const WhiskyView = ({ whiskyList, removeWhisky, updateWhisky }) => {
   const [showAll, setShowAll] = useState(false)
+  const [modalOpen, setModalOpen] = useState(false)
+
+  const close = () => {
+    setModalOpen(false)
+  }
+
+  const open = () => {
+    setModalOpen(true)
+  }
+
 
   if (!showAll) {
     return (
@@ -187,26 +202,39 @@ const WhiskyView = ({ whiskyList, removeWhisky, updateWhisky }) => {
   }
 
   return (
-    <LoginPageWhiskyViewContainer>
-      <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-        <LoginPageH3 fontsize='small' >ViskiLista</LoginPageH3>
-        <LoginPageButton background='light' onClick={() => setShowAll(false)}>Piilota</LoginPageButton>
-      </div>
-      {whiskyList.map(whiskies =>
-        <div key={whiskies.name}>
-          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-            <LoginPageH3 style={{ marginTop: '20px' }}>{whiskies.name}</LoginPageH3>
-          </div>
-          <LoginPageWhiskyViewUl>
-            {whiskies.whiskies.map(whisky =>
-              <LoginPageWhiskyViewList key={whisky.id}>
-                <WhiskyListItem product={whisky} remove={removeWhisky} update={updateWhisky} />
-              </LoginPageWhiskyViewList>
-            )}
-          </LoginPageWhiskyViewUl>
+    <>
+      <AnimatePresence
+          initial={false}
+          mode='wait'
+          onExitComplete={() => null}
+        >
+          {modalOpen && <NotificationModal handleClose={close} text={updateDeleteHelpText} />}
+        </AnimatePresence>
+    
+      <LoginPageWhiskyViewContainer>     
+
+        <LoginModalButton modalOpen={modalOpen} closeModal={close} openModal={open} />
+
+        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+          <LoginPageH3 fontsize='small' >ViskiLista</LoginPageH3>
+          <LoginPageButton background='light' onClick={() => setShowAll(false)}>Piilota</LoginPageButton>
         </div>
-      )}
-    </LoginPageWhiskyViewContainer>
+        {whiskyList.map(whiskies =>
+          <div key={whiskies.name}>
+            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+              <LoginPageH3 style={{ marginTop: '20px' }}>{whiskies.name}</LoginPageH3>
+            </div>
+            <LoginPageWhiskyViewUl>
+              {whiskies.whiskies.map(whisky =>
+                <LoginPageWhiskyViewList key={whisky.id}>
+                  <WhiskyListItem product={whisky} remove={removeWhisky} update={updateWhisky} />
+                </LoginPageWhiskyViewList>
+              )}
+            </LoginPageWhiskyViewUl>
+          </div>
+        )}
+      </LoginPageWhiskyViewContainer>
+    </>
   )
 }
 
@@ -498,7 +526,7 @@ const WhiskyTab = ({ axiosPrivate, notify }) => {
         mode='wait'
         onExitComplete={() => null}
       >
-      {modalOpen && <NotificationModal  handleClose = {close} text = {csvHelpText} />}
+        {modalOpen && <NotificationModal handleClose={close} text={csvHelpText} linkText={linkText} />}
       </AnimatePresence>
 
       <LoginPageInputFormWrapper>
@@ -509,17 +537,13 @@ const WhiskyTab = ({ axiosPrivate, notify }) => {
       </LoginPageInputFormWrapper>
       <LoginPageInputFormWrapper style={{ margin: '5px 0px' }}>
         <LoginPageH1>Lataa viskilista csv-tiedosto</LoginPageH1>
-        <motion.button
-          whileHover={{ scale: 1.1 }}
-          whileTap={{ scale: 0.9 }}
-          className='help-button'
-          onClick={() => (modalOpen ? close() : open())}
-        >
-          Klikkaa ohjeet
-        </motion.button>
+
+        <LoginModalButton modalOpen={modalOpen} closeModal={close} openModal={open} />
+
         <input type='file' accept='.csv' lang='fin' onChange={handleFileChange} />
         <LoginPageButton background='light' onClick={() => uploadWhiskies(file)}>Lataa palvelimelle</LoginPageButton>
       </LoginPageInputFormWrapper>
+
       <WhiskyView whiskyList={sortedWhiskies} removeWhisky={removeWhisky} updateWhisky={updateWhisky} />
     </>
   )
@@ -785,21 +809,36 @@ const UserTab = () => {
   return (
     <>
       {/* <LoginPageGrid> */}
-        <LoginPageInputFormWrapper style={{ margin: '5px 0'}}>
-          <LoginPageH1>Lisää uusi käyttäjä</LoginPageH1>
-          <Togglable buttonLabel='Lisää uusi käyttäjä'>
-            <NewUserForm />
-          </Togglable>
-        </LoginPageInputFormWrapper>
-        <LoginPageInputFormWrapper>
-          <LoginPageH1>Päivitä käyttäjä</LoginPageH1>
-          <Togglable buttonLabel='Päivitä käyttäjä'>
-            <UpdateUserForm />
-          </Togglable>
-        </LoginPageInputFormWrapper>
+      <LoginPageInputFormWrapper style={{ margin: '5px 0' }}>
+        <LoginPageH1>Lisää uusi käyttäjä</LoginPageH1>
+        <Togglable buttonLabel='Lisää uusi käyttäjä'>
+          <NewUserForm />
+        </Togglable>
+      </LoginPageInputFormWrapper>
+      <LoginPageInputFormWrapper>
+        <LoginPageH1>Päivitä käyttäjä</LoginPageH1>
+        <Togglable buttonLabel='Päivitä käyttäjä'>
+          <UpdateUserForm />
+        </Togglable>
+      </LoginPageInputFormWrapper>
       {/* </LoginPageGrid> */}
     </>
   )
+}
+
+const LoginModalButton = ({ modalOpen, closeModal, openModal }) => {
+
+  return (
+    <LoginPageInfoButton
+      whileHover={{ scale: 1.1 }}
+      whileTap={{ scale: 0.9 }}
+      // className='help-button'
+      onClick={() => (modalOpen ? closeModal() : openModal())}
+    >
+      &#9432;
+    </LoginPageInfoButton>
+  )
+
 }
 
 const Admin = () => {

@@ -30,4 +30,5 @@ export const TogglableWrapper = styled.div`
   align-items: center;
   justify-content: center;
   padding: 0 10px;
+  position: relative;
 `;

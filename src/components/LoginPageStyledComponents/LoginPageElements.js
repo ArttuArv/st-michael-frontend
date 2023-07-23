@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { motion } from 'framer-motion';
 
 export const LoginPageContainer = styled.div`
   width: 100%;
@@ -27,7 +28,7 @@ export const LoginPageH1 = styled.h2`
   text-shadow: 1px 1px 0px rgba(0, 0, 0, 1);
 
   @media screen and (max-width: 500px) {
-    font-size: 1.3rem;
+    font-size: 1.1rem;
     align-self: center;
   }
 `;
@@ -112,6 +113,7 @@ export const LoginPageButton = styled.button`
 `;
 
 export const LoginPageInputFormWrapper = styled.div`
+  position: relative;  
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -120,7 +122,8 @@ export const LoginPageInputFormWrapper = styled.div`
   color: #32231F;
   background: #A69666;
   border-radius: 5px;
-  padding: 0 10px;
+  padding: 20px 10px;
+
 `;
 
 export const LoginPageRemoveButton = styled.button`
@@ -144,8 +147,6 @@ export const LoginPageRemoveButton = styled.button`
     font-size: 1rem;
   }
 `;
-
-
 
 export const LoginPageHideButton = styled.button`
   padding: 10px;
@@ -172,6 +173,7 @@ export const LoginPageHideButton = styled.button`
 `;
 
 export const LoginPageWhiskyViewContainer = styled.div`
+  position: relative;
   margin: 5px 0px;
   background: #A69666;
   border-radius: 5px;
@@ -332,3 +334,13 @@ export const LoginPageShortListGridItem = styled.div`
   padding: 5px;
   border: 1px solid #32231F;
 `;
+
+export const LoginPageInfoButton = styled(motion.button)`
+  position: absolute;
+  top: 2px; 
+  right: 12px; 
+  font-size: 25px;
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+`
