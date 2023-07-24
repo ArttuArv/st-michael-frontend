@@ -38,11 +38,9 @@ const GamesContainer = styled.div`
   background-color: hsl(207, 19%, 9%); // #06260F;
   border-top: 3px solid #F5BD30; // #D4A24E;
 
-
   @media screen and (max-width: 700px) {
     flex-direction: column;
   }
-
 `
 
 const GamesSectionWrapper = styled.div`
