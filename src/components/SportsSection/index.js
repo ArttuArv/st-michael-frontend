@@ -13,6 +13,7 @@ import vsportLogo from '../../assets/images/sportLogos/vsport_logo_pos.png'
 import karppaLogo from '../../assets/images/sportLogos/Oulun_Kärpät_logo.png'
 
 import GamesAndToys from '../GamesAndToys/gamesAndToys'
+import TodaysMagazines from '../TodaysMagazines/todaysMagazines'
 
 const SportsSection = () => {
   const [liveMusic, setLiveMusic] = useState([])
@@ -69,7 +70,10 @@ const SportsSection = () => {
   return (
     <div className='live-page-container'>
       <div className='live-page-wrapper'>
-        <GamesAndToys />
+        <div style={flexRowStyles}>
+          <GamesAndToys />
+          <TodaysMagazines />
+        </div>
         <div className='sports-events-grid'>
           <div className='live-music-box'>
             <div className='live-music-content'>
@@ -87,9 +91,9 @@ const SportsSection = () => {
               <div className='karppa-content'>
                 <img src={karppaLogo} alt='Karppa logo' />
                 <h2>{t('karppa.header')}</h2>
-                <h3>{t('karppa.paragraph1')}</h3>
-                <h3>{t('karppa.paragraph2')}</h3>
-                <h3 className='h3-bold-yellow'>{t('karppa.paragraph3')}</h3>
+                {/* <h3>{t('karppa.paragraph1')}</h3> */}
+                {/* <h3>{t('karppa.paragraph2')}</h3> */}
+                <h3>{t('karppa.paragraph3')}</h3>
               </div>
             </div>
             <div className='card-grid'>
@@ -132,3 +136,10 @@ const timeZoneFormatter = new Intl.DateTimeFormat('en-US', {
   minute: '2-digit',
   second: '2-digit'
 })
+
+const flexRowStyles = {
+  display: 'flex',
+  flexDirection: 'row',
+  justifyContent: 'center',
+  alignItems: 'center'
+}

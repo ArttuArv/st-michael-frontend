@@ -14,11 +14,11 @@ export const axiosPrivate = axios.create({
     withCredentials: true
 });
 
-export const getBaseUrl = () => baseUrlProd
+export const getBaseUrl = () => baseUrlTest
 
 export const lazyLoad = (path, namedExport) => {
 
-  console.log('lazyLoad: ', path, namedExport)
+  // console.log('lazyLoad: ', path, namedExport)
 
   return lazy(() => {
     const promise = import(`${path}`)

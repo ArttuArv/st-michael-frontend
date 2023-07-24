@@ -204,12 +204,12 @@ const WhiskyView = ({ whiskyList, removeWhisky, updateWhisky }) => {
   return (
     <>
       <AnimatePresence
-          initial={false}
-          mode='wait'
-          onExitComplete={() => null}
-        >
-          {modalOpen && <NotificationModal handleClose={close} text={updateDeleteHelpText} />}
-        </AnimatePresence>
+        initial={false}
+        mode='wait'
+        onExitComplete={() => null}
+      >
+        {modalOpen && <NotificationModal handleClose={close} text={updateDeleteHelpText} />}
+      </AnimatePresence>
     
       <LoginPageWhiskyViewContainer>     
 
