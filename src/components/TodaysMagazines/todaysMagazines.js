@@ -14,14 +14,37 @@ const TodaysMagazines = () => {
       <TodaysMagazinesTextWrapper>
         <TodaysMagazinesText>
           <TodaysMagazinesTextHeader>
-            {t('todaysMagazines.header')}
+            {t('magazines.header')}
           </TodaysMagazinesTextHeader>
-          <TodaysMagazinesTextParagraphItalic>
-            {t('todaysMagazines.text')}
-          </TodaysMagazinesTextParagraphItalic>
-          <TodaysMagazinesTextParagraph>
-            - {t('todaysMagazines.author')}
-          </TodaysMagazinesTextParagraph>
+          <TodaysMagazinesList>
+            <TodaysMagazinesListItem>
+              {t('magazines.text.text1')}
+            </TodaysMagazinesListItem>
+            <TodaysMagazinesListItem>
+              {t('magazines.text.text2')}
+            </TodaysMagazinesListItem>
+            <TodaysMagazinesListItem>
+              {t('magazines.text.text3')}
+            </TodaysMagazinesListItem>
+            <TodaysMagazinesListItem>
+              {t('magazines.text.text4')}
+            </TodaysMagazinesListItem>
+            <TodaysMagazinesListItem>
+              {t('magazines.text.text5')}
+            </TodaysMagazinesListItem>
+            <TodaysMagazinesListItem>
+              {t('magazines.text.text6')}
+            </TodaysMagazinesListItem>
+            <TodaysMagazinesListItem>
+              {t('magazines.text.text7')}
+            </TodaysMagazinesListItem>
+            <TodaysMagazinesListItem>
+              {t('magazines.text.text8')}
+            </TodaysMagazinesListItem>
+            <TodaysMagazinesListItem>
+              {t('magazines.text.text9')}
+            </TodaysMagazinesListItem>
+          </TodaysMagazinesList>
         </TodaysMagazinesText>
       </TodaysMagazinesTextWrapper>
     </TodaysMagazinesWrapper>  
@@ -82,7 +105,6 @@ const TodaysMagazinesImageWrapper = styled.div`
 const TodaysMagazinesImage = styled.img`
   height: 100%;
   width: 100%;
-  border-radius: 30px;
   object-fit: cover;
 `
 
@@ -90,17 +112,14 @@ const TodaysMagazinesTextWrapper = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
-  height: 40%;
+  // height: 40%;
   width: 100%;
   padding: 10px;
-  border-radius: 30px;
-  background-color: hsl(207, 19%, 9%); // #06260F;
 
   @media screen and (max-width: 700px) {
     height: 50%;
   }
 `
-
 const TodaysMagazinesText = styled.div`
   display: flex;
   flex-direction: column;
@@ -108,10 +127,7 @@ const TodaysMagazinesText = styled.div`
   height: 100%;
   width: 100%;
   padding: 10px;
-  border-radius: 30px;
-  background-color: hsl(207, 19%, 9%); // #06260F;
 `
-
 const TodaysMagazinesTextHeader = styled.h2`
   font-size: 1.5rem;
   font-weight: 600;
@@ -119,19 +135,31 @@ const TodaysMagazinesTextHeader = styled.h2`
   text-align: center;
   margin: 0 0 10px 0;
 `
-
 const TodaysMagazinesTextParagraphItalic = styled.p`
   font-size: 1.2rem;
   font-style: italic;
-  color: #F5BD30; // #D4A24E;
+  color: #FCEBC1; // #D4A24E;
   text-align: center;
   margin: 0 0 10px 0;
 `
-
 const TodaysMagazinesTextParagraph = styled.p`
   font-size: 1.2rem;
   color: #F5BD30; // #D4A24E;
   text-align: center;
   margin: 0 0 10px 0;
 `
+const TodaysMagazinesList = styled.ul`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  list-style-type: none;
+  width: 100%;
+`
+const TodaysMagazinesListItem = styled.li`
+  font-size: 1.2rem;
+  color: #FCEBC1;
+  text-align: center;
+`
+
 

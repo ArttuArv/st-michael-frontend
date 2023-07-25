@@ -12,6 +12,20 @@ const translationFi = {
   hero: {
     aukioloHeader: 'Avoinna',
   },
+  magazines: {
+    header: 'Päivän lehdet',
+    text: {
+      text1: 'Kaleva',
+      text2: 'Helsingin Sanomat',
+      text3: 'Ilta-Sanomat',
+      text4: 'Iltalehti',
+      text5: 'Aamulehti',
+      text6: 'Kauppalehti',
+      text7: 'Aku Ankka',
+      text8: 'ERÄ-lehti',
+      text9: 'ja monta muuta',
+    },
+  },
   games: {
     header: 'Pelejä moneen makuun',
     text: 'Lautapelit ovat keskustelun jatkamista toisin keinoin',
@@ -61,6 +75,20 @@ const translationEn = {
   hero: {
     aukioloHeader: 'Opening Hours',
   },
+  magazines: {
+    header: 'Magazines of the Day',
+    text: {
+      text1: 'Kaleva',
+      text2: 'Helsingin Sanomat',
+      text3: 'Ilta-Sanomat',
+      text4: 'Iltalehti',
+      text5: 'Aamulehti',
+      text6: 'Kauppalehti',
+      text7: 'Aku Ankka',
+      text8: 'ERÄ-lehti',
+      text9: 'and many more',
+    },
+  }, 
   games: {
     header: 'Games for Everyone',
     text: 'Board games are continuation of the conversation by other means',
