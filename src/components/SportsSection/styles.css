@@ -24,9 +24,9 @@
   display: grid;
   gap: 0.5rem;
   grid-template-areas:
-    "karppa-box"
-    "card";
+    "karppa-box card";
   height: 100%;
+  width: 100%;
 }
 
 .live-music-box {
@@ -138,8 +138,11 @@
   display: grid;
   gap: 1rem;
   grid-template-areas:
-    "card-1 card-2 card-3 card-4";
-  max-height: 120px;
+    "card-1" 
+    "card-2" 
+    "card-3"
+    "card-4";
+  max-height: 500px;
 }
 
 .card {
