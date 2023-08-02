@@ -26,7 +26,8 @@ const Admin = lazy(() => import('./pages/admin'))
 const StoryPage = lazy(() => import('./pages/story'))
 const BeerPage = lazy(() => import('./pages/beer'))
 
-import { rearrangeBeerOrder } from './utils/utils'
+import { rearrangeBeerOrder, getAdminUri } from './utils/utils'
+
 
 
 const App = () => {
@@ -115,7 +116,7 @@ const App = () => {
               <StoryPage />
             </Suspense>} 
           />
-          <Route path = '/login' element = {
+          <Route path = '/kirjaudu' element = {
             <Suspense fallback = {<div>Loading...</div>}>
               <Login />
             </Suspense>} 
@@ -128,7 +129,7 @@ const App = () => {
           <Route element = {<PersistLogin />}>
 
             <Route element = {<RequireAuth />}>
-              <Route path = '/admin' element = {
+              <Route path = {getAdminUri()} element = {
                 <Suspense fallback = {<div>Loading...</div>}>
                   <Admin />
                 </Suspense>}

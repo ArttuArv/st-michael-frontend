@@ -70,6 +70,15 @@ const linkText = 'https://www.youtube.com'
 
 const OpeningHoursView = ({ openingHoursList, removeOpeningHours, updateOpeningHours }) => {
   const [showAll, setShowAll] = useState(false)
+  const [modalOpen, setModalOpen] = useState(false)
+
+  const close = () => {
+    setModalOpen(false)
+  }
+
+  const open = () => {
+    setModalOpen(true)
+  }
 
   if (!showAll) {
     return (
@@ -83,19 +92,32 @@ const OpeningHoursView = ({ openingHoursList, removeOpeningHours, updateOpeningH
   }
 
   return (
-    <LoginPageWhiskyViewContainer>
-      <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-        <LoginPageH3 fontsize='small' >Aukioloajat</LoginPageH3>
-        <LoginPageButton background='light' onClick={() => setShowAll(false)}>Piilota</LoginPageButton>
-      </div>
-      <LoginPageShortListGrid>
-        {openingHoursList.map(openingHour =>
-          <LoginPageShortListGridItem key={openingHour.id}>
-            <OpeningHoursListItem openingHour={openingHour} remove={removeOpeningHours} update={updateOpeningHours} />
-          </LoginPageShortListGridItem>
-        )}
-      </LoginPageShortListGrid>
-    </LoginPageWhiskyViewContainer>
+    <>
+      <AnimatePresence
+        initial={false}
+        mode='wait'
+        onExitComplete={() => null}
+      >
+        {modalOpen && <NotificationModal handleClose={close} text={updateDeleteHelpText} />}
+      </AnimatePresence>
+
+      <LoginPageWhiskyViewContainer>
+
+        <LoginModalButton modalOpen={modalOpen} closeModal={close} openModal={open} />
+
+        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+          <LoginPageH3 fontsize='small' >Aukioloajat</LoginPageH3>
+          <LoginPageButton background='light' onClick={() => setShowAll(false)}>Piilota</LoginPageButton>
+        </div>
+        <LoginPageShortListGrid>
+          {openingHoursList.map(openingHour =>
+            <LoginPageShortListGridItem key={openingHour.id}>
+              <OpeningHoursListItem openingHour={openingHour} remove={removeOpeningHours} update={updateOpeningHours} />
+            </LoginPageShortListGridItem>
+          )}
+        </LoginPageShortListGrid>
+      </LoginPageWhiskyViewContainer>
+    </>
   )
 }
 
@@ -121,6 +143,15 @@ const OpeningHoursListItem = ({ openingHour, remove, update }) => {
 
 const BeerView = ({ beerList, removeBeer, updateBeer }) => {
   const [showAll, setShowAll] = useState(false)
+  const [modalOpen, setModalOpen] = useState(false)
+
+  const close = () => {
+    setModalOpen(false)
+  }
+
+  const open = () => {
+    setModalOpen(true)
+  }
 
   if (!showAll) {
     return (
@@ -134,26 +165,39 @@ const BeerView = ({ beerList, removeBeer, updateBeer }) => {
   }
 
   return (
-    <LoginPageWhiskyViewContainer>
-      <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-        <LoginPageH3 fontsize='small' >Hanatuotteet</LoginPageH3>
-        <LoginPageButton background='light' onClick={() => setShowAll(false)}>Piilota</LoginPageButton>
-      </div>
-      {beerList.map(products =>
-        <div key={products.id}>
-          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-            <LoginPageH3 style={{ marginTop: '20px' }}>{products.name}</LoginPageH3>
-          </div>
-          <LoginPageWhiskyViewUl>
-            {products.products.map(beer =>
-              <LoginPageWhiskyViewList key={beer.id}>
-                <BeerListItem product={beer} remove={removeBeer} update={updateBeer} />
-              </LoginPageWhiskyViewList>
-            )}
-          </LoginPageWhiskyViewUl>
+    <>
+      <AnimatePresence
+        initial={false}
+        mode='wait'
+        onExitComplete={() => null}
+      >
+        {modalOpen && <NotificationModal handleClose={close} text={updateDeleteHelpText} />}
+      </AnimatePresence>
+
+      <LoginPageWhiskyViewContainer>
+
+        <LoginModalButton modalOpen={modalOpen} closeModal={close} openModal={open} />
+
+        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+          <LoginPageH3 fontsize='small' >Hanatuotteet</LoginPageH3>
+          <LoginPageButton background='light' onClick={() => setShowAll(false)}>Piilota</LoginPageButton>
         </div>
-      )}
-    </LoginPageWhiskyViewContainer>
+        {beerList.map(products =>
+          <div key={products.id}>
+            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+              <LoginPageH3 style={{ marginTop: '20px' }}>{products.name}</LoginPageH3>
+            </div>
+            <LoginPageWhiskyViewUl>
+              {products.products.map(beer =>
+                <LoginPageWhiskyViewList key={beer.id}>
+                  <BeerListItem product={beer} remove={removeBeer} update={updateBeer} />
+                </LoginPageWhiskyViewList>
+              )}
+            </LoginPageWhiskyViewUl>
+          </div>
+        )}
+      </LoginPageWhiskyViewContainer>
+    </>
   )
 }
 
@@ -180,6 +224,7 @@ const BeerListItem = ({ product, remove, update }) => {
 const WhiskyView = ({ whiskyList, removeWhisky, updateWhisky }) => {
   const [showAll, setShowAll] = useState(false)
   const [modalOpen, setModalOpen] = useState(false)
+  const [searchQuery, setSearchQuery] = useState('')
 
   const close = () => {
     setModalOpen(false)
@@ -187,6 +232,17 @@ const WhiskyView = ({ whiskyList, removeWhisky, updateWhisky }) => {
 
   const open = () => {
     setModalOpen(true)
+  }
+
+  const filteredWhiskies = whiskyList.map((whiskies) => ({
+    ...whiskies,
+    whiskies: whiskies.whiskies.filter((whisky) => 
+      whisky.name.toLowerCase().includes(searchQuery.toLowerCase())
+    ),
+  }))
+  
+  const handleSearchChange = (event) => {
+    setSearchQuery(event.target.value)
   }
 
 
@@ -210,16 +266,27 @@ const WhiskyView = ({ whiskyList, removeWhisky, updateWhisky }) => {
       >
         {modalOpen && <NotificationModal handleClose={close} text={updateDeleteHelpText} />}
       </AnimatePresence>
-    
-      <LoginPageWhiskyViewContainer>     
+
+      <LoginPageWhiskyViewContainer>
 
         <LoginModalButton modalOpen={modalOpen} closeModal={close} openModal={open} />
 
         <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
           <LoginPageH3 fontsize='small' >ViskiLista</LoginPageH3>
           <LoginPageButton background='light' onClick={() => setShowAll(false)}>Piilota</LoginPageButton>
+          <div style = {searchInputWrapper}>
+            <input
+              style={searchInput}
+              type="text"
+              placeholder="Etsi viskejä..."
+              value={searchQuery}
+              onChange={handleSearchChange}
+            />
+            <button style={searchButton} onClick={() => { setSearchQuery('') }}>X</button>
+          </div>
         </div>
-        {whiskyList.map(whiskies =>
+     
+        {filteredWhiskies.map(whiskies =>
           <div key={whiskies.name}>
             <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
               <LoginPageH3 style={{ marginTop: '20px' }}>{whiskies.name}</LoginPageH3>
@@ -259,6 +326,15 @@ const WhiskyListItem = ({ product, remove, update }) => {
 
 const LiveMusicView = ({ liveMusicList, removeLiveMusic, updateLiveMusic }) => {
   const [showAll, setShowAll] = useState(false)
+  const [modalOpen, setModalOpen] = useState(false)
+
+  const close = () => {
+    setModalOpen(false)
+  }
+
+  const open = () => {
+    setModalOpen(true)
+  }
 
   if (!showAll) {
     return (
@@ -272,19 +348,32 @@ const LiveMusicView = ({ liveMusicList, removeLiveMusic, updateLiveMusic }) => {
   }
 
   return (
-    <LoginPageWhiskyViewContainer>
-      <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-        <LoginPageH3 fontsize='small' >Live-tapahtumat</LoginPageH3>
-        <LoginPageButton background='light' onClick={() => setShowAll(false)}>Piilota</LoginPageButton>
-      </div>
-      <LoginPageShortListGrid>
-        {liveMusicList.map(liveMusic =>
-          <LoginPageShortListGridItem key={liveMusic.id}>
-            <LiveMusicListItem livemusic={liveMusic} remove={removeLiveMusic} update={updateLiveMusic} />
-          </LoginPageShortListGridItem>
-        )}
-      </LoginPageShortListGrid>
-    </LoginPageWhiskyViewContainer>
+    <>
+      <AnimatePresence
+        initial={false}
+        mode='wait'
+        onExitComplete={() => null}
+      >
+        {modalOpen && <NotificationModal handleClose={close} text={updateDeleteHelpText} />}
+      </AnimatePresence>
+
+      <LoginPageWhiskyViewContainer>
+
+        <LoginModalButton modalOpen={modalOpen} closeModal={close} openModal={open} />
+
+        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+          <LoginPageH3 fontsize='small' >Live-tapahtumat</LoginPageH3>
+          <LoginPageButton background='light' onClick={() => setShowAll(false)}>Piilota</LoginPageButton>
+        </div>
+        <LoginPageShortListGrid>
+          {liveMusicList.map(liveMusic =>
+            <LoginPageShortListGridItem key={liveMusic.id}>
+              <LiveMusicListItem livemusic={liveMusic} remove={removeLiveMusic} update={updateLiveMusic} />
+            </LoginPageShortListGridItem>
+          )}
+        </LoginPageShortListGrid>
+      </LoginPageWhiskyViewContainer>
+    </>
   )
 }
 
@@ -886,3 +975,37 @@ const Admin = () => {
 }
 
 export default Admin
+
+const searchInputWrapper = {
+  position: 'relative',
+  width: '100%',
+  maxWidth: '300px',
+  margin: '5px 0',
+}
+
+const searchInput = {
+  width: '100%',
+  padding: '12px 20px',
+  margin: '8px 0',
+  boxSizing: 'border-box',
+  border: '3px solid #ccc',
+  borderRadius: '4px',
+  backgroundColor: '#f8f8f8',
+  fontSize: '16px',
+  resize: 'vertical',
+}
+
+const searchButton = {
+  position: 'absolute',
+  width: '30px',
+  height: '30px',
+  right: '10px',
+  top: '20px',
+  zIndex: '2',
+  border: 'none',
+  borderRadius: '50%',    
+  cursor: 'pointer',
+  color: 'white',
+  backgroundColor: 'black',
+  transform: 'translateX(2px)'
+}

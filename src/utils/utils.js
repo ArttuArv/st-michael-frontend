@@ -3,18 +3,21 @@ import axios from 'axios';
 
 const baseUrlProd = process.env.REACT_APP_PRODUCT_API_URI
 const baseUrlTest = process.env.REACT_APP_PRODUCT_API_TEST_URI
+const adminUri = `/${process.env.REACT_APP_ADMIN_URI}`
+
+export const getBaseUrl = () => baseUrlProd
+
+export const getAdminUri = () => adminUri
 
 export const axiosDefault = axios.create({
-    baseURL: baseUrlTest
+    baseURL: getBaseUrl()
 });
 
 export const axiosPrivate = axios.create({
-    baseURL: baseUrlTest,
+    baseURL: getBaseUrl(),
     headers: { 'Content-Type': 'application/json' },
     withCredentials: true
 });
-
-export const getBaseUrl = () => baseUrlTest
 
 export const lazyLoad = (path, namedExport) => {
 

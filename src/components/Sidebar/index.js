@@ -38,9 +38,9 @@ const Sidebar = ({ isOpen, toggle, toggleLang, language }) => {
           <SidebarLink to = "/story" onClick = {() => toggle} >
             {t('nav.Tarina')}
           </SidebarLink>
-          <SidebarLink to = "/admin" onClick = {() => toggle} >
+          {/* <SidebarLink to = "/admin" onClick = {() => toggle} >
             {t('nav.Kirjaudu')}
-          </SidebarLink>
+          </SidebarLink> */}
           <SideBarToggleWrapper>
             <MobileLanguageSwitch toggleLang = {toggleLang} language = {language} />
           </SideBarToggleWrapper>          

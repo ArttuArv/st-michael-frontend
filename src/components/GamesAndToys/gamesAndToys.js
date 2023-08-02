@@ -51,7 +51,7 @@ const GamesSectionWrapper = styled.div`
   padding: 10px;
   border: 2px solid #F5BD30; // #D4A24E;
   border-radius: 30px;
-  margin: 0 15px 0 0;
+  // margin: 0 15px 0 0;
   background-color: hsl(207, 19%, 9%); // #06260F;
 
   @media screen and (max-width: 1586px) {
@@ -64,7 +64,7 @@ const GamesSectionWrapper = styled.div`
 
   @media screen and (max-width: 1330px) {
     flex-direction: row;
-    margin: 15px 0 0 0;
+    
   }
 
   @media screen and (max-width: 865px) {

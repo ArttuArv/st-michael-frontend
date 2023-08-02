@@ -6,6 +6,8 @@ import LoginForm from '../components/LoginForm/loginForm'
 import loginService from '../services/login'
 
 import Notification from '../components/Notification/Notification.js'
+import { getAdminUri } from '../utils/utils'
+import { get } from 'react-scroll/modules/mixins/scroller'
 
 const loginWrapper = {
   display: 'flex',
@@ -21,7 +23,7 @@ const Login = () => {
 
   const navigate = useNavigate()
   const location = useLocation()
-  const from = location.state?.from?.pathname || '/'
+  const from = location.state?.from?.pathname || getAdminUri()
 
   // Handle user login
   const login = async (username, password) => {

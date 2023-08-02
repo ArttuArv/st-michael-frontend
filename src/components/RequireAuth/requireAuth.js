@@ -12,7 +12,7 @@ const RequireAuth = () => {
     auth?.accessToken
       ? <Outlet />
       // : <Navigate to={{ pathname: '/login', state: { from: location } }} />
-      : <Navigate to='/login' state = {{ from: location }} replace />
+      : <Navigate to='/kirjaudu' state = {{ from: location }} replace />
   )
 }
 

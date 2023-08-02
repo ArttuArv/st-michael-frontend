@@ -4,8 +4,6 @@ import useRefreshToken from '../../hooks/useRefreshToken'
 import useAuth from '../../hooks/useAuth'
 import useLocalStorage from "../../hooks/useLocalStorage"
 
-import Admin from '../../pages/admin'
-
 const PersistLogin = () => {
   const [isLoading, setIsLoading] = useState(true)
   const refresh = useRefreshToken()

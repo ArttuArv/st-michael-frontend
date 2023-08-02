@@ -38,7 +38,7 @@ const translationFi = {
     header: 'Kärppapelit',
     paragraph1: 'Bussikuljetukset jäähallille Kärppien Liiga-kotiotteluihin.',
     paragraph2: 'Kyyti lähtee baarin edestä 20min ennen pelin alkua, liput ilmaiseen bussikyytiin saat tiskiltä.',
-    paragraph3: 'Näytämme kaikki Kärppien pelit myös TV:sta.',
+    paragraph3: 'Näytämme kaikki Kärppien pelit TV:sta.',
   },
   tuotteet: {
     nimi: 'Nimi',
@@ -101,7 +101,7 @@ const translationEn = {
     header: 'Karpat',
     paragraph1: 'Bus transportation to the hockey hall for Liiga home matches.',
     paragraph2: 'The bus leaves from the pub 20 minutes before the match starts, you can get a free bus ticket from the pub.',
-    paragraph3: 'We will show all Karpat games on TV as well.',
+    paragraph3: 'We will show all Karpat games on TV.',
   },
   tuotteet: {
     nimi: 'Name',

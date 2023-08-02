@@ -13,7 +13,7 @@ export const jitter = keyframes`
 `
 export const FormContainer = styled.section`
   position: fixed;
-  top: 0px;
+  top: 0;
   left: 0;
   bottom: 0;
   right: 0;

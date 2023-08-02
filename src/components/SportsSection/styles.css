@@ -24,7 +24,8 @@
   display: grid;
   gap: 0.5rem;
   grid-template-areas:
-    "karppa-box card";
+    "karppa-box"
+    "card";
   height: 100%;
   width: 100%;
 }
@@ -41,8 +42,6 @@
   border-radius: 2rem;
   background: var(--clr-neutral-900); 
   padding: .5rem;
-
-  margin-right: 1rem;
 }
 
 .live-music-content {
@@ -138,10 +137,7 @@
   display: grid;
   gap: 1rem;
   grid-template-areas:
-    "card-1" 
-    "card-2" 
-    "card-3"
-    "card-4";
+    "card-1 card-2 card-3 card-4";
   max-height: 500px;
 }
 
@@ -208,24 +204,21 @@
 
   .card-grid-container {
     grid-template-areas:
-      "karppa-box card"
       "karppa-box card";      
   }
 
   .card-grid {
     grid-template-areas:
-      "card-1" 
-      "card-2" 
-      "card-3" 
-      "card-4";
+      "card-1 card-2"
+      "card-3 card-4";     
 
     max-height: none;
   }
 
   .card {
     border-radius: 2rem;
-    max-width: 150px;
-    max-height: 150px;
+    max-width: 200px;
+    max-height: 200px;
   }
 }
 

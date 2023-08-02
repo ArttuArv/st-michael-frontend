@@ -74,7 +74,6 @@ const TodaysMagazinesWrapper = styled.div`
   padding: 10px;
   border: 2px solid #F5BD30; // #D4A24E;
   border-radius: 30px;
-  margin: 0 15px 0 0;
   background-color: hsl(207, 19%, 9%); // #06260F;
 
   @media screen and (max-width: 1586px) {
@@ -82,7 +81,7 @@ const TodaysMagazinesWrapper = styled.div`
   }
 
   @media screen and (max-width: 700px) {
-    margin: 0 0 15px 0;
+    
   }
 `
 
@@ -115,10 +114,6 @@ const TodaysMagazinesTextWrapper = styled.div`
   // height: 40%;
   width: 100%;
   padding: 10px;
-
-  @media screen and (max-width: 700px) {
-    height: 50%;
-  }
 `
 const TodaysMagazinesText = styled.div`
   display: flex;
