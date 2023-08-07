@@ -16,9 +16,9 @@ import {
 import { formatDateTimeToEuropean } from '../../../utils/utils'
 
 const UpdateLiveMusicForm = ({ liveMusicToUpdate, visibility, updateLiveMusic }) => {
-  const [artist, setArtist] = useState('')
-  const [date, setDate] = useState('')
-  const [time, setTime] = useState('')
+  const [artist, setArtist] = useState(liveMusicToUpdate.name)
+  const [date, setDate] = useState(liveMusicToUpdate.date)
+  const [time, setTime] = useState(liveMusicToUpdate.time)
 
   const handleSubmit = (event) => {
     event.preventDefault()

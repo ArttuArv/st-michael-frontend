@@ -1,9 +1,11 @@
 import { useEffect, useRef } from 'react'
 import { motion, useInView, useAnimation, AnimatePresence } from 'framer-motion'
+import { useTranslation } from 'react-i18next'
 
 import styled, { keyframes } from 'styled-components';
 
 const WhiskyFrontpageAdd = () => {
+  const { t } = useTranslation()
 
   const ref = useRef(null)
   const isInView = useInView(ref, { once: true })
@@ -51,7 +53,7 @@ const WhiskyFrontpageAdd = () => {
                 animate={mainControls}
                 transition={{ duration: 0.5, delay: 0.25 }}
               >
-                <WhiskyFrontpageAddH2>Suomen kattavin viskitarjonta</WhiskyFrontpageAddH2>
+                <WhiskyFrontpageAddH2>{t('whiskyFrontpageAdd.header')}</WhiskyFrontpageAddH2>
               </motion.div>
             </AnimatePresence>
 
@@ -76,7 +78,7 @@ const WhiskyFrontpageAdd = () => {
                 transition={{ duration: 0.5, delay: 0.5 }}
               >
                 <WhiskyFrontpageAddP>
-                  Ut id diam at turpis varius varius nec eu dui. Quisque tempor egestas justo, dictum gravida tellus vehicula in. Vestibulum sed augue eget magna vestibulum eleifend id quis ipsum. Suspendisse venenatis quam arcu, vitae ullamcorper mauris feugiat vitae. Duis sed est risus. Integer consequat ligula ut egestas imperdiet. Vivamus vehicula turpis porttitor pellentesque scelerisque. Pellentesque malesuada mattis leo, eget tempus turpis tempus sit amet.
+                  {t('whiskyFrontpageAdd.paragraph')}
                 </WhiskyFrontpageAddP>
               </motion.div>
             </AnimatePresence>

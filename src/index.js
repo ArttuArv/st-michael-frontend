@@ -7,7 +7,7 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 import { disableReactDevTools } from '@fvilers/disable-react-devtools'
 
 // Disable React DevTools in production
-disableReactDevTools()
+// disableReactDevTools()
 
 // Set title for the page
 document.title = 'St Michael Irish Pub'

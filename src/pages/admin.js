@@ -312,6 +312,10 @@ const WhiskyListItem = ({ product, remove, update }) => {
     setVisible(!visible)
   }
 
+  const close = () => {
+    setVisible(false)
+  }
+
   return (
     <>
       <LoginPageWhiskyViewLi>{product.name}</LoginPageWhiskyViewLi>
@@ -443,17 +447,18 @@ const TabsPanel = ({ notify }) => {
           }
         }
       >
-        <Tab label='Viskit' value='1' />
-        <Tab label='Hanatuotteet' value='2' />
-        <Tab label='Aukioloajat' value='3' />
-        <Tab label='Live-tapahtumat' value='4' />
+        <Tab label='Hanatuotteet' value='1' />
+        <Tab label='Aukioloajat' value='2' />
+        <Tab label='Live-tapahtumat' value='3' />
+        <Tab label='Viskit' value='4' />
         <Tab label='Käyttäjät' value='5' />
       </Tabs>
+
       <Box sx={{ p: 3 }}>
-        {value === '1' && <WhiskyTab axiosPrivate={axiosPrivate} notify={notify} />}
-        {value === '2' && <BeerTab axiosPrivate={axiosPrivate} notify={notify} />}
-        {value === '3' && <OpeningHoursTab axiosPrivate={axiosPrivate} notify={notify} />}
-        {value === '4' && <LiveMusicTab axiosPrivate={axiosPrivate} notify={notify} />}
+        {value === '1' && <BeerTab axiosPrivate={axiosPrivate} notify={notify} />}
+        {value === '2' && <OpeningHoursTab axiosPrivate={axiosPrivate} notify={notify} />}
+        {value === '3' && <LiveMusicTab axiosPrivate={axiosPrivate} notify={notify} />}
+        {value === '4' && <WhiskyTab axiosPrivate={axiosPrivate} notify={notify} />}
         {value === '5' && <UserTab axiosPrivate={axiosPrivate} notify={notify} />}
       </Box>
     </>

@@ -13,8 +13,8 @@ import {
 } from '../UpdateFormElements'
 
 const NewOpeningHoursForm = ({ openingHours, visibility, updateOpeningHours }) => {
-  const [day, setDay] = useState('')  
-  const [openinghours, setOpeningHours] = useState('')
+  const [day, setDay] = useState(openingHours.day)  
+  const [openinghours, setOpeningHours] = useState(openingHours.openinghours)
 
   const handleSubmit = (event) => {
     event.preventDefault()

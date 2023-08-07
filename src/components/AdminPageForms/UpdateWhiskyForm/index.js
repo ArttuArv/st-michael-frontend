@@ -18,8 +18,8 @@ import Notification from '../../Notification/Notification'
 
 const UpdateWhiskyForm = ({ whiskyToUpdate, updateWhisky, visibility }) => {
   const [id, setId] = useState('')
-  const [name, setName] = useState('')
-  const [area, setArea] = useState('')
+  const [name, setName] = useState(whiskyToUpdate.name)
+  const [area, setArea] = useState(whiskyToUpdate.area)
   const [whisky, setWhisky] = useState({})
 
   const whiskyAreas = [

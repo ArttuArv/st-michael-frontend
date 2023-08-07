@@ -14,11 +14,11 @@ import {
 } from '../UpdateFormElements'
 
 const UpdateBeerForm = ({ beer, updateBeer, visibility }) => {
-  const [name, setName] = useState('')
-  const [style, setStyle] = useState('')
-  const [country, setCountry] = useState('')
+  const [name, setName] = useState(beer.name)
+  const [style, setStyle] = useState(beer.style)
+  const [country, setCountry] = useState(beer.country)
   const [price, setPrice] = useState('')
-  const [category, setCategory] = useState('')
+  const [category, setCategory] = useState(beer.category)
 
   // const beerCategories = returnListOfBeerCategories(currentBeers)
 

@@ -12,6 +12,10 @@ const translationFi = {
   hero: {
     aukioloHeader: 'Avoinna',
   },
+  whiskyFrontpageAdd: {
+    header: 'Suomen kattavin viskitarjonta',
+    paragraph: 'Ut id diam at turpis varius varius nec eu dui. Quisque tempor egestas justo, dictum gravida tellus vehicula in. Vestibulum sed augue eget magna vestibulum eleifend id quis ipsum. Suspendisse venenatis quam arcu, vitae ullamcorper mauris feugiat vitae. Duis sed est risus. Integer consequat ligula ut egestas imperdiet. Vivamus vehicula turpis porttitor pellentesque scelerisque. Pellentesque malesuada mattis leo, eget tempus turpis tempus sit amet.'
+  },
   magazines: {
     header: 'Päivän lehdet',
     text: {
@@ -74,6 +78,10 @@ const translationEn = {
   },
   hero: {
     aukioloHeader: 'Opening Hours',
+  },
+  whiskyFrontpageAdd: {
+    header: 'Finland\'s most comprehensive selection of whiskeys',
+    paragraph: 'Ut id diam at turpis varius varius nec eu dui. Quisque tempor egestas justo, dictum gravida tellus vehicula in. Vestibulum sed augue eget magna vestibulum eleifend id quis ipsum. Suspendisse venenatis quam arcu, vitae ullamcorper mauris feugiat vitae. Duis sed est risus. Integer consequat ligula ut egestas imperdiet. Vivamus vehicula turpis porttitor pellentesque scelerisque. Pellentesque malesuada mattis leo, eget tempus turpis tempus sit amet.'
   },
   magazines: {
     header: 'Magazines of the Day',
