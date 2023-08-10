@@ -27,6 +27,8 @@ import { FaFacebook, FaInstagram, FaEnvelope } from 'react-icons/fa'
 import Logo from '../../assets/images/Michael-logorigin.png'
 import Kartta from '../../assets/images/stMichael_kartta_brass.svg'
 
+const googleMapsLink = 'https://goo.gl/maps/b1gAc9Sc58tcLdxo9'
+
 
 const Footer = ({ openingHours }) => {
   const { t } = useTranslation()
@@ -85,7 +87,15 @@ const Footer = ({ openingHours }) => {
             </SocialMediaIcons>
           </SocialMediaWrapper>
         </FooterGridItem>
-        <FooterImage src = {Kartta} alt = 'Kartta' />  
+        <a href={googleMapsLink}
+          target = '_blank'
+          rel = 'noopener noreferrer'
+          aria-label = 'Google Maps'>
+          <FooterImage 
+            src = {Kartta} 
+            alt = 'Kartta'             
+          />  
+        </a>
       </FooterWrapper>
     </FooterContainer>
   )

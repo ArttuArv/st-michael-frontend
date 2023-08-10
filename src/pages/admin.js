@@ -171,7 +171,7 @@ const BeerView = ({ beerList, removeBeer, updateBeer }) => {
         mode='wait'
         onExitComplete={() => null}
       >
-        {modalOpen && <NotificationModal handleClose={close} text={updateDeleteHelpText} />}
+        {modalOpen && <NotificationModal handleClose={close} text={updateDeleteHelpText}></NotificationModal>}
       </AnimatePresence>
 
       <LoginPageWhiskyViewContainer>
@@ -310,10 +310,6 @@ const WhiskyListItem = ({ product, remove, update }) => {
 
   const toggleVisibility = () => {
     setVisible(!visible)
-  }
-
-  const close = () => {
-    setVisible(false)
   }
 
   return (

@@ -6,7 +6,8 @@ export const FooterContainer = styled.footer`
   border-bottom: 4px solid #F5BD30;
   background-color: #25361E;             //#06260F;
   width: 100%;
-  padding: 50px 0;
+  padding-top: 50px;
+  padding-bottom: 15px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -221,16 +222,16 @@ export const FooterTableH3 = styled.h3`
 
 export const FooterImage = styled.img`
   width: 100%;
-  margin-top: -40px;
+  margin-top: -70px;
 
   &:hover {
     cursor: pointer;
-    transform: scale(1.3);
+    transform: scale(1.1);
     transition: 0.4s ease-in-out;
   }
 
   @media screen and (max-width: 1400px) {
-    margin-top: 0;
+    margin-top: 0px;
   }
 
 `;

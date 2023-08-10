@@ -27,7 +27,7 @@ const dropIn = {
 }
 
 
-const Modal = ({ handleClose, text, linkText }) => {
+const Modal = ({ handleClose, text, linkText, children }) => {
 
   return (
     <Backdrop onClick={handleClose}>
@@ -42,6 +42,7 @@ const Modal = ({ handleClose, text, linkText }) => {
         <p>{text}</p>
         <br />
         {linkText && <a href={linkText} target='_blank' rel='noreferrer'>YouTube-ohje</a>}
+        {children}
         <XStyleButton onClick={handleClose}>&times;</XStyleButton>
       </motion.div>
     </Backdrop>

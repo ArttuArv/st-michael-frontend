@@ -4,7 +4,7 @@ import { initReactI18next } from 'react-i18next'
 const translationFi = {
   nav: {
     Etusivu: 'Etusivu',
-    Tuotteet: 'Tuotteet',
+    Tuotteet: 'Juomat',
     Viskit: 'Viskit',
     Tarina: 'Tarina',
     Kirjaudu: 'Kirjaudu',
@@ -61,7 +61,7 @@ const translationFi = {
   },
   footer: {
     content: 'Sisältö',
-    tuotteet: 'Tuotteet',
+    tuotteet: 'Juomat',
     viskit: 'Viskit',
     tarina: 'Tarina',
     aukioloHeader: 'Avoinna',
@@ -71,7 +71,7 @@ const translationFi = {
 const translationEn = {
   nav:{
     Etusivu: 'Home',
-    Tuotteet: 'Products',
+    Tuotteet: 'Beverages',
     Viskit: 'Whiskeys',
     Tarina: 'Story',
     Kirjaudu: 'Login',
@@ -128,7 +128,7 @@ const translationEn = {
   },
   footer: {
     content: 'Content',
-    tuotteet: 'Products',
+    tuotteet: 'Beverages',
     viskit: 'Whiskeys',
     tarina: 'Story',
     aukioloHeader: 'Opening Hours',
