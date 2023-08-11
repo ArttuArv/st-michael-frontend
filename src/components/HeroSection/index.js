@@ -1,6 +1,7 @@
 import React from 'react'
 import { useTranslation } from 'react-i18next'
-import Video from '../../assets/video/guinness.mp4'
+import video from '../../assets/video/guinness.mp4'
+import video_nosound from '../../assets/video/guinness_nosound.mp4'
 import Logo from  '../../assets/images/Michael-logo-green-glow.png' //'../../assets/images/Michael-logorigin.png'  //'../../assets/images/Michael-logo-vari.png'
 import OpeningHours from './OpeningHours'
 import { 
@@ -21,7 +22,14 @@ const HeroSection = ({ openingHours }) => {
   return (
     <HeroContainer draggable = 'false'>
       <HeroBg>
-        <VideoBg autoPlay loop muted src = {Video} type = 'video/mp4' playsInline />
+        <VideoBg 
+          autoPlay 
+          loop 
+          muted 
+          src = {video_nosound} 
+          type = 'video/mp4' 
+          playsInline 
+        />
       </HeroBg>
       <HeroContent>
         <HeroLogo draggable = 'false' src = {Logo} alt = 'Logo' />

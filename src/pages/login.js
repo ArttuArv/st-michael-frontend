@@ -59,7 +59,7 @@ const Login = () => {
       position: 'top-right',
       pauseOnHover: true,
       pauseOnFocusLoss: true,
-      color: type === 'info' ? '##1DB954' : '#FF4136',
+      color: type === 'info' ? '#1DB954' : '#FF4136',
     })
   }
 

@@ -1,5 +1,5 @@
 const DEFAULT_OPTIONS = {
-  autoClose: 2000,
+  autoClose: 1500,
   position: "top-right",
   onClose: () => {},
   canClose: true,
