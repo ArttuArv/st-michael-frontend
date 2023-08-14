@@ -904,12 +904,12 @@ const UserTab = () => {
   return (
     <>
       {/* <LoginPageGrid> */}
-      <LoginPageInputFormWrapper style={{ margin: '5px 0' }}>
+      {/* <LoginPageInputFormWrapper style={{ margin: '5px 0' }}>
         <LoginPageH1>Lisää uusi käyttäjä</LoginPageH1>
         <Togglable buttonLabel='Lisää uusi käyttäjä'>
           <NewUserForm />
         </Togglable>
-      </LoginPageInputFormWrapper>
+      </LoginPageInputFormWrapper> */}
       <LoginPageInputFormWrapper>
         <LoginPageH1>Päivitä käyttäjä</LoginPageH1>
         <Togglable buttonLabel='Päivitä käyttäjä'>

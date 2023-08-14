@@ -29,7 +29,8 @@ const Togglable = forwardRef((props, ref) => {
   const hideWhenVisible = { display: visible ? 'none' : '' }
   const showWhenVisible = { display: visible ? '' : 'none' }
 
-  const newFormHelpText = 'Lisääminen onnistuu täyttämällä lomake ja klikkaamalla lisää-nappia. Kaikki kentät ovat pakollisia ja lomake herjaa jos jokin kenttä on tyhjä.'
+  const newFormHelpText = 'Lisääminen onnistuu täyttämällä lomake ja klikkaamalla lisää-nappia. Kaikki kentät ovat pakollisia ja lomake herjaa jos jokin kenttä on tyhjä. '
+    + 'Aukioloajat annetaan tasatunteina esim. 09-03. Sivu lisää puuttuvan nollan aamutunteihin automaattisesti jos se unohtuu.'
 
   const close = () => {
     setModalOpen(false)
