@@ -9,6 +9,8 @@ import {
   InputFormInput, 
 } from '../InputFormElements'
 
+import { formatOpeningHoursTime } from '../../../utils/utils'
+
 import Notification from '../../Notification/Notification'
 
 const NewOpeningHoursForm = ({ createNewHours }) => {
@@ -26,9 +28,10 @@ const NewOpeningHoursForm = ({ createNewHours }) => {
 
     const newHours = {
       day,
-      openinghours: openingHours,
+      openinghours: formatOpeningHoursTime(openingHours),
     }
 
+    console.log('newHours: ', newHours)
     createNewHours(newHours)
     
     // Nollataan syöttökentät

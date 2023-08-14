@@ -35,6 +35,8 @@ import Notification from '../components/Notification/Notification.js'
 
 import { Box, Tab, Tabs, TabPanel } from '@mui/material'
 import { motion, AnimatePresence } from 'framer-motion'
+import { faClose } from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 import '../index.css'
 
@@ -282,7 +284,10 @@ const WhiskyView = ({ whiskyList, removeWhisky, updateWhisky }) => {
               value={searchQuery}
               onChange={handleSearchChange}
             />
-            <button style={searchButton} onClick={() => { setSearchQuery('') }}>X</button>
+            {/* <button style={searchButton} onClick={() => { setSearchQuery('') }}>&#x2716;</button> */}
+            <button style={searchButton} onClick={() => { setSearchQuery('') }}>
+              <FontAwesomeIcon icon={faClose} />
+            </button>
           </div>
         </div>
      
@@ -989,7 +994,7 @@ const searchInput = {
   padding: '12px 20px',
   margin: '8px 0',
   boxSizing: 'border-box',
-  border: '3px solid #ccc',
+  border: '3px solid #EEBC1D',
   borderRadius: '4px',
   backgroundColor: '#f8f8f8',
   fontSize: '16px',
@@ -1003,10 +1008,11 @@ const searchButton = {
   right: '10px',
   top: '20px',
   zIndex: '2',
-  border: 'none',
-  borderRadius: '50%',    
+  // border: 'none',
+  border: '1px solid gold',
+  borderRadius: '50%', 
   cursor: 'pointer',
-  color: 'white',
+  color: 'gold',
   backgroundColor: 'black',
   transform: 'translateX(2px)'
 }

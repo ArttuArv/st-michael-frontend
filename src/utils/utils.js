@@ -154,3 +154,16 @@ export function formatDateTimeToEuropean(liveEventObject) {
 
   return liveEventObject
 }
+
+export function formatOpeningHoursTime(time) {
+  const [start, end] = time.split('-')
+  const formattedStart = addLeadingZero(parseInt(start, 10))
+  const formattedEnd = addLeadingZero(parseInt(end, 10))
+
+  return `${formattedStart} - ${formattedEnd}`
+  
+}
+
+const addLeadingZero = (number) => {
+  return number < 10 ? `0${number}` : number
+}
