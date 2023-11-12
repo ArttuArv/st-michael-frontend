@@ -73,6 +73,12 @@ export const SidebarLink = styled(LinkRouter)`    // Linkkitekstit
   }
 `;
 
+export const SideBarToggleWrapper = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`;
+
 export const SideBtnWrap = styled.div`
   display: flex;
   justify-content: center;

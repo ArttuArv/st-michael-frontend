@@ -1,20 +1,44 @@
 import { useState, useImperativeHandle, forwardRef } from 'react'
+import { motion, AnimatePresence } from 'framer-motion'
 
-import { TogglableButton } from './TogglableElements'
+import NotificationModal from '../Modal/modal'
 
-const flexContainer = {
-  display: 'flex',
-  flexDirection: 'column',
-  alignItems: 'center',
-  justifyContent: 'center',
+import { TogglableButton, TogglableWrapper } from './TogglableElements'
+import { LoginPageInfoButton } from '../LoginPageStyledComponents/LoginPageElements'
+
+const LoginModalButton = ({ modalOpen, closeModal, openModal }) => {
+
+  return (
+    <LoginPageInfoButton
+      whileHover={{ scale: 1.1 }}
+      whileTap={{ scale: 0.9 }}
+      // className='help-button'
+      onClick={() => (modalOpen ? closeModal() : openModal())}
+    >
+      &#9432;
+    </LoginPageInfoButton>
+  )
+
 }
 
 
 const Togglable = forwardRef((props, ref) => {
   const [visible, setVisible] = useState(false)
+  const [modalOpen, setModalOpen] = useState(false)
 
   const hideWhenVisible = { display: visible ? 'none' : '' }
   const showWhenVisible = { display: visible ? '' : 'none' }
+
+  const newFormHelpText = 'Lisääminen onnistuu täyttämällä lomake ja klikkaamalla lisää-nappia. Kaikki kentät ovat pakollisia ja lomake herjaa jos jokin kenttä on tyhjä. '
+    + 'Aukioloajat annetaan tasatunteina esim. 09-03. Sivu lisää puuttuvan nollan aamutunteihin automaattisesti jos se unohtuu.'
+
+  const close = () => {
+    setModalOpen(false)
+  }
+
+  const open = () => {
+    setModalOpen(true)
+  }
 
   const toggleVisibility = () => {
     setVisible(!visible)
@@ -27,11 +51,19 @@ const Togglable = forwardRef((props, ref) => {
   })
 
   return (
-    <div style={flexContainer}>
-      <div style={hideWhenVisible}>
+    <>
+       <AnimatePresence
+          initial={false}
+          mode='wait'
+          onExitComplete={() => null}
+        >
+          {modalOpen && <NotificationModal handleClose={close} text={newFormHelpText} />}
+        </AnimatePresence>
+
+      <TogglableWrapper style={hideWhenVisible}>
         <TogglableButton background = 'add' onClick={toggleVisibility}>{props.buttonLabel}</TogglableButton>
-      </div>
-      <div style={{...showWhenVisible, margin: '15px'}}>
+      </TogglableWrapper>
+      <TogglableWrapper style={{...showWhenVisible,}}>
         {props.children}
         <TogglableButton 
           background = 'light' 
@@ -39,8 +71,11 @@ const Togglable = forwardRef((props, ref) => {
           >
           Hylkää
         </TogglableButton>
-      </div>
-    </div>
+
+        <LoginModalButton modalOpen={modalOpen} closeModal={close} openModal={open} />
+
+      </TogglableWrapper>
+    </>
   )
 })
 

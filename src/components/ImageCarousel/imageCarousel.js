@@ -3,28 +3,16 @@ import {AiFillCaretRight, AiFillCaretLeft} from 'react-icons/ai'
 
 import './styles.css'
 
-const slides = [
-  require('../../assets/images/kuva1.png'),
-  require('../../assets/images/kuva2.jpg'),
-  require('../../assets/images/kuva3.png'),
-  require('../../assets/images/kuva4.png'),  
-  require('../../assets/images/kuva6.jpg'),
-  require('../../assets/images/kuva7.jpg'),
-  require('../../assets/images/kuva8.jpg'),
-  require('../../assets/images/st-michael-tunnelmakuva.jpg'),
-  require('../../assets/images/kuva5.jpg'),
-]  
 
-
-const ImageCarousel = () => {
+const ImageCarousel = ({ images }) => {
   const [currentSlide, setCurrentSlide] = useState(0)  
  
   const goToPrevious = () => {
-    setCurrentSlide(currentSlide => (currentSlide - 1 + slides.length) % slides.length);
+    setCurrentSlide(currentSlide => (currentSlide - 1 + images.length) % images.length);
   }
 
   const goToNext = () => {
-    setCurrentSlide(currentSlide => (currentSlide + 1) % slides.length);
+    setCurrentSlide(currentSlide => (currentSlide + 1) % images.length);
   }
 
   const goToSlide = (index) => {
@@ -32,7 +20,7 @@ const ImageCarousel = () => {
   }
 
   const slideBackgroundImageStyle = {
-    backgroundImage: `url(${slides[currentSlide]})`,
+    backgroundImage: `url(${images[currentSlide]})`,
     width: '100%',
     height: '100%',
     backgroundSize: 'cover',
@@ -61,7 +49,7 @@ const ImageCarousel = () => {
         </button>
 
         <div className="carousel__nav">
-          {slides.map((slide, index) =>
+          {images.map((slide, index) =>
             <button 
               className={`carousel__indicator ${currentSlide === index ? 'carousel__indicator--active' : ''}`}
               onClick={() => goToSlide(index)}

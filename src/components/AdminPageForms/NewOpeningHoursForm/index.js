@@ -9,6 +9,10 @@ import {
   InputFormInput, 
 } from '../InputFormElements'
 
+import { formatOpeningHoursTime } from '../../../utils/utils'
+
+import Notification from '../../Notification/Notification'
+
 const NewOpeningHoursForm = ({ createNewHours }) => {
   const [day, setDay] = useState('')
   const [openingHours, setOpeningHours] = useState('')
@@ -16,11 +20,18 @@ const NewOpeningHoursForm = ({ createNewHours }) => {
   const handleSubmit = (event) => {
     event.preventDefault()
 
-    const newHours = {
-      day,
-      openinghours: openingHours,
+    if (!day || !openingHours) {
+      notify('Täytä kaikki kentät', 'alert')
+
+      return
     }
 
+    const newHours = {
+      day,
+      openinghours: formatOpeningHoursTime(openingHours),
+    }
+
+    console.log('newHours: ', newHours)
     createNewHours(newHours)
     
     // Nollataan syöttökentät
@@ -36,38 +47,41 @@ const NewOpeningHoursForm = ({ createNewHours }) => {
     setOpeningHours(event.target.value)
   }
 
+  const notify = (message, type = 'info') => {
+
+    new Notification({
+      text: message,
+      position: "top-center",
+      pauseOnHover: true,
+      pauseOnFocusLoss: true,
+      color: type === 'info' ? '##1DB954' : '#FF4136',
+    })
+  }
+
   return (
-    <div>
-      <div style = {{ marginBottom: '10px' }}>
+    <>
+      <InputFormForm onSubmit={handleSubmit}>
         <InputFormH2>Lisää uusi</InputFormH2>
         <InputFormH2>aukioloaika</InputFormH2>
-      </div>
-      <div>
-        <InputFormForm onSubmit={handleSubmit}>
-          <InputFormItems>
-            <InputFormP>Päivä</InputFormP>
-            <InputFormInput
-              value={day}
-              onChange={handleDayChange}
-              id='day'
-              placeholder='Aseta päivä'
-            />
-          </InputFormItems>
-          <InputFormItems>
-            <InputFormP>Aukioloaika</InputFormP>
-            <InputFormInput
-              value={openingHours}
-              onChange={handleHoursChange}
-              id='openingHours'
-              placeholder='Aseta aukioloaika'
-            />
-          </InputFormItems>
-          <InputFormButton background = 'add' id="login-button" type="submit">
-            Lisää
-          </InputFormButton>
-        </InputFormForm>
-      </div>
-    </div>
+          <InputFormP>Päivä</InputFormP>
+          <InputFormInput
+            value={day}
+            onChange={handleDayChange}
+            id='openinghours-day'
+            placeholder='Aseta päivä'
+          />
+          <InputFormP>Aukioloaika</InputFormP>
+          <InputFormInput
+            value={openingHours}
+            onChange={handleHoursChange}
+            id='openingHours'
+            placeholder='Aseta aukioloaika'
+          />
+        <InputFormButton background = 'add' id="create-openinghours-button" type="submit">
+          Lisää
+        </InputFormButton>
+      </InputFormForm>
+    </>
   )
 }
 

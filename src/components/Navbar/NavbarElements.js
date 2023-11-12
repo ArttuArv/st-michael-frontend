@@ -1,6 +1,15 @@
-import styled from 'styled-components';
+import styled, { keyframes } from 'styled-components';
 import { Link as LinkRouter } from 'react-router-dom';
 import { Link as LinkScroll } from 'react-scroll';
+
+const logoRotate = keyframes`
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+`
 
 export const Nav = styled.nav`
   display: flex;
@@ -65,9 +74,16 @@ export const NavLogoImg = styled.img`       // Logo vasen yläkulma
   cursor: pointer;
   justify-self: flex-start;
 
+  will-change: filter;
+  transition: filter 300ms;
+
+  // @media (prefers-reduced-motion: no-preference) {
+  //   animation: ${logoRotate} infinite 20s linear;
+  // }
+
   &:hover {
+    filter: drop-shadow(0 0 2em gold);
     transform: scale(1.1);
-    transition: 0.2s ease-in-out;
   } 
 
   @media screen and (max-width: 769px) {
@@ -77,6 +93,8 @@ export const NavLogoImg = styled.img`       // Logo vasen yläkulma
   @media screen and (max-width: 400px) {
     max-width: 40px;
   }
+
+  
 `;
 
 export const MobileIcon = styled.div`       // Menu-ikoni oikea yläreuna
@@ -130,6 +148,7 @@ export const NavItem = styled.li`
   font-size: 1.2rem;
   height: 30px;
   margin-top: 20px;
+  font-weight: 400;
 `;
 
 export const NavLinkTo = styled(LinkRouter)`
@@ -139,7 +158,7 @@ export const NavLinkTo = styled(LinkRouter)`
   text-decoration: none;
   padding: 0 1rem;
   height: 100%;
-  cursor: pointer;  
+  cursor: pointer;
 
   &:hover {
     border-bottom: 3px solid #F5BD30;
@@ -168,6 +187,7 @@ export const NavLinks = styled(LinkScroll)`
   &.active {
     border-bottom: 9px solid #F5BD30;
   }
+
 `;
 
 export const NavBtn = styled.nav`

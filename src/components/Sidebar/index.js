@@ -1,14 +1,21 @@
-import React from 'react'
+import React, { useState } from 'react'
+import { useTranslation } from 'react-i18next'
+import i18next from '../../utils/i18next'
 import { 
   SidebarContainer, 
   Icon, 
   CloseIcon, 
   SidebarWrapper, 
   SidebarMenu, 
-  SidebarLink, 
+  SidebarLink,
+  SideBarToggleWrapper, 
 } from './SidebarElements'
 
-const Sidebar = ({ isOpen, toggle }) => {
+import MobileLanguageSwitch from '../LanguageSwitch/MobileLanguageSwitch'
+
+const Sidebar = ({ isOpen, toggle, toggleLang, language }) => {
+  const { t } = useTranslation()
+
   return (
     <SidebarContainer isOpen = {isOpen} onClick = {toggle} >
       <Icon onClick = {toggle} >
@@ -17,23 +24,26 @@ const Sidebar = ({ isOpen, toggle }) => {
       <SidebarWrapper>
         <SidebarMenu>
           <SidebarLink to = "/" onClick = {() => toggle} >
-            Etusivu
+            {t('nav.Etusivu')}
           </SidebarLink>
           <SidebarLink to = "/beer" onClick = {() => toggle} >
-            Hanatuotteet
+            {t('nav.Tuotteet')}
           </SidebarLink>
           <SidebarLink to = "/whisky" onClick = {() => toggle} >
-            Viskit
+            {t('nav.Viskit')}
           </SidebarLink>
           {/* <SidebarLink to = "/sports" onClick = {() => toggle} >
             Urheilu
           </SidebarLink> */}
           <SidebarLink to = "/story" onClick = {() => toggle} >
-            Tarina
+            {t('nav.Tarina')}
           </SidebarLink>
-          <SidebarLink to = "/login" onClick = {() => toggle} >
-            Kirjaudu
-          </SidebarLink>
+          {/* <SidebarLink to = "/admin" onClick = {() => toggle} >
+            {t('nav.Kirjaudu')}
+          </SidebarLink> */}
+          <SideBarToggleWrapper>
+            <MobileLanguageSwitch toggleLang = {toggleLang} language = {language} />
+          </SideBarToggleWrapper>          
         </SidebarMenu>
       </SidebarWrapper>  
     </SidebarContainer>

@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import { 
   HeroTableWrapper,
   HeroTable,
@@ -7,22 +8,33 @@ import {
   HeroTableHead, 
 } from './HeroElements'
 
+
 const OpeningHours = ({ openingHours }) => {
 
   return (
     <HeroTableWrapper>
-      <HeroTable>
+      <HeroTable> 
         <HeroTableBody>
-          {openingHours.map( (item) => (
+          {openingHours.map((item) => (
             <HeroTableRow key = {item.id}>
-              <HeroTableHead>{item.day}</HeroTableHead>
-              <HeroTableHead>{item.openinghours}</HeroTableHead>
+              <HeroTableHead key={item.id}>{item.day}</HeroTableHead>
+              <HeroTableHead style={{ textAlign: 'right' }}>{item.openinghours}</HeroTableHead>
             </HeroTableRow>
           ))}
         </HeroTableBody>
-      </HeroTable>
+       </HeroTable>
     </HeroTableWrapper>
   )
 }
 
 export default OpeningHours
+
+OpeningHours.propTypes = {
+  openingHours:PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.number.isRequired,
+      day: PropTypes.string.isRequired,
+      openinghours: PropTypes.string.isRequired,
+    })
+  )
+}

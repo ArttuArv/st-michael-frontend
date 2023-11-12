@@ -1,67 +1,204 @@
-import React from 'react'
+import { useState, useEffect } from 'react'
+import { useTranslation } from 'react-i18next'
+import styled from 'styled-components'
 
 // import css file
-import './styles.css';
+import './styles.css'
 
-import fiLogo from '../../assets/images/sportLogos/F1.svg';
-import valioliigaLogo from '../../assets/images/sportLogos/Premier_League-Logo.wine.svg';
-import liigaLogo from '../../assets/images/sportLogos/Liiga_logo.svg.png';
-import vsportLogo from '../../assets/images/sportLogos/vsport_logo_pos.png';
-import karppaLogo from '../../assets/images/sportLogos/Oulun_Kärpät_logo.png';
+import liveMusicService from '../../services/liveMusic'
+
+import fiLogo from '../../assets/images/sportLogos/F1.svg'
+import valioliigaLogo from '../../assets/images/sportLogos/Premier_League-Logo.wine.svg'
+import liigaLogo from '../../assets/images/sportLogos/Liiga_logo.svg.png'
+import vsportLogo from '../../assets/images/sportLogos/vsport_logo_pos.png'
+import karppaLogo from '../../assets/images/sportLogos/Oulun_Kärpät_logo.png'
+import mestarienLiiga from '../../assets/images/sportLogos/ucl-logo_white.png'
+import cmoreLogo from '../../assets/images/sportLogos/cmore_white_bg.png'
+import maikkariLogo from '../../assets/images/sportLogos/MTV_Katsomo_2023.png'
+
+import GamesAndToys from '../GamesAndToys/gamesAndToys'
+import TodaysMagazines from '../TodaysMagazines/todaysMagazines'
+
+const LiveEvents = () => {
+  const [liveMusic, setLiveMusic] = useState([])
+  const { t } = useTranslation()
+
+  // Get all liveMusic from db
+  useEffect(() => {
+    liveMusicService.getAll()
+      .then(liveMusic => {
+        setLiveMusic(liveMusic)
+      }).catch(error => {
+        console.log(error)
+      })
+  }, [])
+
+  const sortedEvents = [...liveMusic].sort((a, b) => {
+
+    a.date = a.date.split('.').reverse().join('-')
+    b.date = b.date.split('.').reverse().join('-')
+
+    a.time = a.time.split('.').join(':')
+    b.time = b.time.split('.').join(':')
+
+    const dateA = new Date(timeZoneFormatter.format(new Date(a.date + ' ' + a.time)))
+    const dateB = new Date(timeZoneFormatter.format(new Date(b.date + ' ' + b.time)))
+
+    // Sort by latest date first
+    if (dateA < dateB) return -1
+    if (dateA > dateB) return 1
+
+    // If dates are equal, sort by earliest time first
+    if (a.time < b.time) return -1
+    if (a.time > b.time) return 1
+
+    return 0
+  }).map(event => {
+    const date = new Date(event.date + ' ' + event.time)
+    const formattedDate = date.toLocaleString('fi-FI', {
+      timeZone: 'Europe/Helsinki',
+      hour: '2-digit',
+      minute: '2-digit',
+      day: '2-digit',
+      month: '2-digit',
+      year: 'numeric'
+    })
+
+    return {
+      ...event,
+      date: formattedDate.split(' ')[0],
+      time: formattedDate.split(' ')[1]
+    }
+  })
+
+  return (
+    <div className='live-music-box'>
+      <div className='live-music-content'>
+        <h2>{t('events.header')}</h2>
+        {sortedEvents.map(liveMusic => (
+          <section className='live-music-info' key={liveMusic.id}>
+            <h3>{liveMusic.name}</h3>
+            <p>{liveMusic.date} klo. {liveMusic.time}</p>
+          </section>
+        ))}
+      </div>
+    </div>
+  )
+}
+
+const KarpatInfo = () => {
+  const { t } = useTranslation()
+
+  return (
+    <div className='card-grid-container'>
+      <div className='karppa-box'>
+        <div className='karppa-content'>
+          <img src={karppaLogo} alt='Karppa logo' />
+          <h2>{t('karppa.header')}</h2>
+          {/* <h3>{t('karppa.paragraph1')}</h3> */}
+          {/* <h3>{t('karppa.paragraph2')}</h3> */}
+          <h3>{t('karppa.paragraph3')}</h3>
+        </div>
+      </div>
+      <div className='mestarien-liiga-box'>
+        <div className='mestarien-liiga-content'>
+          <img src={mestarienLiiga} alt='Mestarien liiga' />
+          <h3>{t('ucl.header')}</h3>
+        </div>
+      </div>
+      <div className='card-grid'>
+        <div className='card'>
+          <div className='card-content'>
+            <img className='card-image-scaled' alt='' src={liigaLogo} />
+          </div>
+        </div>
+        <div className='card'>
+          <div className='card-content'>
+            <img className='card-image-scaled' alt='' src={vsportLogo} />
+          </div>
+        </div>
+        <div className='card'>
+          <div className='card-content'>
+            <img className='card-image-scaled-up' alt='' src={valioliigaLogo} style={cardImageStyles} />
+          </div>
+        </div>
+        <div className='card'>
+          <div className='card-content'>
+            <img className='card-image-scaled' alt='' src={maikkariLogo} />
+          </div>
+        </div>
+      </div>
+    </div>
+  )
+}
 
 const SportsSection = () => {
 
   return (
-    <>
-      <div className="page-container">
-        <div className='info-box'>
-          <div className='info-content'>
-            <h2>Urheilu</h2>
-            <ul>
-              <li>Pystytään näyttämään kolmea lähetystä yhtä aikaa.</li>
-              {/* <li>Jääkiekkoa, jalkapalloa, Formula 1</li>
-              <li>Jääkiekkoa, jalkapalloa, Formula 1</li>
-              <li>Jääkiekkoa, jalkapalloa, Formula 1</li>
-              <li>Rivejä näyttämään kuinka paljon asiaa tänne mahtuu ja miten teksti skaalautuu.</li> */}
-            </ul>
-          </div>
-        </div>
-        <div className='card-grid-container'>
-          <div className='karppa-box'>
-            <div className='karppa-content'>
-              <img src={karppaLogo} alt='Karppa logo' />
-              <h2>Kärppäpelit</h2>
-              <h3>Bussikuljetukset jäähallille Kärppien kotiotteluihin.</h3>
-              <h3>Kyyti lähtee baarin edestä 20min ennen pelin alkua, liput ilmaiseen bussikyytiin saat tiskiltä.</h3>
-              <h3 className='h3-bold-yellow'>Näytämme kaikki Kärppien pelit myös TV:sta.</h3>
-            </div>
-          </div>
-          <div className='card-grid'>
-            <div className='card'>
-              <div className='card-content'>
-                <img className='card-image' alt='' src={liigaLogo} style={{ width: '100%', height: 'auto', padding: '10px 0' }} />
-              </div>
-            </div>
-            <div className='card'>
-              <div className='card-content'>
-                <img className='card-image' alt='' src={vsportLogo} style={{ width: '100%', height: 'auto', padding: '10px 0' }} />
-              </div>
-            </div>
-            <div className='card'>
-              <div className='card-content'>
-                <img className='card-image' alt='' src={fiLogo} style={{ width: '100%', height: 'auto', padding: '10px 0' }} />
-              </div>
-            </div>
-            <div className='card'>
-              <div className='card-content'>
-                <img className='card-image' alt='' src={valioliigaLogo} style={{ width: '100%', height: 'auto', padding: '10px 0' }} />
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </>
+    <div className = 'live-page-container'>
+      <SportsEventsWrapper>
+        <GamesAndToys />
+        <TodaysMagazines />
+        <LiveEvents />
+        <KarpatInfo />
+      </SportsEventsWrapper>
+    </div>
   )
 }
 
 export default SportsSection
+
+const timeZoneFormatter = new Intl.DateTimeFormat('en-US', {
+  timeZone: 'Europe/Helsinki',
+  year: 'numeric',
+  month: '2-digit',
+  day: '2-digit',
+  hour: '2-digit',
+  minute: '2-digit',
+  second: '2-digit'
+})
+
+// Styles
+
+const overflowCardStyles = {
+  overflow: 'hidden',
+  width: '100%',
+  height: '100%',
+}
+
+const cardImageStyles = {
+  width: '100%',
+  height: 'auto',
+  padding: '10px 0'
+}
+
+const ScaledImg = styled.img`
+  width: 100%;
+  height: auto;
+  padding: 10px 0;
+  transform: scale(0.8);
+`
+const SportsEventsWrapper = styled.div`
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1.2fr;
+  grid-gap: 20px;
+  max-width: 1700px;
+  margin: 0 auto;
+  padding: 20px 0;
+  margin: 0 20px;
+ 
+  @media (max-width: 1330px) {
+    grid-template-columns: 1fr 1fr;    
+  }
+
+  @media (max-width: 1080px) {
+    display: flex;
+    flex-direction: column;
+
+    align-items: center;
+    justify-content: center;
+
+    max-width: 900px;
+  }
+
+`

@@ -1,6 +1,8 @@
 import React from 'react'
+import PropTypes from 'prop-types'
+import { useTranslation } from 'react-i18next'
 import { 
-  BLh1, 
+  BLh2, 
   BLTable, 
   BLTableRow, 
   BLTableData, 
@@ -11,25 +13,28 @@ import {
 } from './BeerListElements'
 
 const BeerList = ({ beer }) => {
+  const { t } = useTranslation()
+
+  beer.map(category => category.products.sort((a, b) => a.country.localeCompare(b.country)))  
 
   return (    
     <div style = {{ paddingBottom: '80px'}}>             
-      {beer.map(genre => (
-        <BLTableContainer key = {genre.id}>
-          <BLh1 key = {genre.id}>
-            {genre.name}
-          </BLh1>
+      {beer.map(category => (
+        <BLTableContainer key = {category.id}>
+          <BLh2 key = {category.id}>
+            {category.name}
+          </BLh2>
           <BLTableWrapper>
             <BLTable>
               <BLTableBody>                  
                 <BLTableRow>                
-                  <BLTableHeader>Nimi</BLTableHeader>
-                  <BLTableHeader>Tyyppi</BLTableHeader>
-                  <BLTableHeader style = {{ textAlign: 'right' }}>Maa</BLTableHeader>
+                  <BLTableHeader>{t('tuotteet.nimi')}</BLTableHeader>
+                  <BLTableHeader>{t('tuotteet.tyyppi')}</BLTableHeader>
+                  <BLTableHeader style = {{ textAlign: 'right' }}>{t('tuotteet.maa')}</BLTableHeader>
                 </BLTableRow>
               </BLTableBody>                  
               <BLTableBody>
-                {genre.products.map(beer => (
+                {category.products.map(beer => (
                   <BLTableRow key = {beer.id}>
                     <BLTableData style = {{ paddingRight: '10px' }}>{beer.name}</BLTableData>
                     <BLTableData style = {{ paddingRight: '10px' }}>{beer.style}</BLTableData>
@@ -46,3 +51,20 @@ const BeerList = ({ beer }) => {
 }
 
 export default BeerList
+
+BeerList.propTypes = {
+  beer:PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.number.isRequired,
+      category: PropTypes.string.isRequired,
+      products: PropTypes.arrayOf(
+        PropTypes.shape({
+          id: PropTypes.number.isRequired,
+          name: PropTypes.string.isRequired,
+          style: PropTypes.string.isRequired,
+          country: PropTypes.string.isRequired,
+        })
+      )
+    })
+  )
+}

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
-import { animateScroll as scroll } from 'react-scroll';
-import { FaBars } from 'react-icons/fa';
+import { animateScroll as scroll } from 'react-scroll'
+import { FaBars } from 'react-icons/fa'
+import { useTranslation } from 'react-i18next'
 import Logo from '../../assets/images/michael-logo-nelio.png'
 import { 
   Nav, 
@@ -10,27 +11,38 @@ import {
   NavItem, 
   NavLogoImg,
   NavLinkTo,
-  NavLinks
 } from './NavbarElements'
 
-const Navbar  = ({ toggle }) => {
-  const [scrollNav, setScrollNav] = useState(false);
+import LanguageSwitch from '../LanguageSwitch/LanguageSwitch.js'
+
+
+const Navbar  = ({ toggle, toggleLang, language, isMobile }) => {
+  const [scrollNav, setScrollNav] = useState(false)
+  const { t } = useTranslation()
 
   const handleScroll = () => {
     if (window.scrollY >= 80) {
-      setScrollNav(true);
+      setScrollNav(true)
     } else {
-      setScrollNav(false);
+      setScrollNav(false)
     }
   }
 
   useEffect(() => {
-    window.addEventListener('scroll', handleScroll);
-  }, []);
+    window.addEventListener('scroll', handleScroll)
+  }, [])
 
   const onTop = () => {
-    scroll.scrollToTop();
+    scroll.scrollToTop()
   }
+
+  const links = [
+    {id: 1, path: '/', text: t('nav.Etusivu')},
+    {id: 2, path: '/beer', text: t('nav.Tuotteet')},
+    {id: 3, path: '/whisky', text: t('nav.Viskit')},
+    {id: 4, path: '/story', text: t('nav.Tarina')},
+    // {id: 5, path: '/admin', text: t('nav.Kirjaudu')},
+  ]
 
   return (
     <>
@@ -41,85 +53,21 @@ const Navbar  = ({ toggle }) => {
             <FaBars onClick = {toggle}/>
           </MobileIcon>
           <NavMenu>
-            <NavItem>
-              <NavLinkTo to = '/' >
-                Etusivu
-              </NavLinkTo>
-            </NavItem>
-            <NavItem>
-              <NavLinkTo to = '/beer' >
-                Hanatuotteet
-              </NavLinkTo>
-            </NavItem>
-            <NavItem>
-              <NavLinkTo to = '/whisky' >
-                Viskit
-              </NavLinkTo>
-            </NavItem>
-            {/* <NavItem>
-              <NavLinkTo to = '/sports' >
-                Urheilu
-              </NavLinkTo>
-            </NavItem> */}
-            <NavItem>
-              <NavLinkTo to = '/story' >
-                Tarina
-              </NavLinkTo>
-            </NavItem>
-            <NavItem>
-              <NavLinkTo to = '/login' >
-                Kirjaudu
-              </NavLinkTo>
-            </NavItem>
-            {/* <NavItem>
-              <NavLinks 
-                to = '/' 
-                smooth = {true} 
-                duration = {500} 
-                spy = {true}
-                exact = 'true' 
-                offset = {-80}>
-                Etusivu
-              </NavLinks>
-            </NavItem>
-            <NavItem>
-              <NavLinks 
-                to = 'whisky'
-                smooth = {true} 
-                duration = {500} 
-                spy = {true}
-                exact = 'true' 
-                offset = {-80}>
-                Hanasta
-              </NavLinks>
-            </NavItem>
-            <NavItem>
-              <NavLinks 
-                to = 'whisky'  
-                smooth = {true} 
-                duration = {500} 
-                spy = {true}
-                exact = 'true' 
-                offset = {-80}>
-                Viskit
-              </NavLinks>
-              </NavItem>*/}
-            {/* <NavItem>
-              <NavLinks 
-                to = 'sports'  
-                smooth = {true} 
-                duration = {500} 
-                spy = {true}
-                exact = 'true' 
-                offset = {-80}>
-                Urheilu
-              </NavLinks>
-            </NavItem> */}
+            {links.map(link => (
+              <NavItem key = {link.id}>
+                <NavLinkTo to = {link.path}>
+                  {link.text}
+                </NavLinkTo>
+              </NavItem>
+            ))}
+            <LanguageSwitch toggleLang = {toggleLang} language = {language} />
           </NavMenu>
         </NavbarContainer>
       </Nav>
     </>
-  );
+  )
 }
 
-export default Navbar;
+export default Navbar
+
+

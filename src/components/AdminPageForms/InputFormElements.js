@@ -1,10 +1,10 @@
 import styled from 'styled-components';
 
 export const InputFormButton = styled.button`
-  padding: 10px;
-  margin: 5px;
   width: 100%;
   max-width: 300px;
+  padding: 10px;
+  margin-top: 5px;
   border-radius: 5px;
   font-size: 1rem;
   background: ${props => props.background === 'add' ? '#06260F' : '#84172C'};
@@ -19,22 +19,28 @@ export const InputFormButton = styled.button`
   }
 
   @media screen and (max-width: 500px) {
-    font-size: 1.5rem;
-    height: 60px;
+    font-size: 1.2rem;
+    height: 100%;
   }
 `;
 
 export const InputFormH2 = styled.h2`
-  font-size: 3rem;
+  font-size: 1.5rem;
   margin: 0 10px;
   color: #06260F;
   text-align: center;
+  align-self: center;
   color: gold;
   font-weight: bold;
   text-shadow: 1px 1px 0px rgba(0, 0, 0, 1);
+
+  @media screen and (max-width: 500px) {
+    font-size: 1.2rem;
+  }
 `;
 
 export const InputFormP = styled.p`
+  font-size: 1rem;
 `;
 
 export const InputFormForm = styled.form`
@@ -45,23 +51,20 @@ export const InputFormForm = styled.form`
   align-items: center;
   justify-content: center;
   margin: 0 auto;
-  padding: 10px;
-
 `;
 
 export const InputFormItems = styled.div`
   width: 100%;
-  padding: 2px;
-  font-size: 1.5rem;
+  // padding: 2px;
+  // font-size: 1rem;
 
   @media screen and (max-width: 500px) {
-    font-size: 1.8rem;
+    font-size: 1.2rem;
   }
 `;
 
 export const InputFormInput = styled.input`
   width: 100%;
-  max-width: 700px;
   padding: 10px;
   margin: 5px;
   border-radius: 5px;
@@ -77,12 +80,12 @@ export const InputFormInput = styled.input`
   }
 
   @media screen and (max-width: 500px) {
-    font-size: 1.5rem;
-    height: 60px;
+    font-size: 1rem;
   }
 `;
 
 export const InputFormLabel = styled.label`
+  font-size: 1rem;
 `;
 
 export const InputFormSelect = styled.select`
@@ -103,8 +106,7 @@ export const InputFormSelect = styled.select`
   }
 
   @media screen and (max-width: 500px) {
-    font-size: 1.5rem;
-    height: 60px;
+    font-size: 1rem;
   }
 `;
 
@@ -119,5 +121,5 @@ export const InputFormOption = styled.option`
   // font-weight: bold;
   // border: 1px solid gold;
   // text-align: center;
-  line-height: 50px;
+  // line-height: 50px;
 `;

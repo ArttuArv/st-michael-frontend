@@ -1,59 +1,55 @@
 import { useState } from 'react'
 
-import { 
-  InputFormButton, 
-  InputFormH2, 
-  InputFormP, 
-  InputFormForm, 
-  InputFormItems, 
-  InputFormInput,
-  InputFormSelect,
-  InputFormOption,
-  InputFormLabel
-} from '../InputFormElements'
+import {
+  FormContainer,
+  FormWrapperLarge,
+  FormClose,
+  Form,
+  FormInput,
+  FormSelect,
+  FormButton,
+  FormH2,
+  FormH4,
+  FormP,
+} from '../UpdateFormElements'
 
-const UpdateBeerForm = ({ currentBeers, updateBeer }) => {
-  const [id, setId] = useState('')
-  const [name, setName] = useState('')
-  const [style, setStyle] = useState('')
-  const [country, setCountry] = useState('')
+const UpdateBeerForm = ({ beer, updateBeer, visibility }) => {
+  const [name, setName] = useState(beer.name)
+  const [style, setStyle] = useState(beer.style)
+  const [country, setCountry] = useState(beer.country)
   const [price, setPrice] = useState('')
-  const [category, setCategory] = useState('')
+  const [category, setCategory] = useState(beer.category)
 
-  const beerCategories = returnListOfBeerCategories(currentBeers)
+  // const beerCategories = returnListOfBeerCategories(currentBeers)
+
+  const beerCategories = [
+    'Valitse listasta',
+    'Seasonal Bottles',
+    'Seasonal Draughts',
+    'Regular Bottles',
+    'Regular Draughts',
+  ]
 
   const handleSubmit = (event) => {
     event.preventDefault()
 
-    let existingBeerCategory
-    const existingBeerName = currentBeers.map(beers => beers.products).flat().find(beer => beer.id === id)
+    // let existingBeerCategory
+    // const existingBeerName = currentBeers.map(beers => beers.products).flat().find(beer => beer.id === id)
 
     const updatedBeer = {
-      name,
-      style,
-      country,
-      price,
-      category,
+      name: name === '' || !name ? beer.name : name,
+      style: style === '' || !style ? beer.style : style,
+      country: country === '' || !country ? beer.country : country,
+      category: category === '' || category === 'Valitse listasta' || !category ? beer.category : category,
     }
 
-    if (name === '' || !name)
-      updatedBeer.name = existingBeerName.name
+    updateBeer(beer.id, beer.category, updatedBeer)
 
-    if (category === 'Valitse listasta' || !category) {
-      alert('Valitse kategoria')
+    closeForm()
 
-      return
-    }
-
-    existingBeerCategory = existingBeerName.category
-
-    updateBeer(id, existingBeerCategory, updatedBeer)
-
-    resetStates()
   }
 
   const resetStates = () => {
-    setId('')
     setName('')
     setStyle('')
     setCountry('')
@@ -61,8 +57,10 @@ const UpdateBeerForm = ({ currentBeers, updateBeer }) => {
     setCategory('')
   }
 
-  const handleIdChange = (event) => {
-    setId(event.target.value)
+  const closeForm = () => {
+    resetStates()
+
+    visibility(false)
   }
 
   const handleNameChange = (event) => {
@@ -86,61 +84,42 @@ const UpdateBeerForm = ({ currentBeers, updateBeer }) => {
   }
 
   return (
-    <>
-      <div style = {{ marginBottom: '10px' }}>
-        <InputFormH2>Päivitä olut</InputFormH2>
-      </div>
-      <div>
-        <InputFormForm onSubmit={handleSubmit}>
-          <InputFormItems>
-            <InputFormLabel>Valitse olut</InputFormLabel>
-            <InputFormSelect value={id} onChange={handleIdChange}>
-              {currentBeers.map(beers => beers.products.map(beer => (
-                <InputFormOption key={beer.id} value={beer.id}>{beer.name}</InputFormOption>
-              )))}
-            </InputFormSelect>
-          </InputFormItems>
-          <InputFormItems>
-            <InputFormP>Nimi</InputFormP>
-            <InputFormInput
-              value={name}
-              onChange={handleNameChange}
-              id='style'
-              placeholder='Jätä tyhjäksi jos haluat säilyttää nykyisen nimen'
-            />
-          </InputFormItems>
-          <InputFormItems>
-            <InputFormP>Tyyppi</InputFormP>
-            <InputFormInput
-              value={style}
-              onChange={handleStyleChange}
-              id='style'
-              placeholder='Oluen tyyppi esim. IPA'
-            />
-          </InputFormItems>
-          <InputFormItems>
-            <InputFormP>Maa</InputFormP>
-            <InputFormInput
-              value={country}
-              onChange={handleCountryChange}
-              id='country'
-              placeholder='Oluen kotimaa'
-            />
-          </InputFormItems>
-          <InputFormItems>
-            <InputFormLabel>Kategoria</InputFormLabel>
-            <InputFormSelect value={category} onChange={handleCategoryChange}>
-              {beerCategories.map(beerArea => (
-                <InputFormOption key={beerArea} value={beerArea}>{beerArea}</InputFormOption>
-              ))}
-            </InputFormSelect>
-          </InputFormItems>
-           <InputFormButton background = 'add' id="login-button" type="submit">
-             Päivitä
-           </InputFormButton>
-         </InputFormForm>
-       </div>
-    </>
+    <FormContainer>
+      <FormWrapperLarge>
+        <FormClose onClick={closeForm} />
+        <Form onSubmit={handleSubmit}>
+          <FormH2>Päivitä hanatuote</FormH2>
+          <FormH4>{beer?.name}</FormH4>
+          <FormP>{beer?.style} : {beer?.country} : {beer?.category}</FormP>
+          <FormH4>Nimi</FormH4>
+          <FormInput
+            type='text'
+            id='name'
+            value={name}
+            onChange={handleNameChange}
+          />
+          <FormH4>Tyyli</FormH4>
+          <FormInput
+            type='text'
+            id='style'
+            value={style}
+            onChange={handleStyleChange}
+          />
+          <FormH4>Maa</FormH4>
+          <FormInput
+            type='text'
+            id='country'
+            value={country}
+            onChange={handleCountryChange}
+          />
+          <FormH4>Kategoria</FormH4>
+          <FormSelect onChange={handleCategoryChange}>
+            {beerCategories.map(category => <option key={category} value={category}>{category}</option>)}
+          </FormSelect>
+          <FormButton type='submit'>Päivitä</FormButton>
+        </Form>
+      </FormWrapperLarge>
+    </FormContainer>
   )
 }
 

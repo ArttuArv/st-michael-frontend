@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import { 
   WhiskyListContainer, 
   WhiskyListWrapper, 
@@ -13,7 +14,13 @@ import {
   WhiskyListLink,
   WhiskyListInput,
   WhiskyListPageContainer,
+  WhiskyPageHeaderH2,
+  WhiskyTableData
 } from './WhiskyListElements';
+
+import { rearrangeWhiskyOrder } from '../../utils/utils';
+
+import PropTypes from 'prop-types';
 
 const tableStyle = {
   borderCollapse: 'collapse',
@@ -50,12 +57,12 @@ const WhiskyListNavs = ({ whisky }) => {
           <WhiskyListMenu key = {area.id}>
             <WhiskyListMenuItem>
               <WhiskyListLink 
-              to={area.name} 
+              to={area.area} 
               spy={true} 
               smooth={true}
-              offset = {-100} 
+              offset = {-180} 
               duration={500}>
-                {area.name}
+                {area.area}
               </WhiskyListLink>
             </WhiskyListMenuItem>
         </WhiskyListMenu>
@@ -65,16 +72,22 @@ const WhiskyListNavs = ({ whisky }) => {
   )
 }
 
-const SearchResult = ({ filteredList, input }) => { 
-  
-   // Jos filtteröity lista on tyhjä ja inputissa on tekstiä, kerrotaan käyttäjälle ettei hakutuloksia löytynyt
-   if (filteredList.length === 0 && input.length > 0) {
+const SearchResult = ({ filteredList, input, t }) => { 
+
+  // Jos filtteröity lista on tyhjä ja inputissa on tekstiä, kerrotaan käyttäjälle ettei hakutuloksia löytynyt
+  if (filteredList.length === 0 && input.length > 0) {
+    return (
+      <WhiskyListP>{t('viskit.notFound')}</WhiskyListP>
+    )
+  }
+  // Jos filtteröity lista ei ole tyhjä ja input on tyhjä, poistetaan ilmoitusviesti
+  if (filteredList.length > 0 && input.length === 0) {
     return (
       <>
-        <WhiskyListP>Haulla ei löydy viskin viskiä.</WhiskyListP>
       </>
     )
   }
+
   // Jos filtteröity lista on tyhjä ja input on tyhjä, poistetaan ilmoitusviesti
   if (filteredList.length === 0 && input.length === 0) {
     return (
@@ -90,13 +103,13 @@ const SearchResult = ({ filteredList, input }) => {
         <table style = {tableStyle}>
           <tbody>
             <tr>
-              <th style = {{textAlign: 'left'}}>Nimi</th>
-              <th style = {{textAlign: 'right'}}>Hinta (€ / 4 cl)</th>
+              <th style = {{textAlign: 'left'}}>{t('viskit.nimi')}</th>
+              {/* <th style = {{textAlign: 'right'}}>Hinta (€ / 4 cl)</th> */}
             </tr>      
-            {filteredList.map((whisky, index) => (          
-              <tr style = {{borderBottom: '1px dashed black', marginBottom: '20px' }} key = {index}>
-                <td style = {{ paddingTop: '10px', paddingBottom: '10px', paddingRight: '10px' }}>{whisky.name}</td>
-                <td style = {{ textAlign: 'right'}}>{whisky.price}</td>
+            {filteredList.map((whisky) => (          
+              <tr style = {{borderBottom: '1px dashed black', marginBottom: '20px' }} key = {whisky.id}>
+                <WhiskyTableData>{whisky.name}</WhiskyTableData>
+                <td style = {{ textAlign: 'right'}}>{whisky.area}</td>
               </tr>                          
             ))}
             </tbody>
@@ -106,7 +119,7 @@ const SearchResult = ({ filteredList, input }) => {
   } // Jos hakutuloksia on yli 40, kerrotaan käyttäjälle että tuloksia on liikaa
   else {
     return (
-      <WhiskyListP>Liikaa tuloksia. Rajaa hakua.</WhiskyListP>
+      <WhiskyListP>{t('viskit.tooMany')}</WhiskyListP>
     )
   }
 }
@@ -114,62 +127,58 @@ const SearchResult = ({ filteredList, input }) => {
 const WhiskyList = ({ whisky }) => { 
   const [whiskies, setWhiskies ] = useState([])
   const [filter, setFilter] = useState('')
+  const { t } = useTranslation();
 
   const handleChange = (event) => {
     setFilter(event.target.value);
 
     const filtered = whisky.map(whiskies => (
-      whiskies.whiskies.filter(({ name }) => name.toLowerCase().includes(event.target.value.toLowerCase()))
+      whiskies.products.filter(({ name }) => name.toLowerCase().includes(event.target.value.toLowerCase()))
     ));
 
     const flattenedArray = filtered.flat();
     setWhiskies(flattenedArray);
   }
 
-  // Takaperin järjestys, jotta Uutuudet-kategoria näkyy ensimmäisenä
-  // Tää pitää funtsia paremmaksi
-  const sortedWhisky = whisky.sort((a, b) => b.name.localeCompare(a.name));
-
   return (
     <WhiskyListPageContainer>
-      <WhiskyListContainer style = {{padding: '10px 5px'}}>
-        <WhiskyListH2>Viskilista elää viikottain. Pidätämme oikeudet muutoksiin.</WhiskyListH2>
-        <WhiskyListH2>Lista löytyy myös baaritiskiltä.</WhiskyListH2>
-        <WhiskyListH2>Kysy uutuuksista henkilökunnalta.</WhiskyListH2>
-      </WhiskyListContainer>
-        <WhiskyListNavs whisky = {whisky} />
+      <WhiskyListContainer>
+        <WhiskyPageHeaderH2>{t('viskit.header1')}</WhiskyPageHeaderH2>
+        <WhiskyPageHeaderH2>{t('viskit.header2')}</WhiskyPageHeaderH2>
+        <WhiskyPageHeaderH2>{t('viskit.header3')}</WhiskyPageHeaderH2>
+      </WhiskyListContainer >
+      <WhiskyListNavs whisky = {whisky} />
       <WhiskyListContainer>
         <WhiskyListWrapper>
           <WhiskyListBox>
-            <WhiskyListH2>Haku</WhiskyListH2>
+            <WhiskyPageHeaderH2 dark >{t('viskit.haku')}</WhiskyPageHeaderH2>
             <div style = {{width: 'min(250px)', position: 'relative'}}>
               <WhiskyListInput 
               value = {filter} 
-              placeholder = {'Etsi viskejä...'} 
+              placeholder = {t('viskit.hakuPlaceholder')}
               onChange = {handleChange} />
               <button style = {buttonStyle} onClick = {() => {setFilter(''); setWhiskies([])}}>X</button>
             </div>
-            <SearchResult filteredList = {whiskies} input = {filter} />
+            <SearchResult filteredList = {whiskies} input = {filter} t = {t} />
           </WhiskyListBox>
         </WhiskyListWrapper>
       </WhiskyListContainer>
-      <>
         <WhiskyListContainer>
           <WhiskyListWrapper>
-            {sortedWhisky.map(area => (
-              <WhiskyListBox name = {area.name} key={area.id}>
-                <WhiskyListH1>{area.name}</WhiskyListH1>
+            {whisky.map(area => (
+              <WhiskyListBox name = {area.area} key={area.id}>
+                <WhiskyListH1>{area.area}</WhiskyListH1>
                 <div style = {tableWrapper}>
                 <table style = {tableStyle}>
                   <tbody>
                     <tr>
-                      <th style = {{textAlign: 'left'}}>Nimi</th>
-                      <th style = {{textAlign: 'right'}}>Hinta (€ / 4 cl)</th>
+                      <th style = {{textAlign: 'left'}}>{t('viskit.nimi')}</th>
+                      {/* <th style = {{textAlign: 'right'}}>Hinta (€ / 4 cl)</th> */}
                     </tr>      
-                    {area.whiskies.map(whisky => (          
+                    {area.products.map(whisky => (          
                       <tr style = {{borderBottom: '1px dashed black', marginBottom: '20px' }} key = {whisky.id}>
-                        <td style = {{ paddingTop: '10px', paddingBottom: '10px', paddingRight: '10px' }}>{whisky.name}</td>
-                        <td style = {{ textAlign: 'right'}}>{whisky.price}</td>
+                        <WhiskyTableData>{whisky.name}</WhiskyTableData>
+                        {/* <td style = {{ textAlign: 'right'}}>{whisky.price}</td> */}
                       </tr>                          
                     ))}
                     </tbody>
@@ -179,9 +188,57 @@ const WhiskyList = ({ whisky }) => {
             ))}
           </WhiskyListWrapper>
         </WhiskyListContainer>
-      </>
     </WhiskyListPageContainer>
   )
 }
 
 export default WhiskyList
+
+WhiskyListNavs.propTypes = {
+  whisky: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.number.isRequired,
+      area: PropTypes.string.isRequired,
+      total: PropTypes.number.isRequired,
+      products: PropTypes.arrayOf(
+        PropTypes.shape({
+          id: PropTypes.number.isRequired,
+          name: PropTypes.string.isRequired,
+          price: PropTypes.string.isRequired,
+          area: PropTypes.string.isRequired,
+        })
+      )
+    })
+  )
+}
+
+SearchResult.propTypes = {
+  filteredList: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.number.isRequired,
+      name: PropTypes.string.isRequired,
+      price: PropTypes.string.isRequired,
+      area: PropTypes.string.isRequired,
+    })
+  ),
+  input: PropTypes.string.isRequired,
+  t: PropTypes.func.isRequired
+}
+
+WhiskyList.propTypes = {
+  whisky: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.number.isRequired,
+      area: PropTypes.string.isRequired,
+      total: PropTypes.number.isRequired,
+      products: PropTypes.arrayOf(
+        PropTypes.shape({
+          id: PropTypes.number.isRequired,
+          name: PropTypes.string.isRequired,
+          price: PropTypes.string.isRequired,
+          area: PropTypes.string.isRequired,
+        })
+      )
+    })
+  )
+}

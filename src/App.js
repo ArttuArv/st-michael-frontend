@@ -1,29 +1,46 @@
 import React, { useState, useEffect, Suspense, lazy } from 'react'
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 
+import i18next from './utils/i18next'
+
 import Home from './pages'
 
 import Navbar from './components/Navbar'
 import Sidebar from './components/Sidebar'
+import Footer from './components/Footer'
+
+import Layout from './components/Layout/layout'
+import Missing from './components/Missing/missing'
+import RequireAuth from './components/RequireAuth/requireAuth'
+import PersistLogin from './components/PersistLogin/persistLogin'
 
 import './App.css'
 
-import beerService from './services/beers'
-import whiskyService from './services/whiskies'
+import beerService from './services/beer'//'./services/beers'
+import whiskyService from './services/whisky'//'./services/whiskies'
 import openingHoursService from './services/openinghours'
 
 const WhiskyPage = lazy(() => import('./pages/whisky'))
 const Login = lazy(() => import('./pages/login'))
+const Admin = lazy(() => import('./pages/admin'))
 const StoryPage = lazy(() => import('./pages/story'))
-const SportsPage = lazy(() => import('./pages/sports'))
 const BeerPage = lazy(() => import('./pages/beer'))
+
+import { rearrangeBeerOrder, getAdminUri } from './utils/utils'
 
 
 const App = () => {
   const [isOpen, setIsOpen] = useState(false)
+  const [isMobile, setIsMobile] = useState(false)
   const [whisky, setWhisky] = useState([])
   const [beer, setBeer] = useState([])
   const [openingHours, setOpeningHours] = useState([])
+  const [language, setLanguage] = useState('fi')
+
+  const toggleLanguage = (event) => {
+    i18next.changeLanguage(event.target.value)
+    setLanguage(event.target.value)
+  } 
 
   const toggle = () => {   
     setIsOpen(open => !open)
@@ -59,26 +76,37 @@ const App = () => {
       })
   }, [])
 
+  // screen size listerer for sidebar
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth <= 769);
+    };
+
+      window.addEventListener('resize', handleResize);
+
+    // Cleanup the event listener when component unmounts
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+  }, []);
+
   return (
     <>
-      <Router>
-        <Sidebar isOpen = {isOpen} toggle = {toggle} />
-        <Navbar toggle = {toggle} />
-        <Routes>
-          <Route path = '/' exact element = {<Home openingHours = {openingHours} beer = {beer} />} />
+      <Sidebar toggle = {toggle} isOpen = {isOpen} toggleLang = {toggleLanguage} language = {language} isMobile = {isMobile}/>
+      <Navbar toggle = {toggle} toggleLang = {toggleLanguage} language = {language}/>
+
+      <Routes>
+        <Route path = '/' element = {<Layout />} >
+
+          <Route path = '/' element = {<Home openingHours = {openingHours} />} />
           <Route path = '/whisky' element = {
             <Suspense fallback = {<div>Loading...</div>}>
-             <WhiskyPage whisky = {whisky} />
+            <WhiskyPage whisky = {whisky} />
             </Suspense>} 
           />
           <Route path = '/beer' element = {
-            <Suspense>
-              <BeerPage beer = {beer} />
-            </Suspense>} 
-          />
-          <Route path = '/sports' element = {
             <Suspense fallback = {<div>Loading...</div>}>
-              <SportsPage />
+              <BeerPage beer = {beer} />
             </Suspense>} 
           />
           <Route path = '/story' element = {
@@ -86,13 +114,31 @@ const App = () => {
               <StoryPage />
             </Suspense>} 
           />
-          <Route path = '/login' element = {
+          <Route path = '/kirjaudu' element = {
             <Suspense fallback = {<div>Loading...</div>}>
               <Login />
             </Suspense>} 
           />
-        </Routes>
-      </Router>
+
+          {/* Catch all */}
+          <Route path = '*' element = {<Missing />} />
+
+          {/* These need to be protected by auth */}
+          <Route element = {<PersistLogin />}>
+
+            <Route element = {<RequireAuth />}>
+              <Route path = {getAdminUri()} element = {
+                <Suspense fallback = {<div>Loading...</div>}>
+                  <Admin />
+                </Suspense>}
+              />
+            </Route>
+
+          </Route>
+        </Route>
+      </Routes>
+
+      <Footer openingHours = {openingHours} />
     </>
   );
 }
