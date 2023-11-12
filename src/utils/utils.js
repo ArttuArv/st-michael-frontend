@@ -6,7 +6,7 @@ const baseUrlTest = process.env.REACT_APP_PRODUCT_API_TEST_V1_URI
 const baseUrlTestV2 = process.env.REACT_APP_PRODUCT_API_V2_TEST_URI
 const adminUri = `/${process.env.REACT_APP_ADMIN_URI}`
 
-export const getBaseUrl = () => baseUrlTestV2
+export const getBaseUrl = () => baseUrlProd
 
 export const getAdminUri = () => adminUri
 
