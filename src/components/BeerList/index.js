@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import { useTranslation } from 'react-i18next'
 import { 
   BLh2, 
@@ -50,3 +51,20 @@ const BeerList = ({ beer }) => {
 }
 
 export default BeerList
+
+BeerList.propTypes = {
+  beer:PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.number.isRequired,
+      category: PropTypes.string.isRequired,
+      products: PropTypes.arrayOf(
+        PropTypes.shape({
+          id: PropTypes.number.isRequired,
+          name: PropTypes.string.isRequired,
+          style: PropTypes.string.isRequired,
+          country: PropTypes.string.isRequired,
+        })
+      )
+    })
+  )
+}

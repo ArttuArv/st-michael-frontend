@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import HeroSection from '../components/HeroSection'
 import Footer from '../components/Footer'
 import SlidingPictures from '../components/SlidingPictures'
@@ -8,7 +9,7 @@ import GamesAndToys from '../components/GamesAndToys/gamesAndToys'
 import WhiskyFrontpageAdd from '../components/WhiskyFrontpageAdd/whiskyFrontpageAdd'
 
 
-const Home = ({ openingHours, beer }) => {
+const Home = ({ openingHours }) => {
 
   // window.scrollTo(0, 0);
 
@@ -26,3 +27,13 @@ const Home = ({ openingHours, beer }) => {
 }
 
 export default Home
+
+Home.propTypes = {
+  openingHours:PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.number.isRequired,
+      day: PropTypes.string.isRequired,
+      openinghours: PropTypes.string.isRequired,
+    })
+  )
+}

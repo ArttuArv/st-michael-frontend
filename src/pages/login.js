@@ -7,7 +7,6 @@ import loginService from '../services/login'
 
 import Notification from '../components/Notification/Notification.js'
 import { getAdminUri } from '../utils/utils'
-import { get } from 'react-scroll/modules/mixins/scroller'
 
 const loginWrapper = {
   display: 'flex',
@@ -27,6 +26,7 @@ const Login = () => {
 
   // Handle user login
   const login = async (username, password) => {
+    console.log("Login.js: login: ", username, password)
     loginService.login({
       username, password,
     }).then(response => {

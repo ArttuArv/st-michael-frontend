@@ -1,8 +1,8 @@
 import React, { lazy } from "react"
 import axios from 'axios';
 
-const baseUrlProd = process.env.REACT_APP_PRODUCT_API_URI
-const baseUrlTest = process.env.REACT_APP_PRODUCT_API_TEST_URI
+const baseUrlProd = process.env.REACT_APP_PRODUCT_API_V2_URI
+const baseUrlTest = process.env.REACT_APP_PRODUCT_API_TEST_V1_URI
 const baseUrlTestV2 = process.env.REACT_APP_PRODUCT_API_V2_TEST_URI
 const adminUri = `/${process.env.REACT_APP_ADMIN_URI}`
 
@@ -166,7 +166,7 @@ export function formatOpeningHoursTime(time) {
 }
 
 export function returnListOfWhiskyAreas(currentWhiskies) {
-  let whiskyAreas = currentWhiskies.map((whisky) => whisky.name)
+  let whiskyAreas = currentWhiskies.map((whisky) => whisky.area)
   const uutuudetExists = whiskyAreas.find(areaName => areaName === 'Uutuudet')
 
   if (!uutuudetExists) {

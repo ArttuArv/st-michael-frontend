@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import { 
   HeroTableWrapper,
   HeroTable,
@@ -27,3 +28,13 @@ const OpeningHours = ({ openingHours }) => {
 }
 
 export default OpeningHours
+
+OpeningHours.propTypes = {
+  openingHours:PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.number.isRequired,
+      day: PropTypes.string.isRequired,
+      openinghours: PropTypes.string.isRequired,
+    })
+  )
+}

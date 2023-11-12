@@ -21,7 +21,7 @@ const NewWhiskyForm = ({ createNewWhisky, currentWhiskies }) => {
   const [area, setArea] = useState('')
 
   const whiskyAreas = returnListOfWhiskyAreas(currentWhiskies)
-
+  
   const handleSubmit = (event) => {
     event.preventDefault()
 
@@ -78,25 +78,23 @@ const NewWhiskyForm = ({ createNewWhisky, currentWhiskies }) => {
   }
 
   return (
-    <>
-      <InputFormForm onSubmit={handleSubmit}>
-        <InputFormH2>Lisää viski</InputFormH2>
-        <InputFormP>Nimi</InputFormP>
-        <InputFormInput
-          value={name}
-          onChange={handleNameChange}
-          id='name'
-          placeholder='Viskin nimi'
-        />
-        <InputFormLabel>Alue</InputFormLabel>
-        <InputFormSelect value={area} onChange={handleAreaChange}>
-          {whiskyAreas.map((area) => (
-            <InputFormOption key={area} value={area}>{area}</InputFormOption>
-          ))}
-        </InputFormSelect>
-        <InputFormButton background='add' id='create-whisky-button' type='submit'>Lisää</InputFormButton>
-      </InputFormForm>
-    </>
+    <InputFormForm onSubmit={handleSubmit}>
+      <InputFormH2>Lisää viski</InputFormH2>
+      <InputFormP>Nimi</InputFormP>
+      <InputFormInput
+        value={name}
+        onChange={handleNameChange}
+        id='name'
+        placeholder='Viskin nimi'
+      />
+      <InputFormLabel>Alue</InputFormLabel>
+      <InputFormSelect value={area} onChange={handleAreaChange}>
+        {whiskyAreas.map((area) => (
+          <InputFormOption key={area} value={area}>{area}</InputFormOption>
+        ))}
+      </InputFormSelect>
+      <InputFormButton background='add' id='create-whisky-button' type='submit'>Lisää</InputFormButton>
+    </InputFormForm>
   )
 }
 

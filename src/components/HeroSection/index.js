@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import { useTranslation } from 'react-i18next'
 import video from '../../assets/video/guinness.mp4'
 import video_nosound from '../../assets/video/guinness_nosound.mp4'
@@ -44,3 +45,13 @@ const HeroSection = ({ openingHours }) => {
 }
 
 export default HeroSection
+
+HeroSection.propTypes = {
+  openingHours:PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.number.isRequired,
+      day: PropTypes.string.isRequired,
+      openinghours: PropTypes.string.isRequired,
+    })
+  )
+}

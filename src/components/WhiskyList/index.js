@@ -21,7 +21,6 @@ import {
 import { rearrangeWhiskyOrder } from '../../utils/utils';
 
 import PropTypes from 'prop-types';
-import whisky from '../../services/whisky';
 
 const tableStyle = {
   borderCollapse: 'collapse',
@@ -58,12 +57,12 @@ const WhiskyListNavs = ({ whisky }) => {
           <WhiskyListMenu key = {area.id}>
             <WhiskyListMenuItem>
               <WhiskyListLink 
-              to={area.name} 
+              to={area.area} 
               spy={true} 
               smooth={true}
               offset = {-180} 
               duration={500}>
-                {area.name}
+                {area.area}
               </WhiskyListLink>
             </WhiskyListMenuItem>
         </WhiskyListMenu>
@@ -73,26 +72,10 @@ const WhiskyListNavs = ({ whisky }) => {
   )
 }
 
-// WhiskyListNavs.propTypes = {
-//   whisky: PropTypes.arrayOf(
-//     PropTypes.shape({
-//       id: PropTypes.string.isRequired,
-//       name: PropTypes.string.isRequired,
-//       whiskies: PropTypes.arrayOf(
-//         PropTypes.shape({
-//           id: PropTypes.string.isRequired,
-//           name: PropTypes.string.isRequired,
-//           price: PropTypes.number.isRequired,
-//         })
-//       )
-//     })
-//   )
-// }
-
 const SearchResult = ({ filteredList, input, t }) => { 
-  
-   // Jos filtteröity lista on tyhjä ja inputissa on tekstiä, kerrotaan käyttäjälle ettei hakutuloksia löytynyt
-   if (filteredList.length === 0 && input.length > 0) {
+
+  // Jos filtteröity lista on tyhjä ja inputissa on tekstiä, kerrotaan käyttäjälle ettei hakutuloksia löytynyt
+  if (filteredList.length === 0 && input.length > 0) {
     return (
       <WhiskyListP>{t('viskit.notFound')}</WhiskyListP>
     )
@@ -209,7 +192,9 @@ const WhiskyList = ({ whisky }) => {
   )
 }
 
-WhiskyList.proptypes = {
+export default WhiskyList
+
+WhiskyListNavs.propTypes = {
   whisky: PropTypes.arrayOf(
     PropTypes.shape({
       id: PropTypes.number.isRequired,
@@ -219,7 +204,7 @@ WhiskyList.proptypes = {
         PropTypes.shape({
           id: PropTypes.number.isRequired,
           name: PropTypes.string.isRequired,
-          price: PropTypes.number.isRequired,
+          price: PropTypes.string.isRequired,
           area: PropTypes.string.isRequired,
         })
       )
@@ -227,4 +212,33 @@ WhiskyList.proptypes = {
   )
 }
 
-export default WhiskyList
+SearchResult.propTypes = {
+  filteredList: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.number.isRequired,
+      name: PropTypes.string.isRequired,
+      price: PropTypes.string.isRequired,
+      area: PropTypes.string.isRequired,
+    })
+  ),
+  input: PropTypes.string.isRequired,
+  t: PropTypes.func.isRequired
+}
+
+WhiskyList.propTypes = {
+  whisky: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.number.isRequired,
+      area: PropTypes.string.isRequired,
+      total: PropTypes.number.isRequired,
+      products: PropTypes.arrayOf(
+        PropTypes.shape({
+          id: PropTypes.number.isRequired,
+          name: PropTypes.string.isRequired,
+          price: PropTypes.string.isRequired,
+          area: PropTypes.string.isRequired,
+        })
+      )
+    })
+  )
+}

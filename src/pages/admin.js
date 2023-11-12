@@ -14,27 +14,22 @@ import NewWhiskyForm from '../components/AdminPageForms/NewWhiskyForm'
 import UpdateWhiskyForm from '../components/AdminPageForms/UpdateWhiskyForm'
 import NewLiveMusicForm from '../components/AdminPageForms/NewLiveMusicForm'
 import UpdateLiveMusicForm from '../components/AdminPageForms/UpdateLiveMusicForm'
-import NewUserForm from '../components/AdminPageForms/NewUserForm/newUserForm'
 import UpdateUserForm from '../components/AdminPageForms/UpdateUserForm/updateUserForm'
 
 import Modal from '../components/AdminPageForms/Modal/modal'
 import NotificationModal from '../components/Modal/modal'
 
-import userService from '../services/user'
-import beersService from '../services/beers'
-import beerService from '../services/beer'
-import whiskiesService from '../services/whiskies'
-import whiskyService from '../services/whisky'
+import beersService from '../services/beer'
+import whiskiesService from '../services/whisky'
 import openingHoursService from '../services/openinghours'
-import whiskyCsvService from '../services/whiskyCsv'
 import liveMusicService from '../services/liveMusic'
 
 import { checkIfFileIsCsv, rearrangeWhiskyOrder } from '../utils/utils'
 
 import Notification from '../components/Notification/Notification.js'
 
-import { Box, Tab, Tabs, TabPanel } from '@mui/material'
-import { motion, AnimatePresence } from 'framer-motion'
+import { Box, Tab, Tabs } from '@mui/material'
+import { AnimatePresence } from 'framer-motion'
 import { faClose } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
@@ -45,12 +40,8 @@ import {
   LoginPageH1,
   LoginPageH3,
   LoginPageP,
-  LoginPageGrid,
-  LoginPageGridItem,
   LoginPageButton,
   LoginPageInputFormWrapper,
-  LoginPageRemoveButton,
-  LoginPageHideButton,
   LoginPageWrapper,
   LoginPageWhiskyViewContainer,
   LoginPageWhiskyViewList,
@@ -147,6 +138,8 @@ const BeerView = ({ beerList, removeBeer, updateBeer }) => {
   const [showAll, setShowAll] = useState(false)
   const [modalOpen, setModalOpen] = useState(false)
 
+  console.log('beerList: ', beerList)
+
   const close = () => {
     setModalOpen(false)
   }
@@ -185,9 +178,9 @@ const BeerView = ({ beerList, removeBeer, updateBeer }) => {
           <LoginPageButton background='light' onClick={() => setShowAll(false)}>Piilota</LoginPageButton>
         </div>
         {beerList.map(products =>
-          <div key={products.id}>
+          <div key={products.category}>
             <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-              <LoginPageH3 style={{ marginTop: '20px' }}>{products.name}</LoginPageH3>
+              <LoginPageH3 style={{ marginTop: '20px' }}>{products.category}</LoginPageH3>
             </div>
             <LoginPageWhiskyViewUl>
               {products.products.map(beer =>
@@ -236,13 +229,12 @@ const WhiskyView = ({ whiskyList, removeWhisky, updateWhisky }) => {
     setModalOpen(true)
   }
 
-  const filteredWhiskies = whiskyList.map((whiskies) => ({
-    ...whiskies,
-    whiskies: whiskies.whiskies.filter((whisky) => 
-      whisky.name.toLowerCase().includes(searchQuery.toLowerCase())
+  const filteredWhiskies = whiskyList.map((whisky) => ({
+    ...whisky,
+    products: whisky.products.filter((product) => 
+      product.name.toLowerCase().includes(searchQuery.toLowerCase())
     ),
   }))
- 
 
   const handleSearchChange = (event) => {
     setSearchQuery(event.target.value)
@@ -285,7 +277,7 @@ const WhiskyView = ({ whiskyList, removeWhisky, updateWhisky }) => {
               value={searchQuery}
               onChange={handleSearchChange}
             />
-            {/* <button style={searchButton} onClick={() => { setSearchQuery('') }}>&#x2716;</button> */}
+            {/* <button style={searchButton} onClick={() => { setSearchQuery('') }}>&#x2716</button> */}
             <button style={searchButton} onClick={() => { setSearchQuery('') }}>
               <FontAwesomeIcon icon={faClose} />
             </button>
@@ -293,12 +285,12 @@ const WhiskyView = ({ whiskyList, removeWhisky, updateWhisky }) => {
         </div>
      
         {filteredWhiskies.map(whiskies =>
-          <div key={whiskies.name}>
+          <div key={whiskies.area}>
             <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-              <LoginPageH3 style={{ marginTop: '20px' }}>{whiskies.name}</LoginPageH3>
+              <LoginPageH3 style={{ marginTop: '20px' }}>{whiskies.area}</LoginPageH3>
             </div>
             <LoginPageWhiskyViewUl>
-              {whiskies.whiskies.map(whisky =>
+              {whiskies.products.map(whisky =>
                 <LoginPageWhiskyViewList key={whisky.id}>
                   <WhiskyListItem currentWhiskies={filteredWhiskies} product={whisky} remove={removeWhisky} update={updateWhisky} />
                 </LoginPageWhiskyViewList>
@@ -478,7 +470,7 @@ const WhiskyTab = ({ axiosPrivate, notify }) => {
   useEffect(() => {
     whiskiesService.getAll()
       .then(whiskies => {
-        setWhiskies(rearrangeWhiskyOrder(whiskies))
+        setWhiskies(whiskies)
       }).catch(error => {
         console.log(error)
       })
@@ -491,15 +483,17 @@ const WhiskyTab = ({ axiosPrivate, notify }) => {
   const createWhisky = (newWhisky) => {
     axiosPrivate.post('whisky', newWhisky)
       .then(response => {
-        setWhiskies(whiskies.map(whisky => {
-          if (whisky.name === newWhisky.area) {
-            whisky.whiskies.push(response.data)
+        setWhiskies(whiskies.map(area => {
+          if (area.area === newWhisky.area) {
+            area.products.push(response.data)
           }
-          return whisky
+          return area
         }))
+  
         notify(`Lisätty ${response.data.name}!`)
         whiskyFormRef.current.toggleVisibility()
-      }).catch(exception => {
+      })
+      .catch(exception => {
         notify(`${exception.response.data.error}`, 'alert')
         console.log('Exception: ', exception)
       })
@@ -521,16 +515,11 @@ const WhiskyTab = ({ axiosPrivate, notify }) => {
 
         axiosPrivate.post('csv', formData)
           .then(response => {
-            console.log('old whiskies: ', whiskies)
-            console.log('returned whiskies: ', response.data)
-            // iterate through old whiskies and add new whiskies to them
-            setWhiskies(whiskies.map(whisky => {
-              if (whisky.name === response.data[0].area) {
-                whisky.whiskies = whisky.whiskies.concat(response.data)
-              }
-              return whisky
-            }))
-
+            console.log('Response: ', response.data.whiskys)
+            const returnedWhiskies = response.data.whiskys
+            // this is fresh list of whiskys after a csv upload
+            // we need to update the state with this new list
+            setWhiskies(returnedWhiskies)
             notify(`Ladattu ${response.data.length} tuotetta! Päivitä selain hetken kuluttua!`)
             setFile(() => null)
 
@@ -557,21 +546,16 @@ const WhiskyTab = ({ axiosPrivate, notify }) => {
       return
     }
 
-    // Find the correct sub array from whiskies
-    const filteredWhiskies = whiskies.find(whiskyArea => whiskyArea.whiskies.find(product => product.name === whisky.name))
-
-    // Remove old entry from array
-    const newWhiskiesArea = filteredWhiskies.whiskies.filter(whisky => whisky.id !== id)
-
-    const updatedWhiskies = {
-      name: filteredWhiskies.name,
-      whiskies: newWhiskiesArea,
-      id: filteredWhiskies.id,
-    }
-
     axiosPrivate.delete(`whisky/${id}`)
       .then(() => {
-        setWhiskies(whiskies.map(whisky => whisky.id === updatedWhiskies.id ? updatedWhiskies : whisky))
+        setWhiskies(prevWhiskys => {
+          const areaIndex = prevWhiskys.findIndex(area => area.products.find(whisky => whisky.id === id))
+
+          if (areaIndex !== -1) {
+            prevWhiskys[areaIndex].products = prevWhiskys[areaIndex].products.filter(whisky => whisky.id !== id)
+          }         
+          return [...prevWhiskys] // Make sure to return a new array reference to trigger re-render
+        })
         notify(`${whisky.name} poistettu!`)
       }).catch(exception => {
         notify(`${exception.response.data.error}`, 'alert')
@@ -583,24 +567,24 @@ const WhiskyTab = ({ axiosPrivate, notify }) => {
   const updateWhisky = (id, updatedWhisky) => {
     axiosPrivate.put(`whisky/${id}`, updatedWhisky)
       .then(returnedWhisky => {
-
-        setWhiskies(whiskies.map(whiskies => {
-
-          for (let i = 0; i < whiskies.whiskies.length; i++) {
-            if (whiskies.whiskies[i].id === id)
-              whiskies.whiskies.splice(i, 1)
+        setWhiskies(whiskies.map(area => {
+          for (let i = 0; i < area.products.length; i++) {
+            if (area.products[i].id === id) {
+              area.products.splice(i, 1)
+              break // Stop iterating once the item is found and removed
+            }
           }
 
-          return whiskies
+          if (area.area === updatedWhisky.area) {
+            area.products.push(returnedWhisky.data)
+          }
+
+          return area
         }))
 
-        setWhiskies(whiskies.map(whiskies => {
-          if (whiskies.name === updatedWhisky.area)
-            whiskies.whiskies.push(returnedWhisky.data)
-          return whiskies
-        }))
         notify(`Muokattiin ${returnedWhisky.data.name}`)
-      }).catch(exception => {
+      })
+      .catch(exception => {
         notify(`${exception.response.data.error}`, 'alert')
         console.log('Exception: ', exception)
       })
@@ -611,7 +595,7 @@ const WhiskyTab = ({ axiosPrivate, notify }) => {
   }
 
   const sortedWhiskies = whiskies.map(whisky => {
-    whisky.whiskies.sort((a, b) => a.name.localeCompare(b.name))
+    whisky.products.sort((a, b) => a.name.localeCompare(b.name))
     return whisky
   })
 
@@ -646,7 +630,6 @@ const WhiskyTab = ({ axiosPrivate, notify }) => {
 }
 
 const BeerTab = ({ axiosPrivate, notify }) => {
-
   const [beers, setBeers] = useState([])
 
   const beerFormRef = useRef()
@@ -655,22 +638,38 @@ const BeerTab = ({ axiosPrivate, notify }) => {
   useEffect(() => {
     beersService.getAll()
       .then(beers => {
-        setBeers(beers);
+        setBeers(beers)
       }).catch(error => {
-        console.log(error);
+        console.log(error)
       })
-  }, []);
+  }, [])
 
   // Create new beer
   const createBeer = (newBeer) => {
     axiosPrivate.post('beer', newBeer)
       .then(response => {
-        setBeers(beers.map(beer => {
-          if (beer.name === newBeer.category) {
-            beer.products.push(response.data)
+        setBeers(prevBeers => {
+          const updatedBeers = prevBeers.map(category => {
+            if (category.category === newBeer.category) {
+              category.products.push(response.data)
+            }
+            return category
+          })
+  
+          const categoryExists = updatedBeers.some(category => category.category === newBeer.category)
+  
+          if (!categoryExists) {
+            const newCategory = {
+              name: newBeer.category,
+              category: newBeer.category,
+              products: [response.data],
+              id: prevBeers.length + 1
+            }
+            updatedBeers.push(newCategory)
           }
-          return beer
-        }))
+  
+          return updatedBeers
+        })
         notify(`Lisätty ${response.data.name}`)
         beerFormRef.current.toggleVisibility()
       }).catch(exception => {
@@ -681,29 +680,24 @@ const BeerTab = ({ axiosPrivate, notify }) => {
 
   // Remove beer from db
   const removeBeer = (id, beerCategory) => {
-
     const ok = window.confirm(`Poistetaanko ${beerCategory.name} ?`)
 
     if (!ok) {
       return
     }
 
-    // Find the correct sub array from beers
-    const filteredBeers = beers.find(beer => beer.products.find(product => product.category === beerCategory.category))
-
-    // Remove old entry from array
-    const newBeersCategory = filteredBeers.products.filter(beer => beer.id !== id)
-
-    const updatedBeers = {
-      name: filteredBeers.name,
-      products: newBeersCategory,
-      id: filteredBeers.id,
-    }
-
     axiosPrivate.delete(`beer/${id}`)
       .then(() => {
-        setBeers(beers.map(beer => beer.id === updatedBeers.id ? updatedBeers : beer))
-        notify(`${beerCategory.name} poistettu!`)
+        setBeers(prevBeers => {
+          const categoryIndex = prevBeers.findIndex(category => category.products.find(beer => beer.id === id))
+  
+          if (categoryIndex !== -1) {
+            prevBeers[categoryIndex].products = prevBeers[categoryIndex].products.filter(beer => beer.id !== id)
+          }
+  
+          notify(`${beerCategory.name} poistettu!`)
+          return [...prevBeers] // Make sure to return a new array reference to trigger re-render
+        })
       }).catch(exception => {
         notify(`${exception.response.data.error}`, 'alert')
         console.log('Exception: ', exception)
@@ -712,24 +706,46 @@ const BeerTab = ({ axiosPrivate, notify }) => {
 
   // Update beer
   const updateBeer = (id, existingBeerCategory, updatedBeer) => {
+
+    if (updatedBeer.category === undefined) {
+      notify('Kategoria ei voi olla tyhjä', 'alert')
+      return
+    }
+
     axiosPrivate.put(`beer/${id}`, updatedBeer)
       .then(returnedBeer => {
+        setBeers(prevBeers => {
+          const updatedBeers = prevBeers.map(beerCategory => {
+            if (beerCategory.name === existingBeerCategory) {
+              // Remove the beer with the specified id from the existing category
+              beerCategory.products = beerCategory.products.filter(beer => beer.id !== id)
 
-        setBeers(beers.map(beers => {
-          if (beers.name === existingBeerCategory) {
-            beers.products = beers.products.filter(beer => beer.id !== id)
+              // If the old category is empty, remove it from the state
+              if (beerCategory.products.length === 0) {
+                return null // This will filter out the category from the final array
+              }
+            }
+
+            if (beerCategory.name === updatedBeer.category) {
+              // Add the returned beer data to the updated category
+              beerCategory.products.push(returnedBeer.data)
+            }
+
+            return beerCategory
+          }).filter(Boolean) // Filter out null entries
+
+          // If the updated category doesn't exist, create a new category
+          if (!updatedBeers.some(beerCategory => beerCategory.name === updatedBeer.category)) {
+            const newCategory = {
+              name: updatedBeer.category,
+              products: [returnedBeer.data]
+            }
+            updatedBeers.push(newCategory)
           }
-          return beers
-        }))
 
-        setBeers(beers.map(beers => {
-          if (beers.name === updatedBeer.category) {
-            beers.products.push(returnedBeer.data)
-          }
-          return beers
-        }))
-
-        notify(`Muokattiin ${returnedBeer.data.name}`)
+          notify(`Muokattiin ${returnedBeer.data.name}`)
+          return updatedBeers
+        })
       }).catch(exception => {
         notify(`${exception.response.data.error}`, 'alert')
         console.log('Exception: ', exception)
@@ -877,6 +893,9 @@ const LiveMusicTab = ({ axiosPrivate, notify }) => {
 
   // Update live music event
   const updateLiveMusic = (id, updatedLiveMusic) => {
+
+    console.log('updatedLiveMusic: ', updatedLiveMusic)
+
     axiosPrivate.put(`livemusic/${id}`, updatedLiveMusic)
       .then(returnedLiveMusic => {
         setLiveMusic(liveMusic.map(liveMusic => liveMusic.id !== id ? liveMusic : returnedLiveMusic.data))

@@ -60,7 +60,6 @@ const App = () => {
   useEffect(() => {
     whiskyService.getAll()
       .then(whiskies => {
-        console.log(whiskies)
         setWhisky(whiskies)
       }).catch(error => {
         console.log(error)
@@ -99,7 +98,7 @@ const App = () => {
       <Routes>
         <Route path = '/' element = {<Layout />} >
 
-          <Route path = '/' element = {<Home openingHours = {openingHours} beer = {beer}/>} />
+          <Route path = '/' element = {<Home openingHours = {openingHours} />} />
           <Route path = '/whisky' element = {
             <Suspense fallback = {<div>Loading...</div>}>
             <WhiskyPage whisky = {whisky} />
