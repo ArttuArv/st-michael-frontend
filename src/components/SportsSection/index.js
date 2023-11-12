@@ -12,6 +12,9 @@ import valioliigaLogo from '../../assets/images/sportLogos/Premier_League-Logo.w
 import liigaLogo from '../../assets/images/sportLogos/Liiga_logo.svg.png'
 import vsportLogo from '../../assets/images/sportLogos/vsport_logo_pos.png'
 import karppaLogo from '../../assets/images/sportLogos/Oulun_Kärpät_logo.png'
+import mestarienLiiga from '../../assets/images/sportLogos/ucl-logo_white.png'
+import cmoreLogo from '../../assets/images/sportLogos/cmore_white_bg.png'
+import maikkariLogo from '../../assets/images/sportLogos/MTV_Katsomo_2023.png'
 
 import GamesAndToys from '../GamesAndToys/gamesAndToys'
 import TodaysMagazines from '../TodaysMagazines/todaysMagazines'
@@ -97,25 +100,31 @@ const KarpatInfo = () => {
           <h3>{t('karppa.paragraph3')}</h3>
         </div>
       </div>
+      <div className='mestarien-liiga-box'>
+        <div className='mestarien-liiga-content'>
+          <img src={mestarienLiiga} alt='Mestarien liiga' />
+          <h3>{t('ucl.header')}</h3>
+        </div>
+      </div>
       <div className='card-grid'>
         <div className='card'>
           <div className='card-content'>
-            <img className='card-image' alt='' src={liigaLogo} style={cardImageStyles} />
+            <img className='card-image-scaled' alt='' src={liigaLogo} />
           </div>
         </div>
         <div className='card'>
           <div className='card-content'>
-            <img className='card-image' alt='' src={vsportLogo} style={cardImageStyles} />
+            <img className='card-image-scaled' alt='' src={vsportLogo} />
           </div>
         </div>
         <div className='card'>
           <div className='card-content'>
-            <img className='card-image' alt='' src={fiLogo} style={cardImageStyles} />
+            <img className='card-image-scaled-up' alt='' src={valioliigaLogo} style={cardImageStyles} />
           </div>
         </div>
         <div className='card'>
           <div className='card-content'>
-            <img className='card-image' alt='' src={valioliigaLogo} style={cardImageStyles} />
+            <img className='card-image-scaled' alt='' src={maikkariLogo} />
           </div>
         </div>
       </div>
@@ -151,22 +160,34 @@ const timeZoneFormatter = new Intl.DateTimeFormat('en-US', {
 
 // Styles
 
+const overflowCardStyles = {
+  overflow: 'hidden',
+  width: '100%',
+  height: '100%',
+}
+
 const cardImageStyles = {
   width: '100%',
   height: 'auto',
   padding: '10px 0'
 }
 
+const ScaledImg = styled.img`
+  width: 100%;
+  height: auto;
+  padding: 10px 0;
+  transform: scale(0.8);
+`
 const SportsEventsWrapper = styled.div`
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr 1fr;
+  grid-template-columns: 1fr 1fr 1fr 1.2fr;
   grid-gap: 20px;
   max-width: 1700px;
   margin: 0 auto;
   padding: 20px 0;
   margin: 0 20px;
  
-  @media (max-width: 1350px) {
+  @media (max-width: 1330px) {
     grid-template-columns: 1fr 1fr;    
   }
 

@@ -16,8 +16,8 @@ import PersistLogin from './components/PersistLogin/persistLogin'
 
 import './App.css'
 
-import beerService from './services/beers'
-import whiskyService from './services/whiskies'
+import beerService from './services/beer'//'./services/beers'
+import whiskyService from './services/whisky'//'./services/whiskies'
 import openingHoursService from './services/openinghours'
 
 const WhiskyPage = lazy(() => import('./pages/whisky'))
@@ -27,7 +27,6 @@ const StoryPage = lazy(() => import('./pages/story'))
 const BeerPage = lazy(() => import('./pages/beer'))
 
 import { rearrangeBeerOrder, getAdminUri } from './utils/utils'
-
 
 
 const App = () => {
@@ -51,7 +50,6 @@ const App = () => {
   useEffect(() => {
     beerService.getAll()
       .then(beers => {
-        beers = rearrangeBeerOrder(beers)
         setBeer(beers);
       }).catch(error => {
         console.log(error);
@@ -62,6 +60,7 @@ const App = () => {
   useEffect(() => {
     whiskyService.getAll()
       .then(whiskies => {
+        console.log(whiskies)
         setWhisky(whiskies)
       }).catch(error => {
         console.log(error)

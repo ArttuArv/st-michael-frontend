@@ -14,6 +14,8 @@ import {
 
 import Notification from '../../Notification/Notification'
 
+import { returnListOfWhiskyAreas } from '../../../utils/utils'
+
 const NewWhiskyForm = ({ createNewWhisky, currentWhiskies }) => {
   const [name, setName] = useState('')
   const [area, setArea] = useState('')
@@ -99,22 +101,3 @@ const NewWhiskyForm = ({ createNewWhisky, currentWhiskies }) => {
 }
 
 export default NewWhiskyForm
-
-function returnListOfWhiskyAreas(currentWhiskies) {
-  let whiskyAreas = currentWhiskies.map((whisky) => whisky.name)
-  const uutuudetExists = whiskyAreas.find(areaName => areaName === 'Uutuudet')
-
-  if (!uutuudetExists) {
-    whiskyAreas = [
-      'Valitse listasta',
-      ...whiskyAreas,
-      'Uutuudet'
-    ]
-  } else {
-    whiskyAreas = [
-      'Valitse listasta',
-      ...whiskyAreas
-    ]
-  }
-  return whiskyAreas
-}

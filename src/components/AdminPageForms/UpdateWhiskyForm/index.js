@@ -15,24 +15,15 @@ import {
 
 import Notification from '../../Notification/Notification'
 
+import { returnListOfWhiskyAreas } from '../../../utils/utils'
 
-const UpdateWhiskyForm = ({ whiskyToUpdate, updateWhisky, visibility }) => {
+const UpdateWhiskyForm = ({ currentWhiskies, whiskyToUpdate, updateWhisky, visibility }) => {
   const [id, setId] = useState('')
   const [name, setName] = useState(whiskyToUpdate.name)
   const [area, setArea] = useState(whiskyToUpdate.area)
   const [whisky, setWhisky] = useState({})
 
-  const whiskyAreas = [
-    'Valitse listasta',
-    'Highland',
-    'Lowland',
-    'Campbeltown',
-    'Irish',
-    'Islands',
-    'Japan',
-    'Other Countries / Bourbons',
-    'Uutuudet'
-  ]
+  const whiskyAreas = returnListOfWhiskyAreas(currentWhiskies)
 
   const handleSubmit = (event) => {
     event.preventDefault()

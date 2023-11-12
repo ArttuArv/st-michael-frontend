@@ -12,6 +12,12 @@ const config = () => {
   }
 }
 
+// v2 uri for all beers
+const getAll = async () => {
+  const response = await axios.get(baseUrl)
+  return response.data
+}
+
 const create = async (newObject) => {
   const response = await axios.post(baseUrl, newObject, config())
   return response.data
@@ -27,4 +33,4 @@ const update = async (id, newObject) => {
   return response.data
 }
 
-export default { create, remove, update }
+export default { getAll, create, remove, update }

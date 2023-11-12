@@ -29,7 +29,7 @@ import openingHoursService from '../services/openinghours'
 import whiskyCsvService from '../services/whiskyCsv'
 import liveMusicService from '../services/liveMusic'
 
-import { checkIfFileIsCsv } from '../utils/utils'
+import { checkIfFileIsCsv, rearrangeWhiskyOrder } from '../utils/utils'
 
 import Notification from '../components/Notification/Notification.js'
 
@@ -67,7 +67,7 @@ const csvHelpText = 'Laitan tähän youtube-linkin csv-ohjeisiin'
 const updateDeleteHelpText = 'Päivittäminen onnistuu klikkaamalla päivitä-nappia ja täyttämällä lomake. Tietoja joita ei tarvitse päivittää voi jättää tyhjäksi. Jos haluat poistaa tuotteen, klikkaa poista-nappia.'
 const newFormHelpText = 'Lisääminen onnistuu täyttämällä lomake ja klikkaamalla lisää-nappia. Kaikki kentät ovat pakollisia ja lomake herjaa jos jokin kenttä on tyhjä.'
 
-const linkText = 'https://www.youtube.com'
+const linkText = 'https://youtu.be/mwS8MQlYo_E'
 
 
 const OpeningHoursView = ({ openingHoursList, removeOpeningHours, updateOpeningHours }) => {
@@ -242,7 +242,8 @@ const WhiskyView = ({ whiskyList, removeWhisky, updateWhisky }) => {
       whisky.name.toLowerCase().includes(searchQuery.toLowerCase())
     ),
   }))
-  
+ 
+
   const handleSearchChange = (event) => {
     setSearchQuery(event.target.value)
   }
@@ -274,7 +275,7 @@ const WhiskyView = ({ whiskyList, removeWhisky, updateWhisky }) => {
         <LoginModalButton modalOpen={modalOpen} closeModal={close} openModal={open} />
 
         <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-          <LoginPageH3 fontsize='small' >ViskiLista</LoginPageH3>
+          <LoginPageH3 fontsize='small' >Viskilista</LoginPageH3>
           <LoginPageButton background='light' onClick={() => setShowAll(false)}>Piilota</LoginPageButton>
           <div style = {searchInputWrapper}>
             <input
@@ -299,7 +300,7 @@ const WhiskyView = ({ whiskyList, removeWhisky, updateWhisky }) => {
             <LoginPageWhiskyViewUl>
               {whiskies.whiskies.map(whisky =>
                 <LoginPageWhiskyViewList key={whisky.id}>
-                  <WhiskyListItem product={whisky} remove={removeWhisky} update={updateWhisky} />
+                  <WhiskyListItem currentWhiskies={filteredWhiskies} product={whisky} remove={removeWhisky} update={updateWhisky} />
                 </LoginPageWhiskyViewList>
               )}
             </LoginPageWhiskyViewUl>
@@ -310,7 +311,7 @@ const WhiskyView = ({ whiskyList, removeWhisky, updateWhisky }) => {
   )
 }
 
-const WhiskyListItem = ({ product, remove, update }) => {
+const WhiskyListItem = ({ currentWhiskies, product, remove, update }) => {
   const [visible, setVisible] = useState(false)
 
   const toggleVisibility = () => {
@@ -322,7 +323,7 @@ const WhiskyListItem = ({ product, remove, update }) => {
       <LoginPageWhiskyViewLi>{product.name}</LoginPageWhiskyViewLi>
       <LoginPageWhiskyUpdateButton onClick={toggleVisibility}>Päivitä</LoginPageWhiskyUpdateButton>
       <Modal visible={visible}>
-        <UpdateWhiskyForm whiskyToUpdate={product} visibility={toggleVisibility} updateWhisky={update} />
+        <UpdateWhiskyForm currentWhiskies={currentWhiskies} whiskyToUpdate={product} visibility={toggleVisibility} updateWhisky={update} />
       </Modal>
       <LoginPageWhiskyRemoveButton onClick={() => remove(product.id, product)}>Poista</LoginPageWhiskyRemoveButton>
     </>
@@ -477,7 +478,7 @@ const WhiskyTab = ({ axiosPrivate, notify }) => {
   useEffect(() => {
     whiskiesService.getAll()
       .then(whiskies => {
-        setWhiskies(whiskies)
+        setWhiskies(rearrangeWhiskyOrder(whiskies))
       }).catch(error => {
         console.log(error)
       })
@@ -973,9 +974,9 @@ const Admin = () => {
         <LoginPageP>{user} logged in</LoginPageP>
         <LoginPageButton background='dark' onClick={signOut}>Logout</LoginPageButton>
       </LoginPageWrapper>
-
-      <TabsPanel notify={notify} />
-
+      <div style={{height: '100%'}}>
+        <TabsPanel notify={notify} />
+      </div>
     </LoginPageContainer>
   )
 }

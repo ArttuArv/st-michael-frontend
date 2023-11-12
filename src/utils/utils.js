@@ -3,9 +3,10 @@ import axios from 'axios';
 
 const baseUrlProd = process.env.REACT_APP_PRODUCT_API_URI
 const baseUrlTest = process.env.REACT_APP_PRODUCT_API_TEST_URI
+const baseUrlTestV2 = process.env.REACT_APP_PRODUCT_API_V2_TEST_URI
 const adminUri = `/${process.env.REACT_APP_ADMIN_URI}`
 
-export const getBaseUrl = () => baseUrlTest
+export const getBaseUrl = () => baseUrlTestV2
 
 export const getAdminUri = () => adminUri
 
@@ -162,6 +163,25 @@ export function formatOpeningHoursTime(time) {
 
   return `${formattedStart} - ${formattedEnd}`
   
+}
+
+export function returnListOfWhiskyAreas(currentWhiskies) {
+  let whiskyAreas = currentWhiskies.map((whisky) => whisky.name)
+  const uutuudetExists = whiskyAreas.find(areaName => areaName === 'Uutuudet')
+
+  if (!uutuudetExists) {
+    whiskyAreas = [
+      'Valitse listasta',
+      ...whiskyAreas,
+      'Uutuudet'
+    ]
+  } else {
+    whiskyAreas = [
+      'Valitse listasta',
+      ...whiskyAreas
+    ]
+  }
+  return whiskyAreas
 }
 
 const addLeadingZero = (number) => {

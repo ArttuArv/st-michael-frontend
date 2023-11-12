@@ -20,6 +20,9 @@ import {
 
 import { rearrangeWhiskyOrder } from '../../utils/utils';
 
+import PropTypes from 'prop-types';
+import whisky from '../../services/whisky';
+
 const tableStyle = {
   borderCollapse: 'collapse',
   width: '100%',
@@ -70,14 +73,28 @@ const WhiskyListNavs = ({ whisky }) => {
   )
 }
 
+// WhiskyListNavs.propTypes = {
+//   whisky: PropTypes.arrayOf(
+//     PropTypes.shape({
+//       id: PropTypes.string.isRequired,
+//       name: PropTypes.string.isRequired,
+//       whiskies: PropTypes.arrayOf(
+//         PropTypes.shape({
+//           id: PropTypes.string.isRequired,
+//           name: PropTypes.string.isRequired,
+//           price: PropTypes.number.isRequired,
+//         })
+//       )
+//     })
+//   )
+// }
+
 const SearchResult = ({ filteredList, input, t }) => { 
   
    // Jos filtteröity lista on tyhjä ja inputissa on tekstiä, kerrotaan käyttäjälle ettei hakutuloksia löytynyt
    if (filteredList.length === 0 && input.length > 0) {
     return (
-      <>
-        <WhiskyListP>{t('viskit.notFound')}</WhiskyListP>
-      </>
+      <WhiskyListP>{t('viskit.notFound')}</WhiskyListP>
     )
   }
   // Jos filtteröity lista ei ole tyhjä ja input on tyhjä, poistetaan ilmoitusviesti
@@ -109,7 +126,7 @@ const SearchResult = ({ filteredList, input, t }) => {
             {filteredList.map((whisky) => (          
               <tr style = {{borderBottom: '1px dashed black', marginBottom: '20px' }} key = {whisky.id}>
                 <WhiskyTableData>{whisky.name}</WhiskyTableData>
-                {/* <td style = {{ textAlign: 'right'}}>{whisky.price}</td> */}
+                <td style = {{ textAlign: 'right'}}>{whisky.area}</td>
               </tr>                          
             ))}
             </tbody>
@@ -133,14 +150,12 @@ const WhiskyList = ({ whisky }) => {
     setFilter(event.target.value);
 
     const filtered = whisky.map(whiskies => (
-      whiskies.whiskies.filter(({ name }) => name.toLowerCase().includes(event.target.value.toLowerCase()))
+      whiskies.products.filter(({ name }) => name.toLowerCase().includes(event.target.value.toLowerCase()))
     ));
 
     const flattenedArray = filtered.flat();
     setWhiskies(flattenedArray);
   }
-
-  const whiskyList = rearrangeWhiskyOrder(whisky);
 
   return (
     <WhiskyListPageContainer>
@@ -167,9 +182,9 @@ const WhiskyList = ({ whisky }) => {
       </WhiskyListContainer>
         <WhiskyListContainer>
           <WhiskyListWrapper>
-            {whiskyList.map(area => (
-              <WhiskyListBox name = {area.name} key={area.id}>
-                <WhiskyListH1>{area.name}</WhiskyListH1>
+            {whisky.map(area => (
+              <WhiskyListBox name = {area.area} key={area.id}>
+                <WhiskyListH1>{area.area}</WhiskyListH1>
                 <div style = {tableWrapper}>
                 <table style = {tableStyle}>
                   <tbody>
@@ -177,7 +192,7 @@ const WhiskyList = ({ whisky }) => {
                       <th style = {{textAlign: 'left'}}>{t('viskit.nimi')}</th>
                       {/* <th style = {{textAlign: 'right'}}>Hinta (€ / 4 cl)</th> */}
                     </tr>      
-                    {area.whiskies.map(whisky => (          
+                    {area.products.map(whisky => (          
                       <tr style = {{borderBottom: '1px dashed black', marginBottom: '20px' }} key = {whisky.id}>
                         <WhiskyTableData>{whisky.name}</WhiskyTableData>
                         {/* <td style = {{ textAlign: 'right'}}>{whisky.price}</td> */}
@@ -191,6 +206,24 @@ const WhiskyList = ({ whisky }) => {
           </WhiskyListWrapper>
         </WhiskyListContainer>
     </WhiskyListPageContainer>
+  )
+}
+
+WhiskyList.proptypes = {
+  whisky: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.number.isRequired,
+      area: PropTypes.string.isRequired,
+      total: PropTypes.number.isRequired,
+      products: PropTypes.arrayOf(
+        PropTypes.shape({
+          id: PropTypes.number.isRequired,
+          name: PropTypes.string.isRequired,
+          price: PropTypes.number.isRequired,
+          area: PropTypes.string.isRequired,
+        })
+      )
+    })
   )
 }
 

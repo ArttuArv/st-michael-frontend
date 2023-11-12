@@ -44,6 +44,9 @@ const translationFi = {
     paragraph2: 'Kyyti lähtee baarin edestä 20min ennen pelin alkua, liput ilmaiseen bussikyytiin saat tiskiltä.',
     paragraph3: 'Näytämme kaikki Kärppien pelit TV:sta.',
   },
+  ucl: {
+    header: 'Mestarien liiga -pelit koko kauden TV:sta.'
+  },
   tuotteet: {
     nimi: 'Nimi',
     tyyppi: 'Tyyppi',
@@ -110,6 +113,9 @@ const translationEn = {
     paragraph1: 'Bus transportation to the hockey hall for Liiga home matches.',
     paragraph2: 'The bus leaves from the pub 20 minutes before the match starts, you can get a free bus ticket from the pub.',
     paragraph3: 'We will show all Karpat games on TV.',
+  },
+  ucl: {
+    header: 'Champions League games on TV throughout the season.'
   },
   tuotteet: {
     nimi: 'Name',
